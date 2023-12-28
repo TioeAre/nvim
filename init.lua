@@ -1,6 +1,7 @@
+vim.loader.enable()
 -- settings
 require("config.options")
 -- keymaps
 require("config.keymaps")
 -- plugins
-require("lazy.lazy_nvim_setup")
+require("lazy_init.lazy_nvim_setup")

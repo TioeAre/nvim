@@ -1,24 +1,12 @@
-local config_lspsaga = function()
-    require('lspsaga').setup({
-        -- keybindings for navigation in lspsaga window
-        move_in_saga = { prev = "<C-k>", next = "<C-j>" },
-        -- use enter to open file with finder
-        finder_action_keys = {
-            open = "<CR>",
-        },
-        -- use enter to open file with definition preview
-        definition_action_keys = {
-            edit = "<CR>",
-        },
-    })
-end
+local M = require("plugin_config.plugin_lspsaga")
 
-return{
-    'nvimdev/lspsaga.nvim',
-    lazy = false,
-    config = config_lspsaga,
+return {
+    "nvimdev/lspsaga.nvim",
+    -- lazy = false,
+    event = { "BufReadPre", "BufNewFile", "VeryLazy" },
+    config = M.config_lspsaga,
     dependencies = {
-        'nvim-treesitter/nvim-treesitter', -- optional
-        'nvim-tree/nvim-web-devicons'     -- optional
+        "nvim-treesitter/nvim-treesitter", -- optional
+        "nvim-tree/nvim-web-devicons", -- optional
     },
 }

@@ -1,8 +1,13 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system(
-        {"git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", -- latest stable release
-         lazypath})
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 -- vim.g.mapleader = " "
@@ -10,10 +15,10 @@ vim.opt.rtp:prepend(lazypath)
 -- lazy default configs
 local opts = {
     defaults = {
-        lazy = true
+        lazy = true,
     },
     install = {
-        colorscheme = {"nightfox"}
+        colorscheme = { "nightfox" },
     },
     rtp = {
         disabled_plugins = {
@@ -25,15 +30,15 @@ local opts = {
             "tarPlugin",
             "tohtml",
             "tutor",
-            "zipPlugin"
+            "zipPlugin",
         },
         change_detection = {
-            notify = true
-        }
-    }
+            notify = true,
+        },
+    },
 }
 
 require("lazy").setup("plugins", opts)
 
--- plugin keymaps
-require("plugin_keymaps.plugin_keymaps")
+-- which keymap
+require("which_keymaps.keymaps")
