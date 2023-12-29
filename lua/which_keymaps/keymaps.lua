@@ -366,7 +366,7 @@ wk.register({
 			w = {
 				"<cmd>WinShift <cr>",
 				"winshift move",
-				mode = { "n", "t" },
+				-- mode = { "n", "t" },
 			},
 			-- h = {
 			--     "<cmd>WinShift right <cr>",
@@ -388,27 +388,27 @@ wk.register({
 			a = {
 				"<cmd>WindowsMaximize <cr>",
 				"windows max",
-				mode = { "n", "t" },
+				-- mode = { "n", "t" },
 			},
 			h = {
 				"<cmd>WindowsMaximizeHorizontally <cr>",
 				"windows max horizontally",
-				mode = { "n", "t" },
+				-- mode = { "n", "t" },
 			},
 			v = {
 				"<cmd>WindowsMaximizeVertically <cr>",
 				"windows max vertically",
-				mode = { "n", "t" },
+				-- mode = { "n", "t" },
 			},
 			e = {
 				"<cmd>WindowsEqualize <cr>",
 				"windows equalize",
-				mode = { "n", "t" },
+				-- mode = { "n", "t" },
 			},
 			t = {
 				"<cmd>WindowsToggleAutowidth <cr>",
 				"windows toggle auto width",
-				mode = { "n", "t" },
+				-- mode = { "n", "t" },
 			},
 		},
 		-- NeogitOrg/neogit
