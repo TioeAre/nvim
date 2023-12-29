@@ -9,6 +9,7 @@ return {
         "theHamsta/nvim-dap-virtual-text",
         "nvim-telescope/telescope-dap.nvim",
         "mfussenegger/nvim-dap-python",
+        "Weissle/persistent-breakpoints.nvim",
     },
     config = M.config_dap,
 }

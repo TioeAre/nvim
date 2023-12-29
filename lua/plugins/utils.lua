@@ -78,7 +78,8 @@ return {
     -- 保存上一次关闭时的工作区
     {
         "folke/persistence.nvim",
-        lazy = false, -- this will only start session saving when an actual file was opened
+        -- lazy = false, -- this will only start session saving when an actual file was opened
+        event = "BufReadPre",
         opts = M.opts_persistence,
     },
     -- 打开文件时恢复上次光标位置
@@ -127,12 +128,36 @@ return {
         "Joakker/lua-json5",
         build = "bash install.sh",
         lazy = false,
+        -- event = "VeryLazy",
+        -- event = { "BufReadPre", "BufNewFile", "VeryLazy" },
+    },
+    -- window spilt and switch
+    {
+        "mrjones2014/smart-splits.nvim",
+        event = "VeryLazy",
+        config = M.config_smart_splits,
+    },
+    -- move windows
+    {
+        "sindrets/winshift.nvim",
+        event = "VeryLazy",
+        config = M.config_winshift,
+    },
+    -- max window
+    {
+        "anuvyklack/windows.nvim",
+        dependencies = {
+            "anuvyklack/middleclass",
+            "anuvyklack/animation.nvim",
+        },
+        event = "VeryLazy",
+        -- lazy = false,
+        config = M.config_windows,
     },
     -- markdown
-    -- {
-    --     "toppair/peek.nvim",
-    --     event = { "VeryLazy" },
-    --     build = "deno task --quiet build:fast",
-    --     config = M.config_peek
-    -- },
+    {
+        "ellisonleao/glow.nvim",
+        config = M.config_glow,
+        cmd = "Glow",
+    },
 }

@@ -64,6 +64,9 @@ M.config_telescope = function()
     require("telescope").load_extension("ros")
     require("telescope").load_extension("docker")
     require("telescope").load_extension("dap")
+    require("telescope").load_extension("diff")
+    require("telescope").load_extension("noice")
+    require("telescope").load_extension("vstask")
 
     -- require("telescope").extensions.docker.containers({
     --     env = {

@@ -91,6 +91,21 @@ M.config_lint = function()
         yaml = { "yamllint" },
     }
 
+    -- local function get_cur_file_extension(bufnr)
+    --     bufnr = bufnr or 0
+    --     return "." .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":e")
+    -- end
+    -- local vale = require("lint.linters.vale")
+    -- vale.args = {
+    --     -- "--no-exit",
+    --     -- "--output",
+    --     -- "JSON",
+    --     -- "--ext",
+    --     -- get_cur_file_extension,
+    --     "--config",
+    --     "~/vale/vale.ini",
+    -- }
+
     local lint_augroup = vim.api.nvim_create_augroup("lint", {
         clear = true,
     })

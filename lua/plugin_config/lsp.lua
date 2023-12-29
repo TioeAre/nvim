@@ -15,6 +15,8 @@ M.config_lspconfig = function()
         ".clang-tidy",
         ".clang-format",
         "./build/compile_commands.json",
+        "compile_commands.json",
+        "build",
         "compile_flags.txt",
         "configure.ac", -- AutoTools
         "CMakeLists.txt",

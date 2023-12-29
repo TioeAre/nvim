@@ -1,4 +1,3 @@
-local keymap = vim.keymap
 local M = {}
 
 -- folke/which-key.nvim
@@ -278,9 +277,9 @@ end
 M.opts_toggleterm = {
     size = function(term)
         if term.direction == "horizontal" then
-            return math.floor(vim.o.lines * 0.35)
+            return math.floor(vim.o.lines * 0.2)
         elseif term.direction == "vertical" then
-            return math.floor(vim.o.columns * 0.3)
+            return math.floor(vim.o.columns * 0.2)
         end
     end,
     direction = "horizontal",
@@ -353,21 +352,123 @@ M.opts_nvim_window_picker = {
     },
 }
 
+-- mrjones2014/smart-splits.nvim
+M.config_smart_splits = function()
+    require("smart-splits").setup({
+        ignored_filetypes = {
+            "nofile",
+            "quickfix",
+            "prompt",
+        },
+        ignored_buftypes = {}, -- "NvimTree"
+        default_amount = 2,
+        at_edge = "wrap",
+        move_cursor_same_row = false,
+        -- whether the cursor should follow the buffer when swapping
+        -- buffers by default; it can also be controlled by passing
+        -- `{ move_cursor = true }` or `{ move_cursor = false }`
+        -- when calling the Lua function.
+        cursor_follows_swapped_bufs = false,
+        resize_mode = {
+            quit_key = "<ESC>",
+            resize_keys = { "h", "j", "k", "l" },
+            silent = false,
+            hooks = {
+                on_enter = nil,
+                on_leave = nil,
+            },
+        },
+        ignored_events = {
+            "BufEnter",
+            "WinEnter",
+        },
+        disable_multiplexer_nav_when_zoomed = true,
+        kitty_password = nil,
+        log_level = "info",
+    })
+end
+
+-- sindrets/winshift.nvim
+M.config_winshift = function()
+    require("winshift").setup({
+        highlight_moving_win = true, -- Highlight the window being moved
+        focused_hl_group = "Visual", -- The highlight group used for the moving window
+        moving_win_options = {
+            -- These are local options applied to the moving window while it's
+            -- being moved. They are unset when you leave Win-Move mode.
+            wrap = false,
+            cursorline = false,
+            cursorcolumn = false,
+            colorcolumn = "",
+        },
+        keymaps = {
+            disable_defaults = false, -- Disable the default keymaps
+            win_move_mode = {
+                ["h"] = "left",
+                ["j"] = "down",
+                ["k"] = "up",
+                ["l"] = "right",
+                ["H"] = "far_left",
+                ["J"] = "far_down",
+                ["K"] = "far_up",
+                ["L"] = "far_right",
+                ["<left>"] = "left",
+                ["<down>"] = "down",
+                ["<up>"] = "up",
+                ["<right>"] = "right",
+                ["<S-left>"] = "far_left",
+                ["<S-down>"] = "far_down",
+                ["<S-up>"] = "far_up",
+                ["<S-right>"] = "far_right",
+            },
+        },
+        ---A function that should prompt the user to select a window.
+        ---The window picker is used to select a window while swapping windows with
+        ---`:WinShift swap`.
+        ---@return integer? winid # Either the selected window ID, or `nil` to
+        ---   indicate that the user cancelled / gave an invalid selection.
+        window_picker = function()
+            return require("winshift.lib").pick_window({
+                -- A string of chars used as identifiers by the window picker.
+                picker_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+                filter_rules = {
+                    -- This table allows you to indicate to the window picker that a window
+                    -- should be ignored if its buffer matches any of the following criteria.
+                    cur_win = true, -- Filter out the current window
+                    floats = true, -- Filter out floating windows
+                    filetype = {}, -- List of ignored file types
+                    buftype = {}, -- List of ignored buftypes
+                    bufname = {}, -- List of vim regex patterns matching ignored buffer names
+                },
+                ---A function used to filter the list of selectable windows.
+                ---@param winids integer[] # The list of selectable window IDs.
+                ---@return integer[] filtered # The filtered list of window IDs.
+                filter_func = nil,
+            })
+        end,
+    })
+end
+
+-- anuvyklack/windows.nvim
+M.config_windows = function()
+    vim.o.winwidth = 5
+    vim.o.winminwidth = 5
+    vim.o.equalalways = false
+    require("windows").setup()
+    vim.cmd("WindowsDisableAutowidth")
+end
+
 -- toppair/peek.nvim
--- M.config_peek = function()
---     require("peek").setup({
---         auto_load = false, -- whether to automatically load preview when entering another markdown buffer
---         close_on_bdelete = true, -- close preview window on buffer delete
---         syntax = true, -- enable syntax highlighting, affects performance
---         theme = "dark", -- 'dark' or 'light'
---         update_on_change = true,
---         app = "webview", -- 'webview', 'browser', string or a table of strings
---         filetype = { "markdown" }, -- list of filetypes to recognize as markdown
---         throttle_at = 200000, -- start throttling when file exceeds this
---         throttle_time = "auto", -- minimum amount of time in milliseconds
---     })
---     vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
---     vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
--- end
+M.config_glow = function()
+    require("glow").setup({
+        border = "shadow", -- floating window border config
+        style = "dark", -- light filled automatically with your current editor background, you can override using glow json style
+        pager = false,
+        width = 80,
+        height = 100,
+        width_ratio = 0.7, -- maximum width of the Glow window compared to the nvim window size (overrides `width`)
+        height_ratio = 0.7,
+    })
+end
 
 return M

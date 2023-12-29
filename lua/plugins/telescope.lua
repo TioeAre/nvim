@@ -18,6 +18,7 @@ return {
                 "nvim-telescope/telescope-fzf-native.nvim",
                 build = "make",
             },
+            "jemag/telescope-diff.nvim",
         },
         cmd = "Telescope",
         event = { "VeryLazy" },

@@ -3,9 +3,18 @@ local M = require("plugin_config.themes")
 return {
     -- 主题
     {
-        "EdenEast/nightfox.nvim",
+
+        "folke/tokyonight.nvim",
+        dependencies = {
+            "EdenEast/nightfox.nvim",
+            { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+            {
+                "olimorris/onedarkpro.nvim",
+                priority = 1000,
+            },
+        },
         lazy = false,
-        priority = 999,
+        priority = 1000,
         config = M.theme_config,
     },
     -- 底部状态栏
@@ -29,6 +38,11 @@ return {
         lazy = false,
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = M.config_alpha,
+    },
+    {
+        "b0o/incline.nvim",
+        lazy = false,
+        config = M.config_incline,
     },
     -- ui
     -- {

@@ -1,14 +1,45 @@
 local M = {}
 
 M.theme_config = function()
-    vim.cmd("colorscheme nightfox")
+    vim.cmd("colorscheme catppuccin") -- tokyonight-storm tokyonight-day catppuccin catppuccin-latte onedark  onelight
+    require("catppuccin").setup({
+        integrations = {
+            cmp = true,
+            gitsigns = true,
+            nvimtree = true,
+            treesitter = true,
+            notify = true,
+            alpha = true,
+            flash = true,
+            lsp_saga = true,
+            dap = true,
+            dap_ui = true,
+            ufo = true,
+            window_picker = true,
+            symbols_outline = true,
+            telescope = true,
+            lsp_trouble = true,
+            illuminate = true,
+            which_key = true,
+            rainbow_delimiters = true,
+            indent_blankline = {
+                enabled = true,
+                scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+                colored_indent_levels = false,
+            },
+            -- mini = {
+            --     enabled = true,
+            --     indentscope_color = "",
+            -- },
+        },
+    })
 end
 
 -- nvim-lualine/lualine.nvim
 M.config_lualine = function()
     require("lualine").setup({
         options = {
-            theme = "modus-vivendi",
+            theme = "catppuccin",
             globalstatus = true,
             component_separators = {
                 left = ">",
@@ -21,20 +52,68 @@ M.config_lualine = function()
         },
         sections = {
             lualine_a = { "mode" },
-            lualine_b = { "branch", "diff", "diagnostics" },
-            lualine_c = { "os.date()" },
+            lualine_b = { "branch" },
+            lualine_c = {
+                "os.date('%A %B/%d/%Y %H:%M:%S')",
 
-            lualine_x = { "filesize", "encoding", "fileformat", "filetype" },
+                {
+                    require("noice").api.status.message.get_hl,
+                    cond = require("noice").api.status.message.has,
+                },
+                {
+                    require("noice").api.status.command.get,
+                    cond = require("noice").api.status.command.has,
+                    color = { fg = "#ff9e64" },
+                },
+                -- {
+                -- 	require("noice").api.status.mode.get,
+                -- 	cond = require("noice").api.status.mode.has,
+                -- 	color = { fg = "#ff9e64" },
+                -- },
+                {
+                    require("noice").api.status.search.get,
+                    cond = require("noice").api.status.search.has,
+                    color = { fg = "#ff9e64" },
+                },
+            },
+
+            lualine_x = { "diff", "diagnostics", "filesize", "encoding", "fileformat", "filetype" },
             lualine_y = { "progress" },
             lualine_z = { "location" },
         },
         tabline = {},
+        extensions = {
+            "quickfix",
+            "fzf",
+            "lazy",
+            "mason",
+            "nvim-dap-ui",
+            "nvim-tree",
+            "symbols-outline",
+            "toggleterm",
+            "trouble",
+        },
     })
 end
 
 -- akinsho/bufferline.nvim
 M.config_bufferline = function()
+    local mocha = require("catppuccin.palettes").get_palette("mocha")
     require("bufferline").setup({
+        highlights = require("catppuccin.groups.integrations.bufferline").get({
+            styles = { "italic", "bold" },
+            custom = {
+                all = {
+                    fill = { bg = "#000000" },
+                },
+                mocha = {
+                    background = { fg = mocha.text },
+                },
+                latte = {
+                    background = { fg = "#000000" },
+                },
+            },
+        }),
         options = {
             mode = "buffers", -- "buffers" "tabs"
             move_wraps_at_ends = true,
@@ -288,8 +367,8 @@ M.config_alpha = function()
             -- [[⢀⠔⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠁⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠘⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂]],
             -- [[⠋⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠌⠀⠀⠀⠀⠐⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠈⢂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀]],
             -- [[⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠢⢄⠀⠀⠀⠈⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠈⠢⠀⠀⠀⣀⠧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀]],
-            "⠀⠀          ⠉⢀⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⣷⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀",
-            "⠀⠀        ⠇⠁⠀⡀⡠⠔⠹⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣷⣄⠀⠀⠀⠀⠀⠀⠀",
+            -- "⠀⠀          ⠉⢀⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⣷⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            -- "⠀⠀        ⠇⠁⠀⡀⡠⠔⠹⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣷⣄⠀⠀⠀⠀⠀⠀⠀",
             "⠀⠀      ⢝⠟⠀⠀⠘⠌⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠤⠀⣀⣀⠙⢿⣦⡀⠀⠀⠀⠀⠀",
             "⠀⠀     ⠗⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⡶⠃⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠉⠙⠶⣯⣇⣀⠀⠀⠀⠀",
             "⠀⠀    ⣫⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡴⠟⠋⠀⠀⠀⠀⠀⠠⠘⡀⠀⠈⡳⣦⡀⠀⠀⠀⠀⠙⢻⣷⡄⠀⠀",
@@ -314,7 +393,8 @@ M.config_alpha = function()
             "         ⣵⣾⣷⡀⠻⣄⠈⠙⠛⠿⠿⠿⠿⠿⠿⠟⣪⢿⣿⣼⠿⠿⠛⢀⠀⠀⠀⠀⢨⡼⣿⠀⠀⠀⠀⣿         ",
             "       ⣽⣿⣿⣿⣿⣿⣦⡙⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣯⣿⣿⡆⠀⠀⠈⡎⣦⠀⠀⢸⣻⡏⣒⣒⣒⣒⡚⣯⣝⣻      ",
             "     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡝⣿⡇⠀⠀⠀⠣⢉⣧⣤⣼⢰⠧⢤⣤⣤⣤⣴⣿        ",
-            "    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⠿⠇⠀⠀⠀⠀⢸⢿⡟⡏⣽⡋⣏⣽⣭           ", -- "  ⠀⠀⠀⠀⠀⠀⠀⡰⠁⢃⣶⡿⣱⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄             ",
+            -- "    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⠿⠇⠀⠀⠀⠀⢸⢿⡟⡏⣽⡋⣏⣽⣭           ",
+            -- "  ⠀⠀⠀⠀⠀⠀⠀⡰⠁⢃⣶⡿⣱⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄             ",
             -- "  ⠀⠀⠀⠀⠀⠀⡐⠁⣸⣾⣿⢿⢟⣫⣆⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄           ",
             -- "  ⠀⠀⠀⠀⠀⠀⡢⣠⣿⣿⣧⣳⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣛⣿⠿⠿⣦⡀         ",
             -- "  ⠀⠀⠀⠀⠔⣨⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⢉⣼⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣶⣦⣉⠐        ",
@@ -411,15 +491,35 @@ M.config_alpha = function()
         }
 
     dashboard.section.buttons.val = {
-        dashboard.button("l", "  > last layout", "<cmd>lua require('persistence').load({ last = true })<CR>"),
+        dashboard.button("l", "  > last layout", "<cmd>lua require('persistence').load()<CR>"),
         dashboard.button("p", "  > projects", "<cmd>lua require'telescope'.extensions.projects.projects{}<CR>"),
         dashboard.button("r", "  > recent", ":Telescope oldfiles<CR>"),
         dashboard.button("e", "  > new file", ":ene <BAR> startinsert <CR>"),
-        dashboard.button("f", "  > find file", ":cd $HOME | Telescope find_files<CR>"),
+        dashboard.button("f", "  > find file", ":Telescope find_files<CR>"),
         dashboard.button("q", "  > quit nvim", ":qa<CR>"),
     }
     alpha.setup(dashboard.opts)
     -- require("alpha").setup(require("alpha.themes.dashboard").config)
+end
+
+-- b0o/incline.nvim
+M.config_incline = function()
+    require("incline").setup({
+        window = {
+            winhighlight = {
+                active = {
+                    EndOfBuffer = "None",
+                    Normal = "Search", -- "InclineNormal",
+                    Search = "None",
+                },
+                inactive = {
+                    EndOfBuffer = "None",
+                    Normal = "InclineNormalNC",
+                    Search = "None",
+                },
+            },
+        },
+    })
 end
 
 -- ldelossa/nvim-ide

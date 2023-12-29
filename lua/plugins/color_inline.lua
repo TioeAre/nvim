@@ -2,7 +2,8 @@ local M = require("plugin_config.color_inline")
 
 return {
     {
-        "norcalli/nvim-colorizer.lua",
+        -- "norcalli/nvim-colorizer.lua",
+        "NvChad/nvim-colorizer.lua",
         event = { "BufReadPre", "BufNewFile" },
         config = M.config_colorizer,
     },
@@ -12,4 +13,3 @@ return {
         config = M.config_colortils,
     },
 }
-

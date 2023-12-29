@@ -39,6 +39,7 @@ M.config_treesitter = function()
             "matlab",
             "python",
             -- "pip_requirements",
+            "regex",
             "ssh_config",
             "todotxt",
             "toml",
@@ -56,7 +57,7 @@ M.config_treesitter = function()
                     return true
                 end
             end,
-            additional_vim_regex_highlighting = true,
+            additional_vim_regex_highlighting = false,
         },
         incremental_selection = {
             enable = true,
