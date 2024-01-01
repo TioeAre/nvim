@@ -415,21 +415,25 @@ wk.register({
 				-- mode = { "n", "t" },
 			},
 		},
-		-- NeogitOrg/neogit
+		-- kdheepak/lazygit.nvim
 		g = {
 			name = "git",
-			c = {
-				"<cmd>lua require('neogit').open({'commit', kind='tab'}) <cr>",
-				-- "<cmd>lua require('neogit').action('commit', 'commit', {}) <cr>",
-				"git open commit",
-			},
-			l = {
-				"<cmd>Neogit log <cr>",
-				"git log",
-			},
+			-- c = {
+			-- 	"<cmd>lua require('neogit').open({'commit', kind='tab'}) <cr>",
+			-- 	-- "<cmd>lua require('neogit').action('commit', 'commit', {}) <cr>",
+			-- 	"git open commit",
+			-- },
+			-- l = {
+			-- 	"<cmd>Neogit log <cr>",
+			-- 	"git log",
+			-- },
 			g = {
-				"<cmd>Neogit <cr>",
-				"git open",
+				"<cmd>LazyGit <cr>",
+				"lazygit open",
+			},
+			f = {
+				"<cmd>lua require('telescope').extensions.lazygit.lazygit() <cr>",
+				"telescope find git repo",
 			},
 			-- d = {
 			--     "<cmd>DiffviewToggleFiles <cr>",

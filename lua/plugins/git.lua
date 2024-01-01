@@ -2,16 +2,15 @@ local M = require("plugin_config.git")
 
 return {
     {
-        "NeogitOrg/neogit",
+        "kdheepak/lazygit.nvim",
         event = "VeryLazy",
         dependencies = {
             "nvim-lua/plenary.nvim", -- required
             "sindrets/diffview.nvim", -- optional - Diff integration
-            -- Only one of these is needed, not both.
             "nvim-telescope/telescope.nvim", -- optional
             "ibhagwan/fzf-lua", -- optional
         },
-        config = M.config_neogit,
+        config = M.config_lazygit,
     },
     {
         "sindrets/diffview.nvim",
