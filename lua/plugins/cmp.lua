@@ -43,5 +43,5 @@ return {
         event = {"BufReadPost", "BufNewFile", "BufReadPre"},
         -- Uncomment next line if you want to follow only stable versions
         version = "*",
-    }
+    },
 }
