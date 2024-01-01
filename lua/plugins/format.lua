@@ -4,7 +4,7 @@ return {
     {
         "stevearc/conform.nvim",
         lazy = true,
-        event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
+        event = { "BufReadPost", "BufNewFile" }, -- to disable, comment this out
         config = M.config_conform,
     },
     {

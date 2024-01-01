@@ -39,7 +39,7 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = M.config_alpha,
     },
-    {
+    {-- 分屏显示文件名
         "b0o/incline.nvim",
         lazy = false,
         config = M.config_incline,
@@ -62,4 +62,25 @@ return {
     --         require("edgy").setup(M.opts_edgy)
     --     end,
     -- },
+    -- 界面半透明
+    {
+        "xiyaowong/transparent.nvim",
+        lazy = false,
+        config = M.config_transparent,
+    },
+    -- noice
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = M.opt_noice,
+        dependencies = { -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim", -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            -- {
+            --     "rcarriga/nvim-notify",
+            --     config = M.config_notify,
+            -- },
+        }
+    },
 }

@@ -39,6 +39,7 @@ return { -- mason, mason-lspconfig, nvim-lspconfig, efmls-configs-nvim
             },
             "nvimdev/lspsaga.nvim",
             { "ray-x/lsp_signature.nvim" },
+            "dnlhc/glance.nvim",
         },
         event = { "BufReadPre", "BufNewFile", "VeryLazy" },
         config = M.config_lspconfig,
@@ -46,7 +47,7 @@ return { -- mason, mason-lspconfig, nvim-lspconfig, efmls-configs-nvim
     -- 显示文内函数引用, 定义等
     {
         "VidocqH/lsp-lens.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile", "VeryLazy" },
         config = M.config_lsp_lens,
     },
 }

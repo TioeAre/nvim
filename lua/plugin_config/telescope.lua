@@ -8,9 +8,9 @@ M.config_telescope = function()
             mappings = {
                 i = {
                     ["<C-j>"] = "move_selection_next",
-                    ["<C-k>"] = "move_selection_previous",
-                },
-            },
+                    ["<C-k>"] = "move_selection_previous"
+                }
+            }
         },
         pickers = {
             find_files = {
@@ -25,7 +25,7 @@ M.config_telescope = function()
             find_buffers = {
                 -- theme = 'dropdown',
                 -- previewer = false
-            },
+            }
         },
         extensions = {
             docker = {
@@ -36,7 +36,7 @@ M.config_telescope = function()
                 buildx_binary = "docker buildx",
                 machine_binary = "docker-machine",
                 log_level = vim.log.levels.INFO,
-                init_term = "tabnew", -- "vsplit new", "split new", ...
+                init_term = "tabnew" -- "vsplit new", "split new", ...
                 -- a command, a table of env. variables and cwd as input.
                 -- This is intended only for advanced use, in case you want
                 -- to send the env. and command to a tmux terminal or floaterm
@@ -44,15 +44,30 @@ M.config_telescope = function()
             },
             undo = {
                 -- telescope-undo.nvim config, see below
+                mappings = {
+                    i = {
+                        ["<cr>"] = require("telescope-undo.actions").yank_additions,
+                        ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
+                        ["<C-cr>"] = require("telescope-undo.actions").restore,
+                        -- alternative defaults, for users whose terminals do questionable things with modified <cr>
+                        ["<C-y>"] = require("telescope-undo.actions").yank_deletions,
+                        ["<C-r>"] = require("telescope-undo.actions").restore
+                    },
+                    n = {
+                        ["y"] = require("telescope-undo.actions").yank_additions,
+                        ["Y"] = require("telescope-undo.actions").yank_deletions,
+                        ["u"] = require("telescope-undo.actions").restore
+                    }
+                }
             },
             fzf = {
                 fuzzy = true, -- false will only do exact matching
                 override_generic_sorter = true, -- override the generic sorter
                 override_file_sorter = true, -- override the file sorter
-                case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+                case_mode = "smart_case" -- or "ignore_case" or "respect_case"
                 -- the default case_mode is "smart_case"
-            },
-        },
+            }
+        }
     })
 
     -- require("telescope").load_extension("scope")
@@ -96,13 +111,13 @@ M.key_telescope = {
 
 -- tiagovla/scope.nvim
 M.config_scope = function()
-    vim.opt.sessionoptions = { "buffers", "tabpages", "globals" } -- required
+    vim.opt.sessionoptions = {"buffers", "tabpages", "globals"} -- required
     require("scope").setup({
         hooks = {
             pre_tab_enter = function()
                 -- Your custom logic to run before entering a tab
-            end,
-        },
+            end
+        }
     })
 end
 

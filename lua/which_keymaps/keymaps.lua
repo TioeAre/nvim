@@ -118,7 +118,7 @@ wk.register({
 			t = { "<cmd>TodoTrouble<cr>", "open trouble todo" },
 		},
 		f = {
-			name = "find telescope/todo/buffer/project/dap configurations",
+			name = "find telescope/todo/undo/buffer/project/dap configurations",
 			-- folke/todo-comments.nvim
 			t = { "<cmd>TodoTelescope<cr>", "telescope todo" },
 			-- nvim-telescope/telescope.nvim
@@ -148,6 +148,10 @@ wk.register({
 				end,
 				"telescope diff current",
 			},
+			u = {
+				"<cmd>Telescope undo<cr>",
+				"telescope find undo",
+			}
 		},
 		o = {
 			name = "open",
@@ -587,6 +591,12 @@ wk.register({
 		end,
 		"format file or range",
 		mode = { "n", "v" },
+	},
+	-- danymat/neogen
+	["<C-A-g>"] = {
+		"<cmd>lua require('neogen').generate() <cr>",
+		"generate docs",
+		mode = { "n", "i" },
 	},
 })
 

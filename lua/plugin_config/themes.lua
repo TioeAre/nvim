@@ -813,4 +813,80 @@ M.opts_edgy = {
     },
 }
 
+-- xiyaowong/transparent.nvim
+M.config_transparent = function()
+    vim.cmd([[hi StatusLine ctermbg=0 cterm=NONE]])
+    require("transparent").setup({ -- Optional, you don't have to run setup.
+        groups = { -- table: default groups
+            "Normal",
+            "NormalNC",
+            "Comment",
+            "Constant",
+            "Special",
+            "Identifier",
+            "Statement",
+            "PreProc",
+            "Type",
+            "Underlined",
+            "Todo",
+            "String",
+            "Function",
+            "Conditional",
+            "Repeat",
+            "Operator",
+            "Structure",
+            "LineNr",
+            "NonText",
+            "SignColumn",
+            "CursorLineNr",
+            "EndOfBuffer",
+            "InsertEnter",
+        },
+        extra_groups = {
+            "CursorLine",
+            "NormalFloat",
+            "TablineFill",
+        }, -- table: additional groups that should be cleared
+        exclude_groups = {}, -- table: groups you don't want to clear
+    })
+end
+
+-- folke/noice.nvim
+M.opt_noice = {}
+M.config_noice = function()
+    require("noice").setup({
+        routes = {
+            {
+                view = "notify",
+                filter = {
+                    event = "msg_showmode",
+                },
+            },
+        },
+        lsp = {
+            -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+            override = {
+                ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                ["vim.lsp.util.stylize_markdown"] = true,
+                ["cmp.entry.get_documentation"] = true,
+            },
+        },
+        -- you can enable a preset for easier configuration
+        presets = {
+            bottom_search = true, -- use a classic bottom cmdline for search
+            command_palette = true, -- position the cmdline and popupmenu together
+            long_message_to_split = true, -- long messages will be sent to a split
+            inc_rename = false, -- enables an input dialog for inc-rename.nvim
+            lsp_doc_border = true, -- add a border to hover docs and signature help
+        },
+    })
+end
+
+-- rcarriga/nvim-notify
+M.config_notify = function()
+    require("notify").setup({
+        background_color = "#404040fa",
+    })
+end
+
 return M

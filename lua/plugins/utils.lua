@@ -11,19 +11,19 @@ return {
     -- 添加注释
     {
         "numToStr/Comment.nvim",
-        event = { "BufReadPre", "BufNewFile" }, -- InsertEnter
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" }, -- InsertEnter
         config = M.config_comment,
     },
     -- 彩虹色括号
     {
         "HiPhish/rainbow-delimiters.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile", "VeryLazy" },
         config = M.config_rainbow_delimiters,
     },
     -- 彩色缩进
     {
         "lukas-reineke/indent-blankline.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile", "VeryLazy" },
         main = "ibl",
         opts = M.opts_indent_blankline,
         config = M.config_indent_blankline,
@@ -31,18 +31,19 @@ return {
     -- 高亮选中词汇
     {
         "RRethy/vim-illuminate",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_vim_illuminate,
     },
-    -- 高亮复制内容
+    -- smart yank
     {
-        "machakann/vim-highlightedyank",
-        event = { "BufReadPre", "BufNewFile" },
+        "ibhagwan/smartyank.nvim",
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+        config = M.config_smartyank,
     },
     -- 高亮行尾空格, 保存时去除空格
     {
         "emileferreira/nvim-strict",
-        event = { "InsertLeave", "TextChanged", "BufReadPre", "BufNewFile" },
+        event = { "InsertLeave", "TextChanged", "BufReadPre", "BufNewFile", "VeryLazy" },
         config = M.config_strict,
     },
     -- auto save
@@ -56,14 +57,15 @@ return {
     {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile", "VeryLazy" },
         opts = M.opts_trouble,
         keys = M.keys_trouble,
     },
     -- todo trees
     {
         "folke/todo-comments.nvim",
-        lazy = false,
+        -- lazy = false,
+        event = {"VeryLazy"},
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = M.opts_todo_comments,
         keys = M.keys_todo_comments,
@@ -72,20 +74,20 @@ return {
     {
         "folke/twilight.nvim",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         opts = M.opts_twilight,
     },
     -- 保存上一次关闭时的工作区
     {
         "folke/persistence.nvim",
         -- lazy = false, -- this will only start session saving when an actual file was opened
-        event = "BufReadPre",
+        event = {"BufReadPost", "VeryLazy"},
         opts = M.opts_persistence,
     },
     -- 打开文件时恢复上次光标位置
     {
         "ethanholz/nvim-lastplace",
-        event = { "BufReadPre" },
+        event = { "BufReadPre", "VeryLazy" },
         config = M.config_lastplace,
     },
     -- 命令行
@@ -98,14 +100,14 @@ return {
     -- 换行自动添加tab
     {
         "vidocqh/auto-indent.nvim",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         opts = M.opts_auto_indent,
     },
     -- 折叠代码块
     {
         "kevinhwang91/nvim-ufo",
         dependencies = { "kevinhwang91/promise-async" },
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_ufo,
     },
     -- 跳转光标位置
@@ -159,5 +161,23 @@ return {
         "ellisonleao/glow.nvim",
         config = M.config_glow,
         cmd = "Glow",
+    },
+    -- sudo
+    {
+        "lambdalisue/suda.vim",
+        cmd = {"SudaRead", "SudaWrite"},
+    },
+    -- surround text
+    {
+        "kylechui/nvim-surround",
+        version = "*", -- Use for stability; omit to use `main` branch for the latest features
+        event = "VeryLazy",
+        config = M.config_nvim_surround
+    },
+    -- big file
+    {
+        "LunarVim/bigfile.nvim",
+        event = {"VeryLazy", "BufReadPre"},
+        config = M.config_bigfile,
     },
 }

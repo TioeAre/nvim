@@ -5,6 +5,7 @@ M.config_cmp = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
+    local neogen = require('neogen')
     require("luasnip/loaders/from_vscode").lazy_load()
     vim.opt.completeopt = "menu,menuone,noselect"
 
@@ -62,6 +63,9 @@ M.config_cmp = function()
         {
             name = "nvim_lua",
         },
+        {
+            name = 'tmux'
+        },
         -- { name = 'treesitter' }
     })
 
@@ -92,6 +96,8 @@ M.config_cmp = function()
                     luasnip.expand_or_jump()
                 elseif has_words_before() then
                     cmp.complete()
+                elseif neogen.jumpable() then
+                    neogen.jump_next()
                 else
                     fallback()
                 end
@@ -101,6 +107,8 @@ M.config_cmp = function()
                     cmp.select_prev_item()
                 elseif luasnip.jumpable(-1) then
                     luasnip.jump(-1)
+                elseif neogen.jumpable(true) then
+                    neogen.jump_prev()
                 else
                     fallback()
                 end
@@ -174,6 +182,27 @@ M.config_cmp = function()
     -- auto pairs when <cr>
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+end
+
+-- danymat/neogen
+M.config_neogen = function()
+    require("vim-doge").setup({
+        snippet_engine = "luasnip",
+        enabled = true,             --if you want to disable Neogen
+        input_after_comment = true, -- (default: true) automatic jump (with insert mode) on inserted annotation
+        languages = {
+            lua = {
+                template = {
+                    annotation_convention = "emmylua" -- for a full list of annotation_conventions,
+                    }
+            },
+            python = {
+                template = {
+                    annotation_convention = "numpydoc" -- for a full list of annotation_conventions,
+                    }
+            },
+        },
+    })
 end
 
 return M

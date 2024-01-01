@@ -32,6 +32,16 @@ return {
             {
                 "ray-x/cmp-treesitter",
             },
+            "andersevenrud/cmp-tmux",
         },
     },
+    -- docs
+    {
+        "danymat/neogen",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        config = M.config_neogen,
+        event = {"BufReadPost", "BufNewFile", "BufReadPre"},
+        -- Uncomment next line if you want to follow only stable versions
+        version = "*",
+    }
 }

@@ -17,13 +17,13 @@ M.config_comment = function()
         sticky = true,
         toggler = {
             line = "<C-_>",
-            block = "gbc",
+            block = "gbc"
         },
         opleader = {
             line = "<C-_>",
-            block = "gb",
+            block = "gb"
         },
-        comment_empty = false,
+        comment_empty = false
     })
 end
 
@@ -35,38 +35,45 @@ end
 -- lukas-reineke/indent-blankline.nvim
 M.opts_indent_blankline = {}
 M.config_indent_blankline = function()
-    local highlight = {
-        "RainbowRed",
-        "RainbowYellow",
-        "RainbowBlue",
-        "RainbowOrange",
-        "RainbowGreen",
-        "RainbowViolet",
-        "RainbowCyan",
-    }
+    local highlight = {"RainbowRed", "RainbowYellow", "RainbowBlue", "RainbowOrange", "RainbowGreen", "RainbowViolet",
+                       "RainbowCyan"}
     local hooks = require("ibl.hooks")
     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-        vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#e5c2c5" })
-        vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#deceb0" })
-        vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#86acca" })
-        vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#cab4a0" })
-        vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#bacbaf" })
-        vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#cbb0d4" })
-        vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#a1c0c4" })
+        vim.api.nvim_set_hl(0, "RainbowRed", {
+            fg = "#e5c2c5"
+        })
+        vim.api.nvim_set_hl(0, "RainbowYellow", {
+            fg = "#deceb0"
+        })
+        vim.api.nvim_set_hl(0, "RainbowBlue", {
+            fg = "#86acca"
+        })
+        vim.api.nvim_set_hl(0, "RainbowOrange", {
+            fg = "#cab4a0"
+        })
+        vim.api.nvim_set_hl(0, "RainbowGreen", {
+            fg = "#bacbaf"
+        })
+        vim.api.nvim_set_hl(0, "RainbowViolet", {
+            fg = "#cbb0d4"
+        })
+        vim.api.nvim_set_hl(0, "RainbowCyan", {
+            fg = "#a1c0c4"
+        })
     end)
     vim.g.rainbow_delimiters = {
-        highlight = highlight,
+        highlight = highlight
     }
     require("ibl").setup({
         indent = {
             char = "▏",
             highlight = highlight,
-            smart_indent_cap = true,
+            smart_indent_cap = true
         },
         scope = {
             char = "▎",
-            highlight = highlight,
-        },
+            highlight = highlight
+        }
     })
     hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
 end
@@ -76,50 +83,90 @@ M.config_vim_illuminate = function()
     require("illuminate").configure({})
 end
 
+-- ibhagwan/smartyank.nvim
+M.config_smartyank = function()
+    require('smartyank').setup {
+        highlight = {
+            enabled = true, -- highlight yanked text
+            higroup = "IncSearch", -- highlight group of yanked text
+            timeout = 1500 -- timeout for clearing the highlight
+        },
+        clipboard = {
+            enabled = true
+        },
+        tmux = {
+            enabled = true,
+            -- remove `-w` to disable copy to host client's clipboard
+            cmd = {'tmux', 'set-buffer', '-w'}
+        },
+        osc52 = {
+            enabled = true,
+            -- escseq = 'tmux',     -- use tmux escape sequence, only enable if
+            -- you're using tmux and have issues (see #4)
+            ssh_only = true, -- false to OSC52 yank also in local sessions
+            silent = false, -- true to disable the "n chars copied" echo
+            echo_hl = "Directory" -- highlight group of the OSC52 echo message
+        },
+        -- By default copy is only triggered by "intentional yanks" where the
+        -- user initiated a `y` motion (e.g. `yy`, `yiw`, etc). Set to `false`
+        -- if you wish to copy indiscriminately:
+        validate_yank = false,
+        -- For advanced customization set to a lua function returning a boolean
+        -- for example, the default condition is:
+        -- validate_yank = function() return vim.v.operator == "y" end,
+
+        -- TMUX
+        -- One (of the many) advantages of using tmux is the ability to view the yank history by using <prefix># (by default <C-a>#).
+        -- Using fzf-lua tmux_buffers we can fuzzy find the tmux paste buffers and by pressing <CR> copy the current selection into the "unnamed" register for easy pasting with p or P (similar functionality to what is achieved using nvim-neoclip.lua):
+
+
+    }
+end
+
 -- emileferreira/nvim-strict
 M.config_strict = function()
     require("strict").setup({
         -- included_filetypes = nil,
         excluded_filetypes = nil,
-        excluded_buftypes = { "help", "nofile", "terminal", "prompt" },
+        excluded_buftypes = {"help", "nofile", "terminal", "prompt"},
         -- match_priority = -1,
         deep_nesting = {
             highlight = true,
             highlight_group = "DiffDelete",
             depth_limit = 8,
-            ignored_trailing_characters = { ",", ";" },
-            ignored_leading_characters = { "." },
+            ignored_trailing_characters = {",", ";"},
+            ignored_leading_characters = {"."}
         },
         trailing_whitespace = {
             highlight = true,
             highlight_group = "DiffDelete",
-            remove_on_save = true,
+            remove_on_save = true
         },
         todos = {
             highlight = true,
-            highlight_group = "DiffAdd",
+            highlight_group = "DiffAdd"
         },
         space_indentation = {
             highlight = false,
             highlight_group = "DiffDelete",
-            convert_on_save = false,
+            convert_on_save = false
         },
         tab_indentation = {
             highlight = false,
             highlight_group = "DiffDelete",
-            convert_on_save = false,
+            convert_on_save = false
         },
         overlong_lines = {
             highlight = false,
             highlight_group = "DiffDelete",
             length_limit = 120,
-            split_on_save = false,
+            split_on_save = false
         },
         trailing_empty_lines = {
             highlight = false,
             highlight_group = "SpellBad",
-            remove_on_save = false,
-        },
+            remove_on_save = false
+        }
     })
     -- auto save
     local group = vim.api.nvim_create_augroup("autosave", {})
@@ -133,7 +180,7 @@ M.config_strict = function()
                 strict.convert_tabs_to_spaces()
                 strict.remove_trailing_whitespace()
             end
-        end,
+        end
     })
 end
 
@@ -146,18 +193,18 @@ M.opts_auto_save = {
             return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
         end,
         dim = 0.18, -- dim the color of `message`
-        cleaning_interval = 500, -- milliseconds
+        cleaning_interval = 500 -- milliseconds
     },
     trigger_events = { -- See :h events
-        immediate_save = { "BufLeave" }, --  "FocusLost"
-        defer_save = { "FocusLost" }, --  "InsertLeave", "TextChanged"
-        cancel_defered_save = { "InsertEnter" },
+        immediate_save = {"BufLeave"}, --  "FocusLost"
+        defer_save = {"FocusLost"}, --  "InsertLeave", "TextChanged"
+        cancel_defered_save = {"InsertEnter"}
     },
     condition = nil,
     write_all_buffers = false, -- write all buffers when the current one meets `condition`
     noautocmd = false, -- do not execute autocmds when saving
     debounce_delay = 300,
-    debug = false,
+    debug = false
 }
 
 -- folke/trouble.nvim
@@ -169,24 +216,24 @@ M.opts_trouble = {
         close = "q", -- close the list
         cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
         refresh = "r", -- manually refresh
-        jump = { "<cr>", "<tab>", "<2-leftmouse>" }, -- jump to the diagnostic or open / close folds
-        open_split = { "<c-x>" }, -- <c-x> open buffer in new split
-        open_vsplit = { "<c-v>" }, -- <c-v> open buffer in new vsplit
-        open_tab = { "<c-t>" }, -- open buffer in new tab
-        jump_close = { "o" }, -- jump to the diagnostic and close the list
+        jump = {"<cr>", "<tab>", "<2-leftmouse>"}, -- jump to the diagnostic or open / close folds
+        open_split = {"<c-x>"}, -- <c-x> open buffer in new split
+        open_vsplit = {"<c-v>"}, -- <c-v> open buffer in new vsplit
+        open_tab = {"<c-t>"}, -- open buffer in new tab
+        jump_close = {"o"}, -- jump to the diagnostic and close the list
         toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
         switch_severity = "<leader>ss", -- switch "diagnostics" severity filter level to HINT / INFO / WARN / ERROR
         toggle_preview = "P", -- toggle auto_preview
         hover = "K", -- opens a small popup with the full multiline message
         preview = "p", -- preview the diagnostic location
         open_code_href = "c", -- if present, open a URI with more information about the diagnostic error
-        close_folds = { "zc", "zC" }, -- close all folds
-        open_folds = { "zo", "zO" }, -- open all folds
-        toggle_fold = { "za", "zA" }, -- toggle fold of current file
+        close_folds = {"zc", "zC"}, -- close all folds
+        open_folds = {"zo", "zO"}, -- open all folds
+        toggle_fold = {"za", "zA"}, -- toggle fold of current file
         next = "j", -- next item
         previous = "k", -- previous item
-        help = "?", -- help menu
-    },
+        help = "?" -- help menu
+    }
 }
 M.keys_trouble = {
     -- {
@@ -238,29 +285,25 @@ M.opts_twilight = {
     dimming = {
         alpha = 0.25, -- amount of dimming
         -- we try to get the foreground from the highlight groups or fallback color
-        color = { "Normal", "#ffffff" },
+        color = {"Normal", "#ffffff"},
         term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
-        inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
+        inactive = false -- when true, other windows will be fully dimmed (unless they contain the same buffer)
     },
     context = 10, -- amount of lines we will try to show around the current line
     treesitter = true, -- use treesitter when available for the filetype
     -- treesitter is used to automatically expand the visible text,
     -- but you can further control the types of nodes that should always be fully expanded
     expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
-        "function",
-        "method",
-        "table",
-        "if_statement",
-    },
-    exclude = { "markdown" }, -- exclude these filetypes
+    "function", "method", "table", "if_statement"},
+    exclude = {"markdown"} -- exclude these filetypes
 }
 
 -- folke/persistence.nvim
 M.opts_persistence = {
     dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-    options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+    options = {"buffers", "curdir", "tabpages", "winsize"}, -- sessionoptions used for saving
     pre_save = nil, -- a function to call before saving the session
-    save_empty = false, -- don't save if there are no open file buffers
+    save_empty = false -- don't save if there are no open file buffers
     -- vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {}),
     -- -- restore the last session
     -- vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {}),
@@ -286,7 +329,7 @@ M.opts_toggleterm = {
     open_mapping = [[<c+\>]],
     hide_numbers = true,
     start_in_insert = true,
-    shade_terminals = true,
+    shade_terminals = true
     -- vim.api.nvim_set_keymap("n", "<C-\\>", "<cmd> ToggleTerm<CR>", { noremap = true, silent = true }),
     -- vim.api.nvim_set_keymap("t", "<C-\\>", "<cmd> ToggleTerm<CR>", { noremap = true, silent = true }),
     -- vim.api.nvim_set_keymap("t", "<A-l>", "<Cmd> wincmd l<CR>", { noremap = true, silent = true }),
@@ -301,7 +344,7 @@ M.opts_auto_indent = {
     indentexpr = function(lnum)
         return require("nvim-treesitter.indent").get_indent(lnum)
     end, -- Use vim.bo.indentexpr by default, see 'Custom Indent Evaluate Method'
-    ignore_filetype = {}, -- e.g. ignore_filetype = { 'javascript' }
+    ignore_filetype = {} -- e.g. ignore_filetype = { 'javascript' }
 }
 
 -- kevinhwang91/nvim-ufo
@@ -347,19 +390,15 @@ M.opts_nvim_window_picker = {
     filter_rules = {
         include_current_win = true,
         bo = {
-            filetype = { "fidget", "neo-tree-popup", "notify" }, -- "nvim-tree", "symbols-outline", "neo-tree",
-        },
-    },
+            filetype = {"fidget", "neo-tree-popup", "notify"} -- "nvim-tree", "symbols-outline", "neo-tree",
+        }
+    }
 }
 
 -- mrjones2014/smart-splits.nvim
 M.config_smart_splits = function()
     require("smart-splits").setup({
-        ignored_filetypes = {
-            "nofile",
-            "quickfix",
-            "prompt",
-        },
+        ignored_filetypes = {"nofile", "quickfix", "prompt"},
         ignored_buftypes = {}, -- "NvimTree"
         default_amount = 2,
         at_edge = "wrap",
@@ -371,20 +410,17 @@ M.config_smart_splits = function()
         cursor_follows_swapped_bufs = false,
         resize_mode = {
             quit_key = "<ESC>",
-            resize_keys = { "h", "j", "k", "l" },
+            resize_keys = {"h", "j", "k", "l"},
             silent = false,
             hooks = {
                 on_enter = nil,
-                on_leave = nil,
-            },
+                on_leave = nil
+            }
         },
-        ignored_events = {
-            "BufEnter",
-            "WinEnter",
-        },
+        ignored_events = {"BufEnter", "WinEnter"},
         disable_multiplexer_nav_when_zoomed = true,
         kitty_password = nil,
-        log_level = "info",
+        log_level = "info"
     })
 end
 
@@ -399,7 +435,7 @@ M.config_winshift = function()
             wrap = false,
             cursorline = false,
             cursorcolumn = false,
-            colorcolumn = "",
+            colorcolumn = ""
         },
         keymaps = {
             disable_defaults = false, -- Disable the default keymaps
@@ -419,8 +455,8 @@ M.config_winshift = function()
                 ["<S-left>"] = "far_left",
                 ["<S-down>"] = "far_down",
                 ["<S-up>"] = "far_up",
-                ["<S-right>"] = "far_right",
-            },
+                ["<S-right>"] = "far_right"
+            }
         },
         ---A function that should prompt the user to select a window.
         ---The window picker is used to select a window while swapping windows with
@@ -438,14 +474,14 @@ M.config_winshift = function()
                     floats = true, -- Filter out floating windows
                     filetype = {}, -- List of ignored file types
                     buftype = {}, -- List of ignored buftypes
-                    bufname = {}, -- List of vim regex patterns matching ignored buffer names
+                    bufname = {} -- List of vim regex patterns matching ignored buffer names
                 },
                 ---A function used to filter the list of selectable windows.
                 ---@param winids integer[] # The list of selectable window IDs.
                 ---@return integer[] filtered # The filtered list of window IDs.
-                filter_func = nil,
+                filter_func = nil
             })
-        end,
+        end
     })
 end
 
@@ -467,8 +503,39 @@ M.config_glow = function()
         width = 80,
         height = 100,
         width_ratio = 0.7, -- maximum width of the Glow window compared to the nvim window size (overrides `width`)
-        height_ratio = 0.7,
+        height_ratio = 0.7
     })
+end
+
+-- kylechui/nvim-surround
+M.config_nvim_surround = function()
+    --     Old text                    Command         New text
+    -- --------------------------------------------------------------------------------
+    --     surr*ound_words             ysiw)           (surround_words)
+    --     *make strings               ys$"            "make strings"
+    --     [delete ar*ound me!]        ds]             delete around me!
+    --     remove <b>HTML t*ags</b>    dst             remove HTML tags
+    --     'change quot*es'            cs'"            "change quotes"
+    --     <b>or tag* types</b>        csth1<CR>       <h1>or tag types</h1>
+    --     delete(functi*on calls)     dsf             function calls
+end
+
+-- LunarVim/bigfile.nvim
+M.config_bigfile = function()
+    require("bigfile").setup {
+        filesize = 10, -- size of the file in MiB, the plugin round file sizes to the closest MiB
+        pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
+        features = { -- features to disable
+          "indent_blankline",
+          "illuminate",
+          "lsp",
+          "treesitter",
+          "syntax",
+          "matchparen",
+          "vimopts",
+          "filetype",
+        },
+      }
 end
 
 return M

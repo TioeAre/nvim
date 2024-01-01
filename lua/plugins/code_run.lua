@@ -3,7 +3,7 @@ local M = require("plugin_config.code_run")
 return {
     {
         "Civitasv/cmake-tools.nvim",
-        lazy = true,
+        -- lazy = true,
         config = M.config_cmake_tools,
         event = "VeryLazy",
     },

@@ -2,7 +2,7 @@ local M = require("plugin_config.debug")
 
 return {
     "mfussenegger/nvim-dap",
-    event = { "BufReadPre", "BufNewFile", "VeryLazy" },
+    event = { "BufReadPost", "BufNewFile", "VeryLazy" },
     -- lazy = false,
     dependencies = {
         "rcarriga/nvim-dap-ui",
