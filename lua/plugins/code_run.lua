@@ -10,7 +10,7 @@ return {
     {
         "michaelb/sniprun",
         branch = "master",
-        build = "sh install.sh",
+        build = "sh install.sh 1",
         config = M.config_sniprun,
         event = "VeryLazy",
     },

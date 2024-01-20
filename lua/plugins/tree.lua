@@ -5,7 +5,9 @@ return {
     {
         "nvim-tree/nvim-tree.lua",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        lazy = false,
+        -- lazy = false,
+        event = { "VeryLazy" },
+        cmd = { "NvimTreeToggle" },
         config = M.config_nvim_tree,
         keys = M.keys_nvim_tree,
     },
@@ -22,9 +24,27 @@ return {
     -- 	config = M.config_neo_tree,
     -- },
     -- outline
+    -- {
+    --     "simrat39/symbols-outline.nvim",
+    --     cmd = "SymbolsOutline",
+    --     opts = M.opts_symbols_outline,
+    --     config = M.config_symbols_outline,
+    -- },
+    -- {
+    --     "stevearc/aerial.nvim",
+    --     opts = M.opts_aerial,
+    --     config = M.config_aerial,
+    --     event = { "VeryLazy" },
+    --     cmd = { "AerialToggle" },
+    --     -- Optional dependencies
+    --     dependencies = {
+    --         "nvim-treesitter/nvim-treesitter",
+    --         "nvim-tree/nvim-web-devicons",
+    --     },
+    -- },
     {
-        "simrat39/symbols-outline.nvim",
-        cmd = "SymbolsOutline",
+        "hedyhli/outline.nvim",
+        cmd = { "Outline", "OutlineOpen" },
         opts = M.opts_outline,
         config = M.config_outline,
     },
@@ -32,5 +52,14 @@ return {
     {
         "ahmedkhalf/project.nvim",
         config = M.config_project,
+    },
+    -- buffer manager
+    {
+        "j-morano/buffer_manager.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        event = {"VeryLazy", "BufReadPre", "BufNewFile"},
+        config = M.config_buffer_manager,
     },
 }

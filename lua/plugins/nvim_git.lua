@@ -1,9 +1,16 @@
-local M = require("plugin_config.git")
+local M = require("plugin_config.nvim_git")
 
 return {
     {
         "kdheepak/lazygit.nvim",
-        event = "VeryLazy",
+        event = { "VeryLazy", "BufReadPost", "BufNewFile" },
+        cmd = {
+            "LazyGit",
+            "LazyGitCurrentFile",
+            "LazyGitConfig",
+            "LazyGitFilter",
+            "LazyGitFilterCurrentFile"
+        },
         dependencies = {
             "nvim-lua/plenary.nvim", -- required
             "sindrets/diffview.nvim", -- optional - Diff integration
@@ -27,7 +34,7 @@ return {
     },
     {
         "lewis6991/gitsigns.nvim",
-        event = { "BufReadPre", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_gitsigns,
     },
 }

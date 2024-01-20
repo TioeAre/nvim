@@ -20,6 +20,7 @@ M.config_autotag = function()
         "glimmer",
         "handlebars",
         "hbs",
+        "launch",
     }
     local skip_tags = {
         "area",
@@ -41,6 +42,7 @@ M.config_autotag = function()
         "wbr",
         "menuitem",
     }
+    -- nvim-treesitter/nvim-treesitter
     require("nvim-treesitter.configs").setup({
         autotag = {
             enable = true,
@@ -65,6 +67,7 @@ end
 M.opts_auto_pairs = {}
 M.config_auto_pairs = function()
     require('nvim-autopairs').setup({
+        check_ts = true,
         enable_check_bracket_line = false
       })
 end

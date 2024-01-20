@@ -15,7 +15,7 @@
 | pyright                         | python                | flake8     | docformatter, autopep8     |
 | yamlls                          | yaml                  | yamllint   | prettier                   |
 
-
+![1.png](~/Desktop/1.png)
 
 dap: bash-debug-adapter, cpptools, debugpy, mockdebug
 

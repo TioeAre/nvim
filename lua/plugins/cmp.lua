@@ -4,7 +4,7 @@ return {
     {
         "hrsh7th/nvim-cmp",
         -- lazy = false,
-        event = "VeryLazy",
+        event = { "VeryLazy", "BufReadPost", "BufNewFile" },
         config = M.config_cmp,
         dependencies = {
             "onsails/lspkind.nvim",
@@ -14,7 +14,7 @@ return {
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-calc",
-            "f3fora/cmp-spell",
+            -- "f3fora/cmp-spell",
             "kdheepak/cmp-latex-symbols",
             "hrsh7th/cmp-nvim-lua",
             "hrsh7th/cmp-nvim-lsp-signature-help",
@@ -40,7 +40,8 @@ return {
         "danymat/neogen",
         dependencies = "nvim-treesitter/nvim-treesitter",
         config = M.config_neogen,
-        event = {"BufReadPost", "BufNewFile", "BufReadPre"},
+        cmd = {"Neogen"},
+        -- event = {"BufReadPost", "BufNewFile", "BufReadPre"},
         -- Uncomment next line if you want to follow only stable versions
         version = "*",
     },

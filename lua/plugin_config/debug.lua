@@ -119,6 +119,7 @@ M.config_dap = function()
         --- @param opts DAPBreakpointOptions options used to create the breakpoint ({condition, logMessage, hitCondition})
         --- @param buf_id integer the buffer the breakpoint was set on
         --- @param line integer the line the breakpoint was set on
+
         on_load_breakpoint = nil,
     })
 end

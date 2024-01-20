@@ -1,0 +1,46 @@
+[
+  {
+    "name": "gcc/g++",
+    "generator": "Ninja",
+    "compilers": {
+      "C": "/usr/bin/gcc",
+      "CXX": "/usr/bin/g++",
+      "Fortran": "/usr/bin/gfortran"
+    },
+    "linker": "/usr/bin/lld",
+    "toochainFile": "xxx"
+  },
+  {
+    "name": "clang/clang++",
+    "generator": "Ninja",
+    "compilers": {
+      "C": "/usr/bin/clang",
+      "CXX": "/usr/bin/clang++",
+      "Fortran": "/usr/bin/gfortran"
+    },
+    "linker": "/usr/bin/lld",
+    "toochainFile": "xxx"
+  },
+  {
+    "name": "arm gcc/arm g++",
+    "generator": "Ninja",
+    "compilers": {
+      "C": "/usr/local/arm/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-gcc",
+      "CXX": "/usr/local/arm/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-g++",
+      "Fortran": "/usr/bin/gfortran"
+    },
+    "linker": "/usr/local/arm/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-ld",
+    "toochainFile": "xxx"
+  },
+  {
+    "name": "VS 17 2022 amd64",
+    "generator": "Visual Studio 17 2022",
+    "host_architecture": "x64",
+    "environmentSetupScript": "& \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat\"",
+    "target_architecture": "x64",
+    "compilers": {
+      "C": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.34.31933/bin/Hostx64/x64/cl.exe",
+      "CXX": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.34.31933/bin//Hostx64/x64/cl.exe"
+    }
+  }
+]

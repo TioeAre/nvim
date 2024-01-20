@@ -8,9 +8,24 @@ M.config_telescope = function()
             mappings = {
                 i = {
                     ["<C-j>"] = "move_selection_next",
-                    ["<C-k>"] = "move_selection_previous"
-                }
-            }
+                    ["<C-k>"] = "move_selection_previous",
+                },
+            },
+            file_ignore_patterns = {
+                "^.git/",
+                -- ".git/",
+                -- "^scratch/",
+                -- "%.npz",
+                "^.history/",
+                "^.cache/",
+                "^.idea/",
+                "^build/",
+                "^devel/",
+                "^cmake-build-debug/",
+                "**/cmake-build-debug/**",
+                "^cmake-build-release/",
+                "**/cmake-build-release/**",
+            },
         },
         pickers = {
             find_files = {
@@ -25,7 +40,7 @@ M.config_telescope = function()
             find_buffers = {
                 -- theme = 'dropdown',
                 -- previewer = false
-            }
+            },
         },
         extensions = {
             docker = {
@@ -36,7 +51,7 @@ M.config_telescope = function()
                 buildx_binary = "docker buildx",
                 machine_binary = "docker-machine",
                 log_level = vim.log.levels.INFO,
-                init_term = "tabnew" -- "vsplit new", "split new", ...
+                init_term = "tabnew", -- "vsplit new", "split new", ...
                 -- a command, a table of env. variables and cwd as input.
                 -- This is intended only for advanced use, in case you want
                 -- to send the env. and command to a tmux terminal or floaterm
@@ -51,23 +66,32 @@ M.config_telescope = function()
                         ["<C-cr>"] = require("telescope-undo.actions").restore,
                         -- alternative defaults, for users whose terminals do questionable things with modified <cr>
                         ["<C-y>"] = require("telescope-undo.actions").yank_deletions,
-                        ["<C-r>"] = require("telescope-undo.actions").restore
+                        ["<C-r>"] = require("telescope-undo.actions").restore,
                     },
                     n = {
                         ["y"] = require("telescope-undo.actions").yank_additions,
                         ["Y"] = require("telescope-undo.actions").yank_deletions,
-                        ["u"] = require("telescope-undo.actions").restore
-                    }
-                }
+                        ["u"] = require("telescope-undo.actions").restore,
+                    },
+                },
             },
             fzf = {
                 fuzzy = true, -- false will only do exact matching
                 override_generic_sorter = true, -- override the generic sorter
                 override_file_sorter = true, -- override the file sorter
-                case_mode = "smart_case" -- or "ignore_case" or "respect_case"
+                case_mode = "smart_case", -- or "ignore_case" or "respect_case"
                 -- the default case_mode is "smart_case"
-            }
-        }
+            },
+            -- stevearc/aerial.nvim
+            -- aerial = {
+            --     -- Display symbols as <root>.<parent>.<symbol>
+            --     show_nesting = {
+            --         ["_"] = false, -- This key will be the default
+            --         json = true, -- You can set the option for specific filetypes
+            --         yaml = true,
+            --     },
+            -- },
+        },
     })
 
     -- require("telescope").load_extension("scope")
@@ -82,8 +106,7 @@ M.config_telescope = function()
     require("telescope").load_extension("diff")
     require("telescope").load_extension("noice")
     require("telescope").load_extension("vstask")
-    require("telescope").load_extension("lazygit")
-
+    -- require("telescope").load_extension("lazygit")
     -- require("telescope").extensions.docker.containers({
     --     env = {
     --         DOCKER_HOST = "ssh://...."
@@ -112,13 +135,13 @@ M.key_telescope = {
 
 -- tiagovla/scope.nvim
 M.config_scope = function()
-    vim.opt.sessionoptions = {"buffers", "tabpages", "globals"} -- required
+    vim.opt.sessionoptions = { "buffers", "tabpages", "globals" } -- required
     require("scope").setup({
         hooks = {
             pre_tab_enter = function()
                 -- Your custom logic to run before entering a tab
-            end
-        }
+            end,
+        },
     })
 end
 

@@ -23,11 +23,10 @@ return {
         cmd = "Telescope",
         event = { "VeryLazy" },
         config = M.config_telescope,
-        defaults = {
-            file_ignore_patterns = { "node_modules", ".git" },
-        },
+        -- defaults = {
+        --     file_ignore_patterns = { "node_modules", ".git" },
+        -- },
         keys = M.key_telescope,
-        build = ":TSUpdate",
     },
     -- -- 选项卡
     -- {

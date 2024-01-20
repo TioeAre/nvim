@@ -17,13 +17,13 @@ M.config_comment = function()
         sticky = true,
         toggler = {
             line = "<C-_>",
-            block = "gbc"
+            block = "gbc",
         },
         opleader = {
             line = "<C-_>",
-            block = "gb"
+            block = "gbc",
         },
-        comment_empty = false
+        comment_empty = false,
     })
 end
 
@@ -35,45 +35,52 @@ end
 -- lukas-reineke/indent-blankline.nvim
 M.opts_indent_blankline = {}
 M.config_indent_blankline = function()
-    local highlight = {"RainbowRed", "RainbowYellow", "RainbowBlue", "RainbowOrange", "RainbowGreen", "RainbowViolet",
-                       "RainbowCyan"}
+    local highlight = {
+        "RainbowRed",
+        "RainbowYellow",
+        "RainbowBlue",
+        "RainbowOrange",
+        "RainbowGreen",
+        "RainbowViolet",
+        "RainbowCyan",
+    }
     local hooks = require("ibl.hooks")
     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
         vim.api.nvim_set_hl(0, "RainbowRed", {
-            fg = "#e5c2c5"
+            fg = "#e5c2c5",
         })
         vim.api.nvim_set_hl(0, "RainbowYellow", {
-            fg = "#deceb0"
+            fg = "#deceb0",
         })
         vim.api.nvim_set_hl(0, "RainbowBlue", {
-            fg = "#86acca"
+            fg = "#86acca",
         })
         vim.api.nvim_set_hl(0, "RainbowOrange", {
-            fg = "#cab4a0"
+            fg = "#cab4a0",
         })
         vim.api.nvim_set_hl(0, "RainbowGreen", {
-            fg = "#bacbaf"
+            fg = "#bacbaf",
         })
         vim.api.nvim_set_hl(0, "RainbowViolet", {
-            fg = "#cbb0d4"
+            fg = "#cbb0d4",
         })
         vim.api.nvim_set_hl(0, "RainbowCyan", {
-            fg = "#a1c0c4"
+            fg = "#a1c0c4",
         })
     end)
     vim.g.rainbow_delimiters = {
-        highlight = highlight
+        highlight = highlight,
     }
     require("ibl").setup({
         indent = {
-            char = "▏",
+            char = "│",
             highlight = highlight,
-            smart_indent_cap = true
+            smart_indent_cap = true,
         },
         scope = {
-            char = "▎",
-            highlight = highlight
-        }
+            char = "╎", -- "▎",
+            highlight = highlight,
+        },
     })
     hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
 end
@@ -85,19 +92,19 @@ end
 
 -- ibhagwan/smartyank.nvim
 M.config_smartyank = function()
-    require('smartyank').setup {
+    require("smartyank").setup({
         highlight = {
             enabled = true, -- highlight yanked text
             higroup = "IncSearch", -- highlight group of yanked text
-            timeout = 1500 -- timeout for clearing the highlight
+            timeout = 1500, -- timeout for clearing the highlight
         },
         clipboard = {
-            enabled = true
+            enabled = true,
         },
         tmux = {
             enabled = true,
             -- remove `-w` to disable copy to host client's clipboard
-            cmd = {'tmux', 'set-buffer', '-w'}
+            cmd = { "tmux", "set-buffer", "-w" },
         },
         osc52 = {
             enabled = true,
@@ -105,7 +112,7 @@ M.config_smartyank = function()
             -- you're using tmux and have issues (see #4)
             ssh_only = true, -- false to OSC52 yank also in local sessions
             silent = false, -- true to disable the "n chars copied" echo
-            echo_hl = "Directory" -- highlight group of the OSC52 echo message
+            echo_hl = "Directory", -- highlight group of the OSC52 echo message
         },
         -- By default copy is only triggered by "intentional yanks" where the
         -- user initiated a `y` motion (e.g. `yy`, `yiw`, etc). Set to `false`
@@ -118,9 +125,7 @@ M.config_smartyank = function()
         -- TMUX
         -- One (of the many) advantages of using tmux is the ability to view the yank history by using <prefix># (by default <C-a>#).
         -- Using fzf-lua tmux_buffers we can fuzzy find the tmux paste buffers and by pressing <CR> copy the current selection into the "unnamed" register for easy pasting with p or P (similar functionality to what is achieved using nvim-neoclip.lua):
-
-
-    }
+    })
 end
 
 -- emileferreira/nvim-strict
@@ -128,45 +133,45 @@ M.config_strict = function()
     require("strict").setup({
         -- included_filetypes = nil,
         excluded_filetypes = nil,
-        excluded_buftypes = {"help", "nofile", "terminal", "prompt"},
+        excluded_buftypes = { "help", "nofile", "terminal", "prompt" },
         -- match_priority = -1,
         deep_nesting = {
             highlight = true,
             highlight_group = "DiffDelete",
             depth_limit = 8,
-            ignored_trailing_characters = {",", ";"},
-            ignored_leading_characters = {"."}
+            ignored_trailing_characters = { ",", ";" },
+            ignored_leading_characters = { "." },
         },
         trailing_whitespace = {
             highlight = true,
             highlight_group = "DiffDelete",
-            remove_on_save = true
+            remove_on_save = true,
         },
         todos = {
             highlight = true,
-            highlight_group = "DiffAdd"
+            highlight_group = "DiffAdd",
         },
         space_indentation = {
             highlight = false,
             highlight_group = "DiffDelete",
-            convert_on_save = false
+            convert_on_save = false,
         },
         tab_indentation = {
             highlight = false,
             highlight_group = "DiffDelete",
-            convert_on_save = false
+            convert_on_save = false,
         },
         overlong_lines = {
             highlight = false,
             highlight_group = "DiffDelete",
             length_limit = 120,
-            split_on_save = false
+            split_on_save = false,
         },
         trailing_empty_lines = {
             highlight = false,
             highlight_group = "SpellBad",
-            remove_on_save = false
-        }
+            remove_on_save = false,
+        },
     })
     -- auto save
     local group = vim.api.nvim_create_augroup("autosave", {})
@@ -180,7 +185,7 @@ M.config_strict = function()
                 strict.convert_tabs_to_spaces()
                 strict.remove_trailing_whitespace()
             end
-        end
+        end,
     })
 end
 
@@ -193,18 +198,18 @@ M.opts_auto_save = {
             return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
         end,
         dim = 0.18, -- dim the color of `message`
-        cleaning_interval = 500 -- milliseconds
+        cleaning_interval = 500, -- milliseconds
     },
     trigger_events = { -- See :h events
-        immediate_save = {"BufLeave"}, --  "FocusLost"
-        defer_save = {"FocusLost"}, --  "InsertLeave", "TextChanged"
-        cancel_defered_save = {"InsertEnter"}
+        immediate_save = { "BufLeave" }, --  "FocusLost"
+        defer_save = { "FocusLost" }, --  "InsertLeave", "TextChanged"
+        cancel_defered_save = { "InsertEnter" },
     },
     condition = nil,
     write_all_buffers = false, -- write all buffers when the current one meets `condition`
     noautocmd = false, -- do not execute autocmds when saving
     debounce_delay = 300,
-    debug = false
+    debug = false,
 }
 
 -- folke/trouble.nvim
@@ -216,24 +221,24 @@ M.opts_trouble = {
         close = "q", -- close the list
         cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
         refresh = "r", -- manually refresh
-        jump = {"<cr>", "<tab>", "<2-leftmouse>"}, -- jump to the diagnostic or open / close folds
-        open_split = {"<c-x>"}, -- <c-x> open buffer in new split
-        open_vsplit = {"<c-v>"}, -- <c-v> open buffer in new vsplit
-        open_tab = {"<c-t>"}, -- open buffer in new tab
-        jump_close = {"o"}, -- jump to the diagnostic and close the list
+        jump = { "<cr>", "<tab>", "<2-leftmouse>" }, -- jump to the diagnostic or open / close folds
+        open_split = { "<c-x>" }, -- <c-x> open buffer in new split
+        open_vsplit = { "<c-v>" }, -- <c-v> open buffer in new vsplit
+        open_tab = { "<c-t>" }, -- open buffer in new tab
+        jump_close = { "o" }, -- jump to the diagnostic and close the list
         toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
         switch_severity = "<leader>ss", -- switch "diagnostics" severity filter level to HINT / INFO / WARN / ERROR
         toggle_preview = "P", -- toggle auto_preview
         hover = "K", -- opens a small popup with the full multiline message
         preview = "p", -- preview the diagnostic location
         open_code_href = "c", -- if present, open a URI with more information about the diagnostic error
-        close_folds = {"zc", "zC"}, -- close all folds
-        open_folds = {"zo", "zO"}, -- open all folds
-        toggle_fold = {"za", "zA"}, -- toggle fold of current file
+        close_folds = { "zc", "zC" }, -- close all folds
+        open_folds = { "zo", "zO" }, -- open all folds
+        toggle_fold = { "za", "zA" }, -- toggle fold of current file
         next = "j", -- next item
         previous = "k", -- previous item
-        help = "?" -- help menu
-    }
+        help = "?", -- help menu
+    },
 }
 M.keys_trouble = {
     -- {
@@ -285,25 +290,29 @@ M.opts_twilight = {
     dimming = {
         alpha = 0.25, -- amount of dimming
         -- we try to get the foreground from the highlight groups or fallback color
-        color = {"Normal", "#ffffff"},
+        color = { "Normal", "#ffffff" },
         term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
-        inactive = false -- when true, other windows will be fully dimmed (unless they contain the same buffer)
+        inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
     },
     context = 10, -- amount of lines we will try to show around the current line
     treesitter = true, -- use treesitter when available for the filetype
     -- treesitter is used to automatically expand the visible text,
     -- but you can further control the types of nodes that should always be fully expanded
     expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
-    "function", "method", "table", "if_statement"},
-    exclude = {"markdown"} -- exclude these filetypes
+        "function",
+        "method",
+        "table",
+        "if_statement",
+    },
+    exclude = { "markdown" }, -- exclude these filetypes
 }
 
 -- folke/persistence.nvim
 M.opts_persistence = {
     dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-    options = {"buffers", "curdir", "tabpages", "winsize"}, -- sessionoptions used for saving
+    options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
     pre_save = nil, -- a function to call before saving the session
-    save_empty = false -- don't save if there are no open file buffers
+    save_empty = false, -- don't save if there are no open file buffers
     -- vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {}),
     -- -- restore the last session
     -- vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {}),
@@ -329,7 +338,7 @@ M.opts_toggleterm = {
     open_mapping = [[<c+\>]],
     hide_numbers = true,
     start_in_insert = true,
-    shade_terminals = true
+    shade_terminals = true,
     -- vim.api.nvim_set_keymap("n", "<C-\\>", "<cmd> ToggleTerm<CR>", { noremap = true, silent = true }),
     -- vim.api.nvim_set_keymap("t", "<C-\\>", "<cmd> ToggleTerm<CR>", { noremap = true, silent = true }),
     -- vim.api.nvim_set_keymap("t", "<A-l>", "<Cmd> wincmd l<CR>", { noremap = true, silent = true }),
@@ -344,7 +353,7 @@ M.opts_auto_indent = {
     indentexpr = function(lnum)
         return require("nvim-treesitter.indent").get_indent(lnum)
     end, -- Use vim.bo.indentexpr by default, see 'Custom Indent Evaluate Method'
-    ignore_filetype = {} -- e.g. ignore_filetype = { 'javascript' }
+    ignore_filetype = {}, -- e.g. ignore_filetype = { 'javascript' }
 }
 
 -- kevinhwang91/nvim-ufo
@@ -375,11 +384,46 @@ end
 
 -- folke/flash.nvim
 M.keys_flash = {
-    -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-    -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-    -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-    -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-    -- { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+            require("flash").jump()
+        end,
+        desc = "Flash",
+    },
+    {
+        "S",
+        mode = { "n", "x", "o" },
+        function()
+            require("flash").treesitter()
+        end,
+        desc = "Flash Treesitter",
+    },
+    {
+        "r",
+        mode = "o",
+        function()
+            require("flash").remote()
+        end,
+        desc = "Remote Flash",
+    },
+    {
+        "R",
+        mode = { "o", "x" },
+        function()
+            require("flash").treesitter_search()
+        end,
+        desc = "Treesitter Search",
+    },
+    {
+        "<c-s>",
+        mode = { "c" },
+        function()
+            require("flash").toggle()
+        end,
+        desc = "Toggle Flash Search",
+    },
 }
 
 -- s1n7ax/nvim-window-picker
@@ -390,15 +434,15 @@ M.opts_nvim_window_picker = {
     filter_rules = {
         include_current_win = true,
         bo = {
-            filetype = {"fidget", "neo-tree-popup", "notify"} -- "nvim-tree", "symbols-outline", "neo-tree",
-        }
-    }
+            filetype = { "fidget", "neo-tree-popup", "notify" }, -- "nvim-tree", "symbols-outline", "neo-tree",
+        },
+    },
 }
 
 -- mrjones2014/smart-splits.nvim
 M.config_smart_splits = function()
     require("smart-splits").setup({
-        ignored_filetypes = {"nofile", "quickfix", "prompt"},
+        ignored_filetypes = { "nofile", "quickfix", "prompt" },
         ignored_buftypes = {}, -- "NvimTree"
         default_amount = 2,
         at_edge = "wrap",
@@ -410,17 +454,17 @@ M.config_smart_splits = function()
         cursor_follows_swapped_bufs = false,
         resize_mode = {
             quit_key = "<ESC>",
-            resize_keys = {"h", "j", "k", "l"},
+            resize_keys = { "h", "j", "k", "l" },
             silent = false,
             hooks = {
                 on_enter = nil,
-                on_leave = nil
-            }
+                on_leave = nil,
+            },
         },
-        ignored_events = {"BufEnter", "WinEnter"},
+        ignored_events = { "BufEnter", "WinEnter" },
         disable_multiplexer_nav_when_zoomed = true,
         kitty_password = nil,
-        log_level = "info"
+        log_level = "info",
     })
 end
 
@@ -435,7 +479,7 @@ M.config_winshift = function()
             wrap = false,
             cursorline = false,
             cursorcolumn = false,
-            colorcolumn = ""
+            colorcolumn = "",
         },
         keymaps = {
             disable_defaults = false, -- Disable the default keymaps
@@ -455,8 +499,8 @@ M.config_winshift = function()
                 ["<S-left>"] = "far_left",
                 ["<S-down>"] = "far_down",
                 ["<S-up>"] = "far_up",
-                ["<S-right>"] = "far_right"
-            }
+                ["<S-right>"] = "far_right",
+            },
         },
         ---A function that should prompt the user to select a window.
         ---The window picker is used to select a window while swapping windows with
@@ -474,14 +518,14 @@ M.config_winshift = function()
                     floats = true, -- Filter out floating windows
                     filetype = {}, -- List of ignored file types
                     buftype = {}, -- List of ignored buftypes
-                    bufname = {} -- List of vim regex patterns matching ignored buffer names
+                    bufname = {}, -- List of vim regex patterns matching ignored buffer names
                 },
                 ---A function used to filter the list of selectable windows.
                 ---@param winids integer[] # The list of selectable window IDs.
                 ---@return integer[] filtered # The filtered list of window IDs.
-                filter_func = nil
+                filter_func = nil,
             })
-        end
+        end,
     })
 end
 
@@ -490,8 +534,37 @@ M.config_windows = function()
     vim.o.winwidth = 5
     vim.o.winminwidth = 5
     vim.o.equalalways = false
-    require("windows").setup()
-    vim.cmd("WindowsDisableAutowidth")
+    require("windows").setup({
+        autowidth = { --		       |windows.autowidth|
+            enable = true,
+            winwidth = 2, --		        |windows.winwidth|
+            filetype = { --	      |windows.autowidth.filetype|
+                help = 2,
+            },
+        },
+        ignore = { --			  |windows.ignore|
+            buftype = { "quickfix" },
+            filetype = {
+                "NvimTree",
+                "neo-tree",
+                "undotree",
+                "gundo",
+                "symbols-outline",
+                "lsp",
+                "SymbolsOutline",
+                "Outline",
+                "outline",
+                "aerial",
+            },
+        },
+        animation = {
+            enable = true,
+            duration = 200,
+            fps = 45,
+            easing = "in_out_sine",
+        },
+    })
+    -- vim.cmd("WindowsDisableAutowidth")
 end
 
 -- toppair/peek.nvim
@@ -503,7 +576,7 @@ M.config_glow = function()
         width = 80,
         height = 100,
         width_ratio = 0.7, -- maximum width of the Glow window compared to the nvim window size (overrides `width`)
-        height_ratio = 0.7
+        height_ratio = 0.7,
     })
 end
 
@@ -520,22 +593,142 @@ M.config_nvim_surround = function()
     --     delete(functi*on calls)     dsf             function calls
 end
 
+-- echasnovski/mini.surround
+M.config_mini_surround = function()
+    require("mini.surround").setup({
+        -- Add custom surroundings to be used on top of builtin ones. For more
+        -- information with examples, see `:h MiniSurround.config`.
+        custom_surroundings = nil,
+        -- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
+        highlight_duration = 500,
+        -- Module mappings. Use `''` (empty string) to disable one.
+        mappings = {
+            add = "\\a", -- Add surrounding in Normal and Visual modes
+            delete = "\\d", -- Delete surrounding
+            find = "\\f", -- Find surrounding (to the right)
+            find_left = "\\F", -- Find surrounding (to the left)
+            highlight = "\\h", -- Highlight surrounding
+            replace = "\\r", -- Replace surrounding
+            update_n_lines = "\\n", -- Update `n_lines`
+            suffix_last = "l", -- Suffix to search with "prev" method
+            suffix_next = "n", -- Suffix to search with "next" method
+        },
+        -- Number of lines within which surrounding is searched
+        n_lines = 200,
+        -- Whether to respect selection type:
+        -- - Place surroundings on separate lines in linewise mode.
+        -- - Place surroundings on each line in blockwise mode.
+        respect_selection_type = false,
+        -- How to search for surrounding (first inside current line, then inside
+        -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
+        -- 'cover_or_nearest', 'next', 'prev', 'nearest'. For more details,
+        -- see `:h MiniSurround.config`.
+        search_method = "cover",
+        silent = false,
+    })
+end
+
+-- andymass/vim-matchup
+M.config_vim_matchup = function()
+    vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+    vim.g.matchup_matchparen_deferred = 1
+    vim.g.matchup_matchparen_hi_surround_always = 1
+    vim.g.matchup_matchparen_deferred_show_delay = 20
+    vim.g.matchup_matchparen_deferred_hide_delay = 20
+    vim.cmd([[
+        hi MatchParen ctermfg=DarkRed guifg=yellow guibg=##2F2F4A cterm=underline gui=underline
+        hi MatchWord ctermfg=DarkRed guifg=yellow guibg=##2F2F4A cterm=underline gui=underline
+        hi MatchParenCur ctermfg=DarkRed guifg=yellow guibg=##2F2F4A cterm=underline gui=underline
+        hi MatchWordCur ctermfg=DarkRed guifg=yellow guibg=##2F2F4A cterm=underline gui=underline
+    ]])
+    -- vim.g.matchup_matchparen_timeout = 6000000
+    -- vim.g.matchup_matchparen_insert_timeout = 6000000
+    -- vim.g.loaded_matchit = 1
+end
+
 -- LunarVim/bigfile.nvim
 M.config_bigfile = function()
-    require("bigfile").setup {
+    require("bigfile").setup({
         filesize = 10, -- size of the file in MiB, the plugin round file sizes to the closest MiB
         pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
         features = { -- features to disable
-          "indent_blankline",
-          "illuminate",
-          "lsp",
-          "treesitter",
-          "syntax",
-          "matchparen",
-          "vimopts",
-          "filetype",
+            "indent_blankline",
+            "illuminate",
+            "lsp",
+            "treesitter",
+            "syntax",
+            "matchparen",
+            "vimopts",
+            "filetype",
         },
-      }
+    })
+end
+
+-- aserowy/tmux.nvim
+M.config_tmux = function()
+    require("tmux").setup({
+        copy_sync = {
+            enable = false,
+            ignore_buffers = { empty = false },
+            -- TMUX >= 3.2: all yanks (and deletes) will get redirected to system
+            -- clipboard by tmux
+            redirect_to_clipboard = false,
+            -- offset controls where register sync starts
+            -- e.g. offset 2 lets registers 0 and 1 untouched
+            register_offset = 0,
+            -- overwrites vim.g.clipboard to redirect * and + to the system
+            -- clipboard using tmux. If you sync your system clipboard without tmux,
+            -- disable this option!
+            sync_clipboard = true,
+            -- synchronizes registers *, +, unnamed, and 0 till 9 with tmux buffers.
+            sync_registers = true,
+            -- syncs deletes with tmux clipboard as well, it is adviced to
+            -- do so. Nvim does not allow syncing registers 0 and 1 without
+            -- overwriting the unnamed register. Thus, ddp would not be possible.
+            sync_deletes = true,
+            -- syncs the unnamed register with the first buffer entry from tmux.
+            sync_unnamed = true,
+        },
+        navigation = {
+            -- cycles to opposite pane while navigating into the border
+            cycle_navigation = true,
+
+            -- enables default keybindings (C-hjkl) for normal mode
+            enable_default_keybindings = false,
+            -- prevents unzoom tmux when navigating beyond vim border
+            persist_zoom = false,
+        },
+        resize = {
+            -- enables default keybindings (A-hjkl) for normal mode
+            enable_default_keybindings = false,
+            -- sets resize steps for x axis
+            resize_step_x = 2,
+            -- sets resize steps for y axis
+            resize_step_y = 2,
+        },
+    })
+end
+
+-- knubie/vim-kitty-navigator
+M.config_vim_kitty_navigator = function()
+    vim.g.kitty_navigator_no_mappings = 1
+    -- local term = vim.fn.getenv("TERM")
+    -- if term == "xterm-256color" then
+    -- 	require("hologram").setup({
+    -- 		auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
+    -- 	})
+    -- end
+end
+
+-- stevearc/stickybuf.nvim
+M.opts_stickybuf = {}
+M.config_stickybuf = function()
+    require("stickybuf").setup()
+end
+
+-- nvim-pack/nvim-spectre
+M.config_nvim_spectre = function()
+    require("spectre").setup({ is_block_ui_break = true })
 end
 
 return M

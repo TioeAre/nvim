@@ -10,7 +10,9 @@ return {
     {
         "windwp/nvim-autopairs",
         event = {"BufReadPost", "BufNewFile", "InsertEnter"}, -- "InsertEnter",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
         opts = M.opts_auto_pairs, -- this is equal to setup({}) function
+        config = M.config_auto_pairs,
         -- require('nvim-autopairs').setup({ })
     },
 }

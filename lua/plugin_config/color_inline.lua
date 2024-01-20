@@ -31,7 +31,7 @@ M.config_colorizer = function()
         buftypes = {},
     })
     local group = vim.api.nvim_create_augroup("colorizer", {})
-    vim.api.nvim_create_autocmd({ "BufReadPre", "BufWritePost", "InsertLeave" }, {
+    vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
         pattern = "*",
         group = group,
         callback = function()
@@ -79,9 +79,9 @@ M.config_colortils = function()
             -- set the value to a certain number (done by just entering numbers)
             set_value = "c",
             -- toggle transparency
-            transparency = "T",
+            transparency = "t",
             -- choose the background (for transparent colors)
-            choose_background = "B",
+            choose_background = "b",
         },
     })
 end

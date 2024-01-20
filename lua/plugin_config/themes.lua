@@ -1,5 +1,6 @@
 local M = {}
 
+-- local colors = require("tokyonight.colors")
 M.theme_config = function()
     vim.cmd("colorscheme catppuccin") -- tokyonight-storm tokyonight-day catppuccin catppuccin-latte onedark  onelight
     require("catppuccin").setup({
@@ -16,7 +17,9 @@ M.theme_config = function()
             dap_ui = true,
             ufo = true,
             window_picker = true,
+            -- outline = true,
             symbols_outline = true,
+            -- aerial = true,
             telescope = true,
             lsp_trouble = true,
             illuminate = true,
@@ -34,9 +37,28 @@ M.theme_config = function()
         },
     })
 end
+-- local colors = require("catppuccin.colors").setup()
 
 -- nvim-lualine/lualine.nvim
 M.config_lualine = function()
+    local colors = {
+        yellow = "#ECBE7B",
+        cyan = "#008080",
+        darkblue = "#081633",
+        green = "#98be65",
+        orange = "#FF8800",
+        violet = "#a9a1e1",
+        magenta = "#c678dd",
+        blue = "#51afef",
+        red = "#ec5f67",
+    }
+    local function lsp_client_names()
+        local client_names = {}
+        for _, client in ipairs(vim.lsp.get_active_clients()) do
+            table.insert(client_names, client.name)
+        end
+        return table.concat(client_names, ",")
+    end
     require("lualine").setup({
         options = {
             theme = "catppuccin",
@@ -52,10 +74,29 @@ M.config_lualine = function()
         },
         sections = {
             lualine_a = { "mode" },
-            lualine_b = { "branch" },
+            lualine_b = {
+                "branch",
+                {
+                    "filename",
+                    file_status = true, -- Displays file status (readonly status, modified status)
+                    newfile_status = false, -- Display new file status (new file means no write after created)
+                    path = 1, -- 0: Just the filename
+                    -- 1: Relative path
+                    -- 2: Absolute path
+                    -- 3: Absolute path, with tilde as the home directory
+                    -- 4: Filename and parent dir, with tilde as the home directory
+                    shorting_target = 30, -- Shortens path to leave 40 spaces in the window
+                    -- for other components. (terrible name, any suggestions?)
+                    symbols = {
+                        modified = "[+]", -- Text to show when the file is modified.
+                        readonly = "[-]", -- Text to show when the file is non-modifiable or readonly.
+                        unnamed = "[No Name]", -- Text to show for unnamed buffers.
+                        newfile = "[*]", -- Text to show for newly created file before first write
+                    },
+                },
+            },
             lualine_c = {
-                "os.date('%A %B/%d/%Y %H:%M:%S')",
-
+                "os.date('%A %B/%d %H:%M:%S')",
                 {
                     require("noice").api.status.message.get_hl,
                     cond = require("noice").api.status.message.has,
@@ -63,9 +104,10 @@ M.config_lualine = function()
                 {
                     require("noice").api.status.command.get,
                     cond = require("noice").api.status.command.has,
-                    color = { fg = "#ff9e64" },
-                },
-                -- {
+                    color = {
+                        fg = "#ff9e64",
+                    },
+                }, -- {
                 -- 	require("noice").api.status.mode.get,
                 -- 	cond = require("noice").api.status.mode.has,
                 -- 	color = { fg = "#ff9e64" },
@@ -73,23 +115,44 @@ M.config_lualine = function()
                 {
                     require("noice").api.status.search.get,
                     cond = require("noice").api.status.search.has,
-                    color = { fg = "#ff9e64" },
+                    color = {
+                        fg = "#ff9e64",
+                    },
                 },
             },
 
-            lualine_x = { "diff", "diagnostics", "filesize", "encoding", "fileformat", "filetype" },
-            lualine_y = { "progress" },
+            lualine_x = {
+                "diff",
+                "diagnostics",
+                "filesize",
+                "encoding",
+                "fileformat",
+                lsp_client_names, -- {
+                -- 	"lsp_progress",
+                -- 	display_components = { "lsp_client_name", "spinner", { "title", "percentage", "message" } },
+                -- 	colors = {
+                -- 		percentage = colors.cyan,
+                -- 		title = colors.cyan,
+                -- 		message = colors.cyan,
+                -- 		spinner = colors.cyan,
+                -- 		lsp_client_name = colors.magenta,
+                -- 		use = true,
+                -- 	},
+                -- 	timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
+                -- },
+                "filetype",
+            },
+            lualine_y = { "progress" }, -- "aerial",
             lualine_z = { "location" },
         },
         tabline = {},
         extensions = {
             "quickfix",
             "fzf",
-            "lazy",
-            "mason",
+            "lazy", -- "mason",
             "nvim-dap-ui",
-            "nvim-tree",
-            "symbols-outline",
+            "nvim-tree", -- "outline",
+            "symbols-outline", -- "aerial",
             "toggleterm",
             "trouble",
         },
@@ -98,19 +161,37 @@ end
 
 -- akinsho/bufferline.nvim
 M.config_bufferline = function()
+    local function get_all_buffer_filenames()
+        local filenames = {}
+        local buffers = vim.api.nvim_list_bufs()
+        for _, buf in ipairs(buffers) do
+            local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
+            if filename ~= "" then
+                filenames[filename] = (filenames[filename] or 0) + 1
+            end
+        end
+        return filenames
+    end
     local mocha = require("catppuccin.palettes").get_palette("mocha")
+    local latte = require("catppuccin.palettes").get_palette("latte")
     require("bufferline").setup({
         highlights = require("catppuccin.groups.integrations.bufferline").get({
             styles = { "italic", "bold" },
             custom = {
                 all = {
-                    fill = { bg = "#000000" },
+                    fill = {
+                        bg = "#000000",
+                    },
                 },
                 mocha = {
-                    background = { fg = mocha.text },
+                    background = {
+                        fg = mocha.text,
+                    },
                 },
                 latte = {
-                    background = { fg = "#000000" },
+                    background = {
+                        fg = latte.text,
+                    },
                 },
             },
         }),
@@ -162,6 +243,17 @@ M.config_bufferline = function()
                     separator = true, -- use a "true" to enable the default, or set your own character
                 },
             },
+            name_formatter = function(buf)
+                local path = buf.path or ""
+                local filename = vim.fn.fnamemodify(path, ":t")
+                local tail = vim.fn.fnamemodify(path, ":p:h:t")
+                local all_filenames = get_all_buffer_filenames()
+                if all_filenames[filename] and all_filenames[filename] ~= 1 then
+                    return tail .. "/" .. filename
+                else
+                    return filename
+                end
+            end,
         },
     })
     vim.g.transparent_groups = vim.list_extend(
@@ -392,8 +484,7 @@ M.config_alpha = function()
             "         ⣟⠿⠻⢻⡿⣿⣿⣿⣿⣿⣿⣿⣷⣽⣻⢿⣿⣿⠹⣯⣿⣿⣖⠀⠀⠀⠀⠀⢹⠀⣀⠀⠀⠀⠀⣿         ",
             "         ⣵⣾⣷⡀⠻⣄⠈⠙⠛⠿⠿⠿⠿⠿⠿⠟⣪⢿⣿⣼⠿⠿⠛⢀⠀⠀⠀⠀⢨⡼⣿⠀⠀⠀⠀⣿         ",
             "       ⣽⣿⣿⣿⣿⣿⣦⡙⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣯⣿⣿⡆⠀⠀⠈⡎⣦⠀⠀⢸⣻⡏⣒⣒⣒⣒⡚⣯⣝⣻      ",
-            "     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡝⣿⡇⠀⠀⠀⠣⢉⣧⣤⣼⢰⠧⢤⣤⣤⣤⣴⣿        ",
-            -- "    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⠿⠇⠀⠀⠀⠀⢸⢿⡟⡏⣽⡋⣏⣽⣭           ",
+            "     ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⡝⣿⡇⠀⠀⠀⠣⢉⣧⣤⣼⢰⠧⢤⣤⣤⣤⣴⣿        ", -- "    ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠿⠿⠇⠀⠀⠀⠀⢸⢿⡟⡏⣽⡋⣏⣽⣭           ",
             -- "  ⠀⠀⠀⠀⠀⠀⠀⡰⠁⢃⣶⡿⣱⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣄             ",
             -- "  ⠀⠀⠀⠀⠀⠀⡐⠁⣸⣾⣿⢿⢟⣫⣆⣹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄           ",
             -- "  ⠀⠀⠀⠀⠀⠀⡢⣠⣿⣿⣧⣳⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣛⣿⠿⠿⣦⡀         ",
@@ -789,7 +880,7 @@ M.opts_edgy = {
         {
             ft = "Outline",
             pinned = true,
-            open = "SymbolsOutlineOpen",
+            open = "OutlineOpen", -- "AerialOpen!",-- "SymbolsOutlineOpen",
         },
         {
             title = "Neo-Tree Git",
@@ -817,38 +908,38 @@ M.opts_edgy = {
 M.config_transparent = function()
     vim.cmd([[hi StatusLine ctermbg=0 cterm=NONE]])
     require("transparent").setup({ -- Optional, you don't have to run setup.
-        groups = { -- table: default groups
-            "Normal",
-            "NormalNC",
-            "Comment",
-            "Constant",
-            "Special",
-            "Identifier",
-            "Statement",
-            "PreProc",
-            "Type",
-            "Underlined",
-            "Todo",
-            "String",
-            "Function",
-            "Conditional",
-            "Repeat",
-            "Operator",
-            "Structure",
-            "LineNr",
-            "NonText",
-            "SignColumn",
-            "CursorLineNr",
-            "EndOfBuffer",
-            "InsertEnter",
-        },
-        extra_groups = {
-            "CursorLine",
-            "NormalFloat",
-            "TablineFill",
-        }, -- table: additional groups that should be cleared
+        -- groups = { -- table: default groups
+        --     "Normal",
+        --     "NormalNC",
+        --      "Comment",
+        --      "Constant",
+        --      "Special",
+        --      "Identifier",
+        --      "Statement",
+        --      "PreProc",
+        --      "Type",
+        --      "Underlined",
+        --      "Todo",
+        --      "String",
+        --      "Function",
+        --      "Conditional",
+        --      "Repeat",
+        --      "Operator",
+        --      "Structure",
+        --      "LineNr",
+        --      "NonText",
+        --      "SignColumn",
+        --      "CursorLineNr",
+        --      "EndOfBuffer",
+        --      "InsertEnter",
+        --  },
+        extra_groups = { "CursorLine", "NormalFloat", "TablineFill" }, -- table: additional groups that should be cleared
         exclude_groups = {}, -- table: groups you don't want to clear
     })
+    --  require('transparent').clear_prefix('BufferLine')
+    --  require('transparent').clear_prefix('lualine')
+    require("transparent").clear_prefix("NvimTree")
+    vim.cmd("TransparentEnable")
 end
 
 -- folke/noice.nvim
@@ -874,7 +965,7 @@ M.config_noice = function()
         -- you can enable a preset for easier configuration
         presets = {
             bottom_search = true, -- use a classic bottom cmdline for search
-            command_palette = true, -- position the cmdline and popupmenu together
+            command_palette = false, -- position the cmdline and popupmenu together
             long_message_to_split = true, -- long messages will be sent to a split
             inc_rename = false, -- enables an input dialog for inc-rename.nvim
             lsp_doc_border = true, -- add a border to hover docs and signature help
@@ -887,6 +978,198 @@ M.config_notify = function()
     require("notify").setup({
         background_color = "#404040fa",
     })
+end
+
+-- stevearc/dressing.nvim
+M.opts_dressing = {}
+M.config_dressing = function()
+    require("dressing").setup({
+        input = {
+            -- Set to false to disable the vim.ui.input implementation
+            enabled = true,
+
+            -- Default prompt string
+            default_prompt = "Input:",
+
+            -- Can be 'left', 'right', or 'center'
+            title_pos = "left",
+
+            -- When true, <Esc> will close the modal
+            insert_only = true,
+
+            -- When true, input will start in insert mode.
+            start_in_insert = true,
+
+            -- These are passed to nvim_open_win
+            border = "rounded",
+            -- 'editor' and 'win' will default to being centered
+            relative = "cursor",
+
+            -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+            prefer_width = 40,
+            width = nil,
+            -- min_width and max_width can be a list of mixed types.
+            -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
+            max_width = { 140, 0.9 },
+            min_width = { 20, 0.2 },
+
+            buf_options = {},
+            win_options = {
+                -- Disable line wrapping
+                wrap = false,
+                -- Indicator for when text exceeds window
+                list = true,
+                listchars = "precedes:…,extends:…",
+                -- Increase this for more context when text scrolls off the window
+                sidescrolloff = 0,
+            },
+
+            -- Set to `false` to disable
+            mappings = {
+                n = {
+                    ["<Esc>"] = "Close",
+                    ["<CR>"] = "Confirm",
+                },
+                i = {
+                    ["<C-c>"] = "Close",
+                    ["<CR>"] = "Confirm",
+                    ["<Up>"] = "HistoryPrev",
+                    ["<Down>"] = "HistoryNext",
+                },
+            },
+
+            override = function(conf)
+                -- This is the config that will be passed to nvim_open_win.
+                -- Change values here to customize the layout
+                return conf
+            end,
+
+            -- see :help dressing_get_config
+            get_config = nil,
+        },
+        select = {
+            -- Set to false to disable the vim.ui.select implementation
+            enabled = true,
+
+            -- Priority list of preferred vim.select implementations
+            backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+
+            -- Trim trailing `:` from prompt
+            trim_prompt = true,
+
+            -- Options for telescope selector
+            -- These are passed into the telescope picker directly. Can be used like:
+            -- telescope = require('telescope.themes').get_ivy({...})
+            telescope = nil,
+
+            -- Options for fzf selector
+            fzf = {
+                window = {
+                    width = 0.5,
+                    height = 0.4,
+                },
+            },
+
+            -- Options for fzf-lua
+            fzf_lua = {
+                -- winopts = {
+                --   height = 0.5,
+                --   width = 0.5,
+                -- },
+            },
+
+            -- Options for nui Menu
+            nui = {
+                position = "50%",
+                size = nil,
+                relative = "editor",
+                border = {
+                    style = "rounded",
+                },
+                buf_options = {
+                    swapfile = false,
+                    filetype = "DressingSelect",
+                },
+                win_options = {
+                    winblend = 0,
+                },
+                max_width = 80,
+                max_height = 40,
+                min_width = 40,
+                min_height = 10,
+            },
+            -- Options for built-in selector
+            builtin = {
+                -- Display numbers for options and set up keymaps
+                show_numbers = true,
+                -- These are passed to nvim_open_win
+                border = "rounded",
+                -- 'editor' and 'win' will default to being centered
+                relative = "editor",
+                buf_options = {},
+                win_options = {
+                    cursorline = true,
+                    cursorlineopt = "both",
+                },
+                -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+                -- the min_ and max_ options can be a list of mixed types.
+                -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
+                width = nil,
+                max_width = { 140, 0.8 },
+                min_width = { 40, 0.2 },
+                height = nil,
+                max_height = 0.9,
+                min_height = { 10, 0.2 },
+                -- Set to `false` to disable
+                mappings = {
+                    ["<Esc>"] = "Close",
+                    ["<C-c>"] = "Close",
+                    ["<CR>"] = "Confirm",
+                },
+                override = function(conf)
+                    -- This is the config that will be passed to nvim_open_win.
+                    -- Change values here to customize the layout
+                    return conf
+                end,
+            },
+            -- Used to override format_item. See :help dressing-format
+            format_item_override = {},
+            -- see :help dressing_get_config
+            get_config = nil,
+        },
+    })
+end
+
+-- petertriho/nvim-scrollbar
+M.config_nvim_scrollbar = function()
+    require("scrollbar").setup({
+        -- handle = {
+        -- 	color = colors.bg_highlight,
+        -- },
+        -- marks = {
+        -- 	Search = { color = colors.orange },
+        -- 	Error = { color = colors.error },
+        -- 	Warn = { color = colors.warning },
+        -- 	Info = { color = colors.info },
+        -- 	Hint = { color = colors.hint },
+        -- 	Misc = { color = colors.purple },
+        -- },
+    })
+    -- require("scrollbar.handlers.search").setup({
+    --     -- hlslens config overrides
+    -- })
+    require("hlslens").setup({
+        build_position_cb = function(plist, _, _, _)
+            require("scrollbar.handlers.search").handler.show(plist.start_pos)
+        end,
+    })
+    vim.cmd([[
+        augroup scrollbar_search_hide
+            autocmd!
+            autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
+        augroup END
+    ]])
+    require("scrollbar.handlers.gitsigns").setup()
 end
 
 return M

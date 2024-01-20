@@ -4,16 +4,16 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         -- lazy = false,
-        event = { "BufReadPre", "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_treesitter,
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
+            "andymass/vim-matchup",
         }
     },
     { -- 显示向下翻页时仍函数名
         "nvim-treesitter/nvim-treesitter-context",
-        -- lazy = false,
-        event = { "BufReadPre", "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_treesitter_context,
     },
     { -- 自动生成c++类函数实现

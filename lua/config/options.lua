@@ -53,3 +53,15 @@ opt.exrc = true
 
 -- 主题
 -- vim.cmd[[colorscheme tokyonight-moon]]
+
+-- autocmd
+vim.api.nvim_exec([[
+  augroup AutoRefresh
+    autocmd!
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * silent! checktime
+    autocmd FileChangedShellPost * echohl InfoMsg | echo "File changed on disk. Buffer reloaded." | echohl None | checktime
+  augroup END
+]], false)
+
+vim.g.python3_host_prog = 'python3'
+

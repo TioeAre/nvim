@@ -4,13 +4,21 @@ local M = {}
 M.config_lazygit = function()
 	vim.g.lazygit_floating_window_winblend = 0 -- transparency of floating window
 	vim.g.lazygit_floating_window_scaling_factor = 0.9 -- scaling factor for floating window
-	vim.g.lazygit_floating_window_border_chars = {'╭','─', '╮', '│', '╯','─', '╰', '│'} -- customize lazygit popup window border characters
+	vim.g.lazygit_floating_window_border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" } -- customize lazygit popup window border characters
 	vim.g.lazygit_floating_window_use_plenary = 0 -- use plenary.nvim to manage floating window if available
 	vim.g.lazygit_use_neovim_remote = 1 -- fallback to 0 if neovim-remote is not installed
 	vim.g.lazygit_use_custom_config_file_path = 0 -- config file path is evaluated if this value is 1
-	vim.g.lazygit_config_file_path = '' -- custom config file path
+	vim.g.lazygit_config_file_path = "" -- custom config file path
 	-- OR
 	vim.g.lazygit_config_file_path = {} -- table of custom config file paths
+	require("telescope").load_extension("lazygit")
+	-- autocmd BufEnter * :lua require('lazygit.utils').project_root_dir()
+	vim.api.nvim_create_autocmd("BufEnter", {
+		pattern = "*",
+		callback = function()
+			require("lazygit.utils").project_root_dir()
+		end,
+	})
 end
 
 -- sindrets/diffview.nvim
@@ -560,21 +568,21 @@ end
 
 -- lewis6991/gitsigns.nvim
 M.config_gitsigns = function()
-    require("gitsigns").setup({
-        current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-        current_line_blame_opts = {
-            virt_text = true,
-            virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-            delay = 1000,
-            ignore_whitespace = false,
-            virt_text_priority = 100,
-        },
-        current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
-        sign_priority = 6,
-        update_debounce = 100,
-        status_formatter = nil, -- Use default
-        max_file_length = 40000, -- Disable if file is longer than this (in lines)
-    })
+	require("gitsigns").setup({
+		current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+		current_line_blame_opts = {
+			virt_text = true,
+			virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+			delay = 1000,
+			ignore_whitespace = false,
+			virt_text_priority = 1,
+		},
+		current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d> - <summary>",
+		sign_priority = 6,
+		update_debounce = 100,
+		status_formatter = nil, -- Use default
+		max_file_length = 40000, -- Disable if file is longer than this (in lines)
+	})
 end
 
 return M
