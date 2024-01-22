@@ -85,8 +85,8 @@ wk.register({
             name = "split/search|replace/stop persistence/switch trouble filter",
             v = { "<C-w>v", "split windows v (trouble)" },
             h = { "<C-w>s", "split windows h (trouble)" },
-            -- folke/persistence.nvim
-            q = { "<cmd>lua require('persistence').stop()<cr>", "stop persistence" },
+            -- olimorris/persisted.nvim
+            q = { "<cmd>SessionStop<cr>", "stop persisted" },
             -- folke/trouble.nvim
             s = "switch trouble severity filter",
             -- nvim-pack/nvim-spectre
@@ -101,6 +101,10 @@ wk.register({
             c = {
                 "<cmd>lua require('spectre').open_file_search({select_word=true})<CR>",
                 "search current file",
+            },
+            l = {
+                "<cmd>lua require('spectre').resume_last_search()<CR>",
+                "search last",
             },
         },
         n = {
@@ -122,15 +126,18 @@ wk.register({
         },
         -- plugins
         l = {
-            name = "list trouble/todo",
+            name = "list trouble/todo/toggle lsp_lens",
             -- folke/trouble.nvim
             s = { "<cmd>TroubleToggle document_diagnostics<cr>", "open trouble document_diagnostics" },
             w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "open trouble workspace_diagnostics" },
             p = { "<cmd>TroubleToggle lsp_references<cr>", "open trouble lsp_references" },
             d = { "<cmd>TroubleToggle lsp_definitions<cr>", "open trouble lsp_definitions" },
             q = { "<cmd>TroubleToggle quickfix<cr>", "open trouble quickfix" },
+            l = { "<cmd>TroubleToggle loclist<cr>", "open trouble loclist" },
             -- folke/todo-comments.nvim
             t = { "<cmd>TodoTrouble<cr>", "open trouble todo" },
+            -- ~whynothugo/lsp_lines.nvim
+            m = { "<cmd>lua require('lsp_lines').toggle()<cr>", "toggle lsp_lens" },
         },
         f = {
             name = "find telescope/todo/undo/buffer/project/dap configurations/lspsaga",
@@ -142,7 +149,18 @@ wk.register({
             g = { "<cmd>Telescope live_grep<cr>", "telescope live grep string" },
             r = { "<cmd>Telescope resume<cr>", "telescope resume last search window" },
             b = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "telescope find buffers" },
-            p = { "<cmd>lua require'telescope'.extensions.projects.projects{} <cr>", "telescope find projects" },
+            p = {
+                name = "project/persisted",
+                p = {
+                    "<cmd>lua require'telescope'.extensions.projects.projects{} <cr>",
+                    "telescope find projects",
+                },
+                -- olimorris/persisted.nvim
+                s = {
+                    "<cmd>Telescope persisted<cr>",
+                    "telescope find persisted sessions",
+                },
+            },
             -- ussenegger/nvim-dap
             d = {
                 function()
@@ -175,15 +193,35 @@ wk.register({
                 "telescope find recent files",
             },
             h = {
-                "<cmd>Telescope highlights<cr>",
+                function()
+                    local results = {}
+                    local search_pattern = vim.fn.getreg("/")
+                    if search_pattern ~= "" then
+                        for line_nr = 1, vim.api.nvim_buf_line_count(0) do
+                            local line = vim.api.nvim_buf_get_lines(0, line_nr - 1, line_nr, false)[1]
+                            if line:match(search_pattern) then
+                                table.insert(results, line_nr .. ": " .. line)
+                            end
+                        end
+                        require("telescope.pickers")
+                            .new({}, {
+                                prompt_title = "Search Results",
+                                finder = require("telescope.finders").new_table({
+                                    results = results,
+                                }),
+                                sorter = require("telescope.sorters").get_generic_fuzzy_sorter(),
+                            })
+                            :find()
+                    end
+                end,
                 "telescope find highlights",
             },
         },
         o = {
             name = "open layout/outline/gitgraph",
-            -- folke/persistence.nvim
-            p = { "<cmd>lua require('persistence').load()<cr>", "open layout" },
-            l = { "<cmd>lua require('persistence').load({ last = true })<cr>", "restore layout" },
+            -- olimorris/persisted.nvim
+            p = { "<cmd>SessionLoad<cr>", "current dir layout" },
+            l = { "<cmd>SessionLoadLast<cr>", "last layout" },
             i = "PyrightOrganizeImports",
 
             -- simrat39/symbols-outline.nvim
@@ -250,13 +288,13 @@ wk.register({
             j = { "<cmd>BufferLineMovePrev<cr>", "buffer move previous" },
             k = { "<cmd>BufferLineMoveNext<cr>", "buffer move next" },
             -- mfussenegger/nvim-dap
-            a = {
+            b = {
                 function()
                     require("dap").toggle_breakpoint()
                 end,
                 "dap toggle breakpoint",
             },
-            b = {
+            a = {
                 function()
                     require("dap").set_breakpoint()
                 end,
@@ -443,7 +481,7 @@ wk.register({
         -- s1n7ax/nvim-window-picker
         p = {
             name = "pick window/project add/preview makrdown/peek lsp",
-            w = {
+            p = {
                 function()
                     local window_number = require("window-picker").pick_window()
                     if window_number then
@@ -451,6 +489,26 @@ wk.register({
                     end
                 end,
                 "pick window",
+            },
+            s = {
+                function()
+                    local window_picker = require("window-picker")
+                    local picked_win_id = window_picker.pick_window()
+
+                    if picked_win_id then
+                        local bufnr = vim.api.nvim_win_get_buf(picked_win_id)
+                        local bufname = vim.api.nvim_buf_get_name(bufnr)
+                        local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+                        local buftype = vim.api.nvim_buf_get_option(bufnr, "buftype")
+
+                        print("Picked window buffer name:", bufname)
+                        print("Filetype:", filetype)
+                        print("Buftype:", buftype)
+                    else
+                        print("No window was picked")
+                    end
+                end,
+                "show pick window",
             },
             -- ahmedkhalf/project.nvim
             a = {
@@ -802,6 +860,19 @@ wk.register({
         "neogen generate docs",
         mode = { "n", "i" },
     },
+    ["<C-A-n>"] = {
+        function()
+            local file_path = vim.fn.expand("%:p") -- Get the full path of the current file
+            if term == "screen-256color" then
+                -- Open in new tmux window
+                vim.cmd("silent !tmux new-window nvim " .. file_path)
+            elseif term == "xterm-256color" then
+                -- Open in new kitty tab
+                vim.cmd("silent !kitty @ launch --type=tab nvim " .. file_path)
+            end
+        end,
+        "open current file in new tab/window(kitty/tmux)",
+    },
 })
 
 -- folke/todo-comments.nvim
@@ -826,6 +897,21 @@ wk.register({
     ["[m"] = "treesitter goto prev start @function.outer",
     ["[M"] = "treesitter goto prev end @function.outer",
 
+    ["]o"] = "treesitter goto next start @loop.inner",
+    ["]O"] = "treesitter goto next end @loop.inner",
+    ["[o"] = "treesitter goto prev start @loop.inner",
+    ["[O"] = "treesitter goto prev end @loop.inner",
+
+    ["]s"] = "treesitter goto next start @scope",
+    ["]S"] = "treesitter goto next end @scope",
+    ["[s"] = "treesitter goto prev start @scope",
+    ["[S"] = "treesitter goto prev end @scope",
+
+    ["]z"] = "treesitter goto next start @fold",
+    ["]Z"] = "treesitter goto next end @fold",
+    ["[z"] = "treesitter goto prev start @fold",
+    ["[Z"] = "treesitter goto prev end @fold",
+
     ["]]"] = "treesitter goto next start @class.outer",
     ["]["] = "treesitter goto next end @class.outer",
     ["[["] = "treesitter goto prev start @class.outer",
@@ -833,10 +919,6 @@ wk.register({
 
     ["]d"] = "treesitter goto next @conditional.outer",
     ["[d"] = "treesitter goto prev @conditional.outer",
-
-    ["]o"] = "treesitter goto next start @loop.inner",
-    ["]s"] = "treesitter goto next start @scope",
-    ["]z"] = "treesitter goto next start @fold",
 })
 
 -- nvim-treesitter/nvim-treesitter-textobjects
@@ -855,9 +937,9 @@ wk.register({
     },
     -- nvim-pack/nvim-spectre
     s = {
-        w =  {
+        w = {
             "<esc><cmd>lua require('spectre').open_visual()<CR>",
             "search current word",
-        }
+        },
     },
 })

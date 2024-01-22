@@ -35,6 +35,32 @@ M.theme_config = function()
             --     indentscope_color = "",
             -- },
         },
+        highlight_overrides = {
+            mocha = function(cp)
+                return {
+                    -- folke/trouble.nvim
+                    TroubleNormal = { bg = cp.base },
+                }
+            end,
+            latte = function(cp)
+                return {
+                    -- folke/trouble.nvim
+                    TroubleNormal = { bg = cp.base },
+                }
+            end,
+            frappe = function(cp)
+                return {
+                    -- folke/trouble.nvim
+                    TroubleNormal = { bg = cp.base },
+                }
+            end,
+            macchiato = function(cp)
+                return {
+                    -- folke/trouble.nvim
+                    TroubleNormal = { bg = cp.base },
+                }
+            end,
+        },
     })
 end
 -- local colors = require("catppuccin.colors").setup()
@@ -582,12 +608,13 @@ M.config_alpha = function()
         }
 
     dashboard.section.buttons.val = {
-        dashboard.button("l", "  > last layout", "<cmd>lua require('persistence').load()<CR>"),
-        dashboard.button("p", "  > projects", "<cmd>lua require'telescope'.extensions.projects.projects{}<CR>"),
+        dashboard.button("l", "🖫  > last layout", "<cmd>SessionLoadLast<cr>"), -- "<cmd>lua require('persistence').load()<CR>"),
+        dashboard.button("s", "🖪  > layouts", "<cmd>Telescope persisted<cr>"), -- "<cmd>lua require('persistence').load()<CR>"),
+        dashboard.button("p", "🗟  > projects", "<cmd>lua require'telescope'.extensions.projects.projects{}<CR>"),
         dashboard.button("r", "  > recent", ":Telescope oldfiles<CR>"),
         dashboard.button("e", "  > new file", ":ene <BAR> startinsert <CR>"),
-        dashboard.button("f", "  > find file", ":Telescope find_files<CR>"),
-        dashboard.button("q", "  > quit nvim", ":qa<CR>"),
+        dashboard.button("f", "🗒 > find file", ":Telescope find_files<CR>"),
+        dashboard.button("q", "🖬  > quit nvim", ":qa<CR>"),
     }
     alpha.setup(dashboard.opts)
     -- require("alpha").setup(require("alpha.themes.dashboard").config)
@@ -595,20 +622,147 @@ end
 
 -- b0o/incline.nvim
 M.config_incline = function()
+    local field_format = {
+        name = {
+            guifg = "#d95466",
+            -- guibg = "#acc7ae",
+        },
+        num = {
+            guifg = "#968c81",
+        },
+        modified = {
+            guifg = "#4af478",
+        },
+        blocks = {
+            gui = "bold",
+            guifg = "#070707",
+        },
+    }
+
+    local start = vim.tbl_extend("force", { "" }, field_format.blocks)
+    local stop = vim.tbl_extend("force", { "" }, field_format.blocks)
+
+    local function get_diagnostic_label(props)
+        local icons = { error = "", warn = "", info = "", hint = "❃" }
+        local label = {}
+
+        for severity, icon in pairs(icons) do
+            local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
+            if n > 0 then
+                table.insert(label, { icon .. " " .. n .. " ", group = "DiagnosticSign" .. severity })
+            end
+        end
+        if #label > 0 then
+            table.insert(label, { "| " })
+        end
+        return label
+    end
+    local function get_git_diff(props)
+        local icons = { removed = "", changed = "", added = "" }
+        local labels = {}
+        local signs = vim.api.nvim_buf_get_var(props.buf, "gitsigns_status_dict")
+        -- local signs = vim.b.gitsigns_status_dict
+        for name, icon in pairs(icons) do
+            if tonumber(signs[name]) and signs[name] > 0 then
+                table.insert(labels, { icon .. " " .. signs[name] .. " ", group = "Diff" .. name })
+            end
+        end
+        if #labels > 0 then
+            table.insert(labels, { "| " })
+        end
+        return labels
+    end
     require("incline").setup({
+        render = function(props)
+            local bufnum = props.buf
+            local buffullname = vim.api.nvim_buf_get_name(props.buf)
+            local bufname_t = vim.fn.fnamemodify(buffullname, ":t")
+            local bufname = (bufname_t and bufname_t ~= "") and bufname_t or "[No Name]"
+
+            -- optional devicon
+            local devicon = { " " }
+            local success, nvim_web_devicons = pcall(require, "nvim-web-devicons")
+            if success then
+                local bufname_r = vim.fn.fnamemodify(buffullname, ":r")
+                local bufname_e = vim.fn.fnamemodify(buffullname, ":e")
+                local base = (bufname_r and bufname_r ~= "") and bufname_r or bufname
+                local ext = (bufname_e and bufname_e ~= "") and bufname_e or vim.fn.fnamemodify(base, ":t")
+                local ic, hl = nvim_web_devicons.get_icon(base, ext, { default = true })
+                devicon = {
+                    ic,
+                    " ",
+                    group = hl,
+                }
+            end
+
+            -- buffer name
+            local display_bufname = vim.tbl_extend("force", { bufname, " " }, field_format.name)
+
+            -- modified indicator
+            local modified_icon = {}
+            if vim.api.nvim_get_option_value("modified", { buf = props.buf }) then
+                modified_icon = vim.tbl_extend("force", { "● " }, field_format.modified)
+                display_bufname.guifg = field_format.modified.guifg
+            end
+
+            -- buffer number
+            local display_bufnum = vim.tbl_extend("force", { bufnum, " " }, field_format.num)
+
+            -- example: █▓   incline-nvim.lua 13  ▓█
+            return {
+                start,
+                { get_diagnostic_label(props) },
+                { get_git_diff(props) },
+                devicon,
+                display_bufname,
+                modified_icon,
+                display_bufnum,
+                stop,
+            }
+        end,
+
         window = {
+            padding = {
+                left = 0,
+                right = 0,
+            },
+            margin = {
+                horizontal = 0,
+                vertical = 1,
+            },
+            placement = {
+                horizontal = "right",
+                vertical = "top",
+            },
             winhighlight = {
                 active = {
-                    EndOfBuffer = "None",
-                    Normal = "Search", -- "InclineNormal",
-                    Search = "None",
+                    -- EndOfBuffer = "None",
+                    Normal = "InclineActive", -- "Search", -- "InclineNormal",
+                    -- Search = "None",
                 },
                 inactive = {
-                    EndOfBuffer = "None",
-                    Normal = "InclineNormalNC",
-                    Search = "None",
+                    -- EndOfBuffer = "None",
+                    Normal = "InclineInactive", -- "InclineNormalNC",
+                    -- Search = "None",
                 },
             },
+        },
+        highlight = {
+            groups = {
+                InclineNormal = { guibg = "#000000", gui = "bold" },
+                InclineNormalNC = {
+                    default = true,
+                    group = "NormalFloat",
+                },
+                InclineActive = { guibg = "#000000", gui = "bold" },
+                InclineInactive = {
+                    default = true,
+                    group = "NormalFloat",
+                },
+            },
+        },
+        hide = {
+            cursorline = true, -- "focused_win",
         },
     })
 end
@@ -656,7 +810,7 @@ M.config_nvim_ide = function()
                 hidden = false,
                 keymaps = {
                     jump_split = "<c-x>",
-                    jump_tab = "t",
+                    jump_tab = "<c-t>",
                     jump_vsplit = "<c-v>",
                     remove_bookmark = "D",
                 },
@@ -702,7 +856,7 @@ M.config_nvim_ide = function()
                     hide = "<C-[>",
                     jump = "<CR>",
                     jump_split = "<C-x>",
-                    jump_tab = "t",
+                    jump_tab = "<c-t>",
                     jump_vsplit = "<C-v>",
                 },
             },
@@ -715,7 +869,7 @@ M.config_nvim_ide = function()
                     hide = "<C-[>",
                     jump = "<CR>",
                     jump_split = "<C-x>",
-                    jump_tab = "t",
+                    jump_tab = "<c-t>",
                     jump_vsplit = "<C-v>",
                 },
             },
@@ -755,7 +909,6 @@ end
 -- folke/edgy.nvim
 M.init_edgy = function()
     -- views can only be fully collapsed with the global statusline
-    vim.opt.laststatus = 3
     -- Default splitting will cause your main splits to jump when opening an edgebar.
     -- To prevent this, set `splitkeep` to either `screen` or `topline`.
     vim.opt.splitkeep = "screen"
@@ -1155,20 +1308,20 @@ M.config_nvim_scrollbar = function()
         -- 	Misc = { color = colors.purple },
         -- },
     })
-    -- require("scrollbar.handlers.search").setup({
-    --     -- hlslens config overrides
-    -- })
-    require("hlslens").setup({
-        build_position_cb = function(plist, _, _, _)
-            require("scrollbar.handlers.search").handler.show(plist.start_pos)
-        end,
+    require("scrollbar.handlers.search").setup({
+        -- hlslens config overrides
     })
-    vim.cmd([[
-        augroup scrollbar_search_hide
-            autocmd!
-            autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
-        augroup END
-    ]])
+    -- require("hlslens").setup({
+    -- build_position_cb = function(plist, _, _, _)
+    -- 	require("scrollbar.handlers.search").handler.show(plist.start_pos)
+    -- end,
+    -- })
+    -- vim.cmd([[
+    --        augroup scrollbar_search_hide
+    --            autocmd!
+    --            autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
+    --        augroup END
+    --    ]])
     require("scrollbar.handlers.gitsigns").setup()
 end
 

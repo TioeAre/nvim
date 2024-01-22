@@ -9,6 +9,7 @@ return {
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
             "andymass/vim-matchup",
+            "kevinhwang91/nvim-ufo",
         }
     },
     { -- 显示向下翻页时仍函数名

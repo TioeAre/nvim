@@ -3,13 +3,16 @@ local M = require("plugin_config.format")
 return {
     {
         "stevearc/conform.nvim",
+        dependencies = {
+            "emileferreira/nvim-strict",
+        },
         lazy = true,
-        event = { "BufReadPost", "BufNewFile" }, -- to disable, comment this out
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" }, -- to disable, comment this out
         config = M.config_conform,
     },
     {
         "mfussenegger/nvim-lint",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_lint,
     },
 }

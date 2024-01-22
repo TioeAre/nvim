@@ -41,6 +41,7 @@ keymap.set({ "n", "v" }, "<Down>", [[v:count ? 'k' : 'gj']], { noremap = true, e
 -- keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 -- 切换buffer
 keymap.set("n", "<A-Tab>", "<cmd>bNext<cr>", opts)
+keymap.set("n", "<c-Tab>", "<cmd>bprevious<cr>", opts)
 -- 保存文件
 -- keymap.set('n', '<Leader>we', ':wa<cr>', opts)
 -- keymap.set('n', '<Leader>wq', ':wa<CR>:wq<CR>', opts)

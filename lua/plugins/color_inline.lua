@@ -8,8 +8,24 @@ return {
         config = M.config_colorizer,
     },
     {
-        "max397574/colortils.nvim",
+        "nvim-colortils/colortils.nvim",
         cmd = "Colortils",
         config = M.config_colortils,
+    },
+    -- {
+    --     "ziontee113/color-picker.nvim",
+    --     cmd = {"PickColor", "PickColorInsert"},
+    --     config = M.config_color_picker,
+    -- },
+    {
+        "uga-rosa/ccc.nvim",
+        cmd = {
+            "CccPick",
+            "CccConvert",
+            "CccHighlighterToggle",
+            "CccHighlighterEnable",
+            "CccHighlighterDisable",
+        },
+        config = M.config_ccc,
     },
 }

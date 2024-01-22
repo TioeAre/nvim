@@ -73,12 +73,12 @@ M.config_indent_blankline = function()
     }
     require("ibl").setup({
         indent = {
-            char = "│",
+            char = "▏", -- ⡇, ⡆, ⠇, ▎, ▏, │
             highlight = highlight,
             smart_indent_cap = true,
         },
         scope = {
-            char = "╎", -- "▎",
+            char = "▎", -- ▎,╎
             highlight = highlight,
         },
     })
@@ -181,9 +181,14 @@ M.config_strict = function()
         group = group,
         callback = function(opts)
             if opts.data.saved_buffer ~= nil then
-                local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
+                -- local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
                 strict.convert_tabs_to_spaces()
                 strict.remove_trailing_whitespace()
+                -- require("conform").format({
+                -- 	lsp_fallback = true,
+                -- 	async = false,
+                -- 	timeout_ms = 500,
+                -- })
             end
         end,
     })
@@ -217,11 +222,20 @@ M.opts_trouble = {
     position = "bottom",
     height = 10,
     width = 50, -- width of the list when position is left or right
+    icons = true,
+    mode = "workspace_diagnostics",
+    group = true, -- group results by file
+    padding = true, -- add an extra new line on top of the list
+    cycle_results = true, -- cycle item list when reaching beginning or end of list
+    multiline = true, -- render multi-line messages
+    auto_preview = false, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+    auto_jump = { "lsp_references", "lsp_implementations", "lsp_definitions" },
+    use_diagnostic_signs = true,
     action_keys = {
         close = "q", -- close the list
         cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
         refresh = "r", -- manually refresh
-        jump = { "<cr>", "<tab>", "<2-leftmouse>" }, -- jump to the diagnostic or open / close folds
+        jump = { "<cr>", "<2-leftmouse>" }, -- jump to the diagnostic or open / close folds
         open_split = { "<c-x>" }, -- <c-x> open buffer in new split
         open_vsplit = { "<c-v>" }, -- <c-v> open buffer in new vsplit
         open_tab = { "<c-t>" }, -- open buffer in new tab
@@ -234,9 +248,9 @@ M.opts_trouble = {
         open_code_href = "c", -- if present, open a URI with more information about the diagnostic error
         close_folds = { "zc", "zC" }, -- close all folds
         open_folds = { "zo", "zO" }, -- open all folds
-        toggle_fold = { "za", "zA" }, -- toggle fold of current file
+        toggle_fold = { "za", "zA", "<tab>" }, -- toggle fold of current file
         next = "j", -- next item
-        previous = "k", -- previous item
+        previous = "<c-h>", -- previous item
         help = "?", -- help menu
     },
 }
@@ -320,6 +334,28 @@ M.opts_persistence = {
     -- vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], {})
 }
 
+-- olimorris/persisted.nvim
+M.opts_persisted = {}
+M.config_persisted = function()
+    vim.o.sessionoptions = "buffers,curdir,folds,tabpages,winpos,winsize"
+    require("persisted").setup({
+        save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- directory where session files are saved
+        silent = false, -- silent nvim message when sourcing session file
+        use_git_branch = true, -- create session files based on the branch of a git enabled repository
+        default_branch = "main", -- the branch to load if a session file is not found for the current branch
+        autosave = true, -- automatically save session files when exiting Neovim
+        should_autosave = nil, -- function to determine if a session should be autosaved
+        autoload = false, -- automatically load the session for the cwd on Neovim startup
+        on_autoload_no_session = nil, -- function to run when `autoload = true` but there is no session to load
+        follow_cwd = true, -- change session file name to match current working directory if it changes
+        allowed_dirs = nil, -- table of dirs that the plugin will auto-save and auto-load from
+        ignored_dirs = nil, -- table of dirs that are ignored when auto-saving and auto-loading
+        telescope = {
+            reset_prompt = true, -- Reset the Telescope prompt after an action?
+        },
+    })
+end
+
 -- ethanholz/nvim-lastplace
 M.config_lastplace = function()
     require("nvim-lastplace").setup({})
@@ -357,11 +393,103 @@ M.opts_auto_indent = {
 }
 
 -- kevinhwang91/nvim-ufo
-M.config_ufo = function()
+M.opts_ufo = {
+    -- INFO: Uncomment to use treeitter as fold provider, otherwise nvim lsp is used
+    provider_selector = function(bufnr, filetype, buftype)
+        return { "treesitter", "indent" }
+    end,
+    open_fold_hl_timeout = 400,
+    close_fold_kinds = { "imports", "comment" },
+    preview = {
+        win_config = {
+            border = { "", "─", "", "", "", "─", "", "" },
+            -- winhighlight = "Normal:Folded",
+            winblend = 0,
+        },
+        mappings = {
+            scrollU = "<C-u>",
+            scrollD = "<C-d>",
+            -- jumpTop = "[",
+            -- jumpBot = "]",
+        },
+    },
+}
+M.config_ufo = function(_, opts)
     vim.o.foldcolumn = "1" -- '0' is not bad
     vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
+    vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+    vim.opt.viewoptions:remove("curdir")
+    vim.api.nvim_create_augroup("RememberFolds", { clear = true })
+    vim.api.nvim_create_autocmd("BufWinLeave", {
+        group = "RememberFolds",
+        pattern = "*.*",
+        command = "mkview",
+    })
+    vim.api.nvim_create_autocmd("BufWinEnter", {
+        group = "RememberFolds",
+        pattern = "*.*",
+        command = "silent! loadview",
+    })
+
+    local builtin = require("statuscol.builtin")
+    require("statuscol").setup({
+        relculright = true,
+        segments = {
+            -- {
+            -- 	sign = { name = { "Dap*" }, auto = true },
+            -- 	click = "v:lua.ScSa",
+            -- },
+            { text = { "%s" } }, -- click = "v:lua.ScSa" },
+            -- {
+            -- 	sign = { name = { "Diagnostic" }, auto = true },
+            -- 	-- click = "v:lua.ScSa",
+            -- },
+            -- -- { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            -- {
+            -- 	sign = { namespace = { "gitsign*" } },
+            -- 	-- click = "v:lua.ScSa",
+            -- },
+            { text = { builtin.lnumfunc, "" } }, -- click = "v:lua.ScLa" },
+            { text = { builtin.foldfunc, " " } }, -- click = "v:lua.ScFa" },
+        },
+    })
+
+    local handler = function(virtText, lnum, endLnum, width, truncate)
+        local newVirtText = {}
+        local totalLines = vim.api.nvim_buf_line_count(0)
+        local foldedLines = endLnum - lnum
+        local suffix = (" 󰁂 %d %d%%"):format(foldedLines, foldedLines / totalLines * 100)
+        local sufWidth = vim.fn.strdisplaywidth(suffix)
+        local targetWidth = width - sufWidth
+        local curWidth = 0
+        for _, chunk in ipairs(virtText) do
+            local chunkText = chunk[1]
+            local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+            if targetWidth > curWidth + chunkWidth then
+                table.insert(newVirtText, chunk)
+            else
+                chunkText = truncate(chunkText, targetWidth - curWidth)
+                local hlGroup = chunk[2]
+                table.insert(newVirtText, { chunkText, hlGroup })
+                chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                -- str width returned from truncate() may less than 2nd argument, need padding
+                if curWidth + chunkWidth < targetWidth then
+                    suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+                end
+                break
+            end
+            curWidth = curWidth + chunkWidth
+        end
+        -- local rAlignAppndx = math.max(math.min(vim.opt.textwidth["_value"], width - 1) - curWidth - sufWidth, 0)
+        -- suffix = (" "):rep(rAlignAppndx) .. suffix
+        table.insert(newVirtText, { suffix, "MoreMsg" })
+        return newVirtText
+    end
+    opts["fold_virt_text_handler"] = handler
+    require("ufo").setup(opts)
+
     -- vim.keymap.set("n", "zo", require("ufo").openFoldsExceptKinds)
     -- vim.keymap.set("n", "zc", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
     -- vim.keymap.set("n", "zO", require("ufo").openAllFolds)
@@ -379,7 +507,6 @@ M.config_ufo = function()
     --         -- you can add other fields for setting up lsp server in this table
     --     })
     -- end
-    -- require("ufo").setup()
 end
 
 -- folke/flash.nvim
@@ -428,16 +555,34 @@ M.keys_flash = {
 
 -- s1n7ax/nvim-window-picker
 M.config_nvim_window_picker = function()
-    require("window-picker").setup()
-end
-M.opts_nvim_window_picker = {
-    filter_rules = {
-        include_current_win = true,
-        bo = {
-            filetype = { "fidget", "neo-tree-popup", "notify" }, -- "nvim-tree", "symbols-outline", "neo-tree",
+    require("window-picker").setup({
+        hint = "floating-big-letter",
+        filter_rules = {
+            include_current_win = true,
+            -- filter_func = function(window_ids)
+            --     local filtered_windows = {}
+            --     for _, win_id in ipairs(window_ids) do
+            --         local bufnr = vim.api.nvim_win_get_buf(win_id)
+            --         if vim.api.nvim_buf_is_loaded(bufnr) then
+            --             table.insert(filtered_windows, win_id)
+            --         end
+            --     end
+            --     return filtered_windows
+            -- end,
+            bo = {
+                filetype = {
+                    "fidget",
+                    "neo-tree-popup",
+                    "notify",
+                    "incline",
+                    "scrollbar",
+                }, -- "nvim-tree", "symbols-outline", "neo-tree",
+                buftype = { "nofile" },
+            },
         },
-    },
-}
+    })
+end
+M.opts_nvim_window_picker = {}
 
 -- mrjones2014/smart-splits.nvim
 M.config_smart_splits = function()
@@ -521,8 +666,8 @@ M.config_winshift = function()
                     bufname = {}, -- List of vim regex patterns matching ignored buffer names
                 },
                 ---A function used to filter the list of selectable windows.
-                ---@param winids integer[] # The list of selectable window IDs.
-                ---@return integer[] filtered # The filtered list of window IDs.
+                ---param winids integer[] # The list of selectable window IDs.
+                ---return integer[] filtered # The filtered list of window IDs.
                 filter_func = nil,
             })
         end,
@@ -728,7 +873,19 @@ end
 
 -- nvim-pack/nvim-spectre
 M.config_nvim_spectre = function()
-    require("spectre").setup({ is_block_ui_break = true })
+    require("spectre").setup({
+        is_block_ui_break = true,
+        live_update = true,
+        highlight = {
+            ui = "String",
+            search = "SpectreSearch",
+            replace = "SpectreReplace",
+        },
+    })
+    vim.api.nvim_set_hl(0, "SpectreSearch", { fg = "#000000", bg = "#ff4242" })
+    vim.api.nvim_set_hl(0, "SpectreReplace", { fg = "#ffffff", bg = "#008020" })
+    vim.api.nvim_set_hl(0, "SpectreDir", { fg = "#a3a3a3", bg = "#000000" })
+    vim.api.nvim_set_hl(0, "SpectreFile", { fg = "#c085fe", bg = "#000000" })
 end
 
 return M
