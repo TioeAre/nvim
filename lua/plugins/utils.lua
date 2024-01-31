@@ -92,7 +92,7 @@ return {
         -- lazy = false, -- this will only start session saving when an actual file was opened
         event = { "BufReadPre", "VeryLazy" },
         opts = M.opts_persisted,
-        config = M.config_persisted
+        config = M.config_persisted,
     },
     -- 打开文件时恢复上次光标位置
     {
@@ -100,12 +100,24 @@ return {
         event = { "BufReadPre", "VeryLazy" },
         config = M.config_lastplace,
     },
+    -- flatten
+    {
+
+        "willothy/flatten.nvim",
+        config = M.config_flatten,
+        -- or pass configuration with
+        opts = M.opts_flatten,
+        -- Ensure that it runs first to minimize delay when opening file from terminal
+        lazy = false,
+        -- priority = 1001,
+    },
     -- 命令行
     {
         "akinsho/toggleterm.nvim",
         version = "*",
         cmd = "ToggleTerm",
         opts = M.opts_toggleterm,
+        dependencies = {},
     },
     -- 换行自动添加tab
     {

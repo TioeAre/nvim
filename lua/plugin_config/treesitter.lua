@@ -15,7 +15,7 @@ M.config_treesitter = function()
 			-- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
 			-- [options]
 		},
-		event = { "BufReadPre", "BufNewFile" },
+		event = { "BufReadPost", "BufNewFile" },
 		ensure_installed = {
 			"bash",
 			"bibtex",

@@ -832,7 +832,7 @@ M.config_outline = function()
             show_relative_numbers = false,
             wrap = false,
             -- true/false/'focus_in_outline'/'focus_in_code'.
-            show_cursorline = focus_in_outline,
+            show_cursorline = true,
             hide_cursor = false,
             focus_on_open = false,
             winhl = "",

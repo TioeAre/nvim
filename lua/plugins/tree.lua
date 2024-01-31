@@ -59,7 +59,7 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-        event = {"VeryLazy", "BufReadPre", "BufNewFile"},
+        event = {"VeryLazy", "BufReadPost", "BufNewFile"},
         config = M.config_buffer_manager,
     },
 }
