@@ -421,17 +421,17 @@ end
 
 -- willothy/flatten.nvim
 M.opts_flatten = {
-    nest_if_no_args = true,
-    window = {
-        open = "alternate",
-    },
+    -- nest_if_no_args = true,
+    -- window = {
+    --     open = "alternate",
+    -- },
 }
 M.config_flatten = function()
     require("flatten").setup({
-        -- nest_if_no_args = true,
-        -- window = {
-        --     open = "alternate",
-        -- },
+        nest_if_no_args = true,
+        window = {
+            open = "alternate",
+        },
     })
 end
 
@@ -446,6 +446,17 @@ M.opts_toggleterm = {
     end,
     direction = "horizontal",
     open_mapping = [[<c+\>]],
+    on_create = function(t)
+      local bufnr = t.bufnr
+      vim.keymap.set("t", "<Esc>", "<C-\\><C-N>", { buffer = bufnr })
+    end,
+    -- shell = vim.uv.os_uname().sysname == "Windows_NT" and "pwsh" or "zsh",
+    float_opts = {
+      border = "rounded",
+    },
+    winbar = {
+      enabled = true,
+    },
     hide_numbers = true,
     start_in_insert = true,
     shade_terminals = true,
