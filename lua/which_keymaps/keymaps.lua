@@ -79,14 +79,28 @@ wk.register({
 -- leader
 wk.register({
 	["<leader>"] = {
+		s = {
+			mode = "v",
+			name = "search",
+			w = {
+				"<esc><cmd>lua require('spectre').open_visual()<CR>",
+				"search current word",
+			},
+		},
+	},
+})
+wk.register({
+	["<leader>"] = {
 		-- overall
 		s = {
 			mode = "n",
-			name = "split/search|replace/stop persistence/switch trouble filter",
+			name = "split/search|replace/sessions/switch trouble filter",
 			v = { "<C-w>v", "split windows v (trouble)" },
 			h = { "<C-w>s", "split windows h (trouble)" },
 			-- olimorris/persisted.nvim
-			q = { "<cmd>SessionStop<cr>", "stop persisted" },
+			q = { "<cmd>SessionStop<cr>", "stop session" },
+			p = { "<cmd>SessionSave<cr>", "save session" },
+			d = { "<cmd>SessionDelete<cr>", "delete session" },
 			-- folke/trouble.nvim
 			s = "switch trouble severity filter",
 			-- nvim-pack/nvim-spectre
@@ -109,7 +123,7 @@ wk.register({
 		},
 		n = {
 			mode = "n",
-			name = "no hiughlight",
+			name = "no highlight",
 			h = { "<cmd>nohl<cr>", "no highlight" },
 		},
 		w = {
@@ -217,11 +231,17 @@ wk.register({
 				"telescope find highlights",
 			},
 		},
+		h = {
+			name = "history memento",
+			-- gaborvecsei/memento.nvim
+			b = { "<cmd>lua require('memento').toggle()<cr>", "toggle memento buffer history" },
+			c = { "<cmd>lua require('memento').clear_history()<cr>", "clear memento history" },
+		},
 		o = {
-			name = "open layout/outline/gitgraph",
+			name = "open layout/outline/gitgraph/session",
 			-- olimorris/persisted.nvim
-			p = { "<cmd>SessionLoad<cr>", "current dir layout" },
-			l = { "<cmd>SessionLoadLast<cr>", "last layout" },
+			p = { "<cmd>SessionLoad<cr>", "current dir session layout" },
+			l = { "<cmd>SessionLoadLast<cr>", "last session layout" },
 			i = "PyrightOrganizeImports",
 
 			-- simrat39/symbols-outline.nvim
@@ -240,7 +260,7 @@ wk.register({
 			s = { "open lspsaga outline" },
 		},
 		t = {
-			name = "tree/trigger linting/treesitter selection",
+			name = "tree/trigger linting/treesitter selection/show path of current buffer",
 			n = { ":echo expand('%:p') <cr>", "show the path of current buffer" },
 			y = {
 				function()

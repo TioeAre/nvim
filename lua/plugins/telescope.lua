@@ -21,6 +21,7 @@ return {
             "jemag/telescope-diff.nvim",
             "s1n7ax/nvim-window-picker",
             "olimorris/persisted.nvim",
+            "FabianWirth/search.nvim",
             -- "s1n7ax/nvim-window-picker",
         },
         cmd = "Telescope",
