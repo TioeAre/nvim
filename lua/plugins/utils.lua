@@ -252,4 +252,13 @@ return {
         event = { "VeryLazy", "BufReadPost", "BufNewFile" },
         config = M.config_nvim_spectre,
     },
+    -- Chinese words spilt
+    -- {
+    --     'noearc/jieba.nvim',
+    --     dependencies = {
+    --         'noearc/jieba-lua',
+    --     },
+    --     event = { "VeryLazy", "BufReadPost", },
+    --     -- config = true,
+    -- },
 }

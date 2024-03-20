@@ -13,12 +13,12 @@ M.config_lazygit = function()
     vim.g.lazygit_config_file_path = {} -- table of custom config file paths
     require("telescope").load_extension("lazygit")
     -- autocmd BufEnter * :lua require('lazygit.utils').project_root_dir()
-    vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*",
-        callback = function()
-            require("lazygit.utils").project_root_dir()
-        end,
-    })
+    -- vim.api.nvim_create_autocmd("BufEnter", {
+    --     -- pattern = "*",
+    --     callback = function()
+    --         require("lazygit.utils").project_root_dir()
+    --     end,
+    -- })
 end
 
 -- sindrets/diffview.nvim
@@ -111,7 +111,16 @@ M.config_diffview = function()
             DiffviewOpen = {},
             DiffviewFileHistory = {},
         },
-        hooks = {}, -- See ':h diffview-config-hooks'
+        hooks = {
+            diff_buf_read = function(bufnr)
+                vim.opt_local.foldlevel = 99
+                vim.opt_local.foldenable = false
+            end,
+            diff_buf_win_enter = function(bufnr)
+                vim.opt_local.foldlevel = 99
+                vim.opt_local.foldenable = false
+            end,
+        }, -- See ':h diffview-config-hooks'
         keymaps = {
             disable_defaults = false, -- Disable the default keymaps
             view = {

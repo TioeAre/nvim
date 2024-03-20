@@ -20,7 +20,15 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         lazy = false,
-        dependencies = { "arkav/lualine-lsp-progress" },
+        dependencies = {
+            "arkav/lualine-lsp-progress",
+            -- {
+            --     "wyattjsmith1/weather.nvim",
+            --     dependencies = {
+            --         "nvim-lua/plenary.nvim",
+            --     },
+            -- },
+        },
         -- enevt = { "VeryLazy", "FocusGained", "FocusLost", "FuncUndefined" },
         config = M.config_lualine,
     },

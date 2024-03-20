@@ -107,13 +107,13 @@ M.config_nvim_tree = function()
             },
         },
         auto_reload_on_write = true,
-        prefer_startup_root = false,
+        prefer_startup_root = true,
         -- ahmedkhalf/project.nvim
         sync_root_with_cwd = true,
-        respect_buf_cwd = false,
+        respect_buf_cwd = true,
         update_focused_file = {
             enable = true,
-            update_root = false,
+            update_root = true,
         },
     })
     -- vim.api.nvim_exec([[autocmd VimEnter * NvimTreeToggle]], false)
@@ -1110,10 +1110,46 @@ M.config_project = function()
             "requirements.txt",
             "devel",
             "build",
+            "readme.md",
+            "README",
+            "README.md",
+            "readme.txt",
+            "README.txt",
+            "main.*",
+            ".gitignore",
+            ".history"
         },
-        exclude_dirs = { "**/src/**", "**/lua/**", "**/scripts/**", "**/build/**", "**/devel/**", os.getenv("HOME") },
+        exclude_dirs = {
+            "**/src/**",
+            "**/lua/**",
+            "**/scripts/**",
+            "**/build/**",
+            "**/devel/**",
+            os.getenv("HOME"),
+            "/home/tioeare",
+            "/home/linuxbrew/",
+            "/home/Systemback/",
+        },
         show_hidden = true,
         silent_chdir = false,
+    })
+    require("swenv").setup({
+        -- -- Should return a list of tables with a `name` and a `path` entry each.
+        -- -- Gets the argument `venvs_path` set below.
+        -- -- By default just lists the entries in `venvs_path`.
+        -- get_venvs = function(venvs_path)
+        --     return require("swenv.api").get_venvs(venvs_path)
+        -- end,
+        -- -- Path passed to `get_venvs`.
+        -- venvs_path = vim.fn.expand("~/venvs"),
+        -- -- Something to do after setting an environment, for example call vim.cmd.LspRestart
+        -- post_set_venv = nil,
+    })
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "python" },
+        callback = function()
+            require("swenv.api").auto_venv()
+        end,
     })
 end
 

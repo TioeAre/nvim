@@ -10,7 +10,8 @@ return {
             "nvim-treesitter/nvim-treesitter-textobjects",
             "andymass/vim-matchup",
             "kevinhwang91/nvim-ufo",
-        }
+            "nvim-treesitter/nvim-treesitter-refactor",
+        },
     },
     { -- 显示向下翻页时仍函数名
         "nvim-treesitter/nvim-treesitter-context",
@@ -21,5 +22,14 @@ return {
         "eriks47/generate.nvim",
         cmd = "Generate implementations",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
+    },
+    {
+        "Bekaboo/dropbar.nvim",
+        -- optional, but required for fuzzy finder support
+        dependencies = {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            "nvim-web-devicons",
+        },
+        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
     },
 }

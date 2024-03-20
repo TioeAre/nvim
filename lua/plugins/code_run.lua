@@ -20,6 +20,7 @@ return {
             "nvim-lua/popup.nvim",
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
+            "Joakker/lua-json5",
             -- {
             --     "ThePrimeagen/harpoon",
             --     branch = "harpoon2",

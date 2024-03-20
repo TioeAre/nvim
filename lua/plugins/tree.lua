@@ -51,6 +51,13 @@ return {
     -- project in trees
     {
         "ahmedkhalf/project.nvim",
+        dependencies = {
+            {
+                "AckslD/swenv.nvim",
+                dependencies = {"nvim-lua/plenary.nvim",}
+            },
+        },
+        event = {"VeryLazy", "BufReadPost", "BufNewFile"},
         config = M.config_project,
     },
     -- buffer manager

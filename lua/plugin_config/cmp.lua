@@ -66,7 +66,9 @@ M.config_cmp = function()
         {
             name = 'tmux'
         },
-        -- { name = 'treesitter' }
+        {
+            name = 'treesitter'
+        }
     })
 
     cmp.setup({

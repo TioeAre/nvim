@@ -101,6 +101,9 @@ M.config_telescope = function()
                 -- theme = 'dropdown',
                 -- previewer = false
             },
+            colorscheme = {
+                enable_preview = true,
+            },
         },
         extensions = {
             docker = {

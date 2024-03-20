@@ -10,6 +10,8 @@ return {
         "nvim-telescope/telescope-dap.nvim",
         "mfussenegger/nvim-dap-python",
         "Weissle/persistent-breakpoints.nvim",
+        "Joakker/lua-json5",
+        "nvim-neotest/nvim-nio",
     },
     config = M.config_dap,
 }
