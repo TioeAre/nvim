@@ -67,17 +67,17 @@ end
 
 -- nvim-lualine/lualine.nvim
 M.config_lualine = function()
-    -- local colors = {
-    -- 	yellow = "#ECBE7B",
-    -- 	cyan = "#008080",
-    -- 	darkblue = "#081633",
-    -- 	green = "#98be65",
-    -- 	orange = "#FF8800",
-    -- 	violet = "#a9a1e1",
-    -- 	magenta = "#c678dd",
-    -- 	blue = "#51afef",
-    -- 	red = "#ec5f67",
-    -- }
+    local colors = {
+        yellow = "#ECBE7B",
+        cyan = "#008080",
+        darkblue = "#081633",
+        green = "#98be65",
+        orange = "#FF8800",
+        violet = "#a9a1e1",
+        magenta = "#c678dd",
+        blue = "#51afef",
+        red = "#ec5f67",
+    }
     local function lsp_client_names()
         local client_names = {}
         for _, client in ipairs(vim.lsp.get_active_clients()) do
@@ -185,9 +185,22 @@ M.config_lualine = function()
                 "filesize",
                 "encoding",
                 "fileformat",
+                -- {
+                --     'swenv',
+                --     icon = "",
+                -- },
                 {
-                    'swenv',
-                    icon = "",
+                    function()
+                        local has_venv_selector = vim.fn.exists("g:loaded_venv_selector") == 1
+                        local active_venv = ""
+                        if has_venv_selector then
+                            active_venv = require("venv-selector").get_active_venv()
+                        end
+                        return active_venv:match("[^/]*$")
+                    end,
+                    color = {
+                        fg = "#ff9e64",
+                    },
                 },
                 lsp_client_names,
                 -- {

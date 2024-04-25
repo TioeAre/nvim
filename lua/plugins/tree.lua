@@ -52,12 +52,22 @@ return {
     {
         "ahmedkhalf/project.nvim",
         dependencies = {
+            -- {
+            --     "AckslD/swenv.nvim",
+            --     dependencies = {"nvim-lua/plenary.nvim",}
+            -- },
             {
-                "AckslD/swenv.nvim",
-                dependencies = {"nvim-lua/plenary.nvim",}
+                "linux-cultist/venv-selector.nvim",
+                dependencies = {
+                    "neovim/nvim-lspconfig",
+                    "nvim-telescope/telescope.nvim",
+                    "mfussenegger/nvim-dap-python",
+                },
+                event = 'VeryLazy',
+                cmd = {"VenvSelect", "VenvSelectCached"},
             },
         },
-        event = {"VeryLazy", "BufReadPost", "BufNewFile"},
+        event = { "VeryLazy", "BufReadPost", "BufNewFile" },
         config = M.config_project,
     },
     -- buffer manager
@@ -66,7 +76,7 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
-        event = {"VeryLazy", "BufReadPost", "BufNewFile"},
+        event = { "VeryLazy", "BufReadPost", "BufNewFile" },
         config = M.config_buffer_manager,
     },
 }

@@ -654,11 +654,19 @@ wk.register({
         },
         v = {
             name = "venv",
-            p = {
-                "<cmd>lua require('swenv.api').pick_venv()<cr>",
-                "python swenv venv pick",
-            }
-        }
+            -- s = {
+            -- 	"<cmd>lua require('swenv.api').pick_venv()<cr>",
+            -- 	"python swenv venv pick",
+            -- },
+            s = {
+                "<cmd>VenvSelect<cr>",
+                "python venv selevt",
+            },
+            c = {
+                "<cmd>VenvSelectCached<cr>",
+                "python venv selevt from cache",
+            },
+        },
     },
     -- ussenegger/nvim-dap
     ["<F5>"] = {

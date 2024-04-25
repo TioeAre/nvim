@@ -1117,7 +1117,7 @@ M.config_project = function()
             "README.txt",
             "main.*",
             ".gitignore",
-            ".history"
+            ".history",
         },
         exclude_dirs = {
             "**/src/**",
@@ -1133,24 +1133,45 @@ M.config_project = function()
         show_hidden = true,
         silent_chdir = false,
     })
-    require("swenv").setup({
-        -- -- Should return a list of tables with a `name` and a `path` entry each.
-        -- -- Gets the argument `venvs_path` set below.
-        -- -- By default just lists the entries in `venvs_path`.
-        -- get_venvs = function(venvs_path)
-        --     return require("swenv.api").get_venvs(venvs_path)
-        -- end,
-        -- -- Path passed to `get_venvs`.
-        -- venvs_path = vim.fn.expand("~/venvs"),
-        -- -- Something to do after setting an environment, for example call vim.cmd.LspRestart
-        -- post_set_venv = nil,
+    require("venv-selector").setup({
+        -- Your options go here
+        name = { "venv" },
+        auto_refresh = true,
+        path = nil,
+        dap_enabled = true,
+        parents = 4,
+        anaconda_base_path = "/home/tioeare/miniconda3",
+        anaconda_envs_path = "/home/tioeare/miniconda3/envs",
     })
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "python" },
+    vim.api.nvim_create_autocmd("VimEnter", {
+        desc = "Auto select virtualenv Nvim open",
+        pattern = { "*" },
         callback = function()
-            require("swenv.api").auto_venv()
+            local venv = vim.fn.findfile("pyproject.toml", vim.fn.getcwd() .. ";")
+            if venv ~= "" then
+                require("venv-selector").retrieve_from_cache()
+            end
         end,
+        once = true,
     })
+    -- require("swenv").setup({
+    -- -- Should return a list of tables with a `name` and a `path` entry each.
+    -- -- Gets the argument `venvs_path` set below.
+    -- -- By default just lists the entries in `venvs_path`.
+    -- get_venvs = function(venvs_path)
+    --     return require("swenv.api").get_venvs(venvs_path)
+    -- end,
+    -- -- Path passed to `get_venvs`.
+    -- venvs_path = vim.fn.expand("~/venvs"),
+    -- -- Something to do after setting an environment, for example call vim.cmd.LspRestart
+    -- post_set_venv = nil,
+    -- })
+    -- vim.api.nvim_create_autocmd("FileType", {
+    --     pattern = { "python" },
+    --     callback = function()
+    --         require("swenv.api").auto_venv()
+    --     end,
+    -- })
 end
 
 -- j-morano/buffer_manager.nvim
