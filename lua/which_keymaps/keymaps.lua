@@ -230,6 +230,11 @@ wk.register({
                 end,
                 "telescope find highlights",
             },
+            -- AckslD/nvim-neoclip.lua
+            v = {
+                "<cmd>Telescope neoclip<cr>",
+                "telescope find clipboard",
+            },
         },
         h = {
             name = "history memento",

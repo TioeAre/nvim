@@ -48,11 +48,6 @@ return {
                     },
                 }
             },
-            {
-                "barreiroleo/ltex_extra.nvim",
-                ft = { "markdown", "tex", "text", "*" },
-                dependencies = { "neovim/nvim-lspconfig" },
-            },
         },
         event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_lspconfig,

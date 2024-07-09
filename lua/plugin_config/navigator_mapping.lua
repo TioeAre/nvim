@@ -268,7 +268,7 @@ local check_cap = function(opts)
     if cap and cap.documentRangeFormattingProvider then
         rfmt = true
     end
-    for _, value in pairs(vim.lsp.get_active_clients({
+    for _, value in pairs(vim.lsp.get_clients({
         buffer = 0
     })) do
         trace(value)

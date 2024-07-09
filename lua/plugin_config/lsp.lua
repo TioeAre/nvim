@@ -80,7 +80,6 @@ M.config_lspconfig = function()
         },
         dockerls = {},
         docker_compose_language_service = {},
-        html = {},
         jsonls = {},
         lua_ls = {
             -- settings = {
@@ -101,9 +100,7 @@ M.config_lspconfig = function()
             -- },
         },
         pyright = {},
-        lemminx = {},
         yamlls = {},
-        matlab_ls = {},
     }
 
     local on_attach = function(client, bufnr)
@@ -327,10 +324,10 @@ M.config_lspconfig = function()
                 package_uninstalled = "✗",
             },
         },
-        pip = {
-            upgrade_pip = false,
-            install_args = { "--proxy", "http://127.0.0.1:7890" },
-        },
+        -- pip = {
+        --     upgrade_pip = false,
+        --     install_args = { "--proxy", "http://127.0.0.1:7890" },
+        -- },
     })
 
     local exclude_servers = {
@@ -354,25 +351,12 @@ M.config_lspconfig = function()
         }, config))
     end
 
-    require("ltex_extra").setup({
-        load_langs = { "en-US", "zh-CN" },
-        init_check = true,
-        -- path = "",
-        log_level = "none",
-        server_opts = {
-            capabilities = capabilities,
-            on_attach = on_attach,
-        },
-    })
-
     -- WhoIsSethDaniel/mason-tool-installer.nvim
     require("mason-tool-installer").setup({
         ensure_installed = {
             "shellcheck",
             -- "clangtidy",
             "cmakelint",
-            "hadolint",
-            "htmlhint",
             "jsonlint",
             "luacheck",
             "flake8",
@@ -381,7 +365,6 @@ M.config_lspconfig = function()
             -- "clang-format",
             "prettier",
             "xmlformatter",
-            "latexindent",
             "stylua",
             -- "autopep8",
         },
@@ -392,7 +375,6 @@ M.config_lspconfig = function()
             "bash-debug-adapter",
             "cpptools",
             "debugpy",
-            "mockdebug",
         },
     })
 

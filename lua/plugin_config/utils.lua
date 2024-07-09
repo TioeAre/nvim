@@ -87,62 +87,7 @@ end
 
 -- RRethy/vim-illuminate
 M.config_vim_illuminate = function()
-    require("illuminate").configure({
-        -- providers: provider used to get references in the buffer, ordered by priority
-        providers = {
-            "lsp",
-            "treesitter",
-            "regex",
-        },
-        -- delay: delay in milliseconds
-        delay = 100,
-        -- filetype_overrides: filetype specific overrides.
-        -- The keys are strings to represent the filetype while the values are tables that
-        -- supports the same keys passed to .configure except for filetypes_denylist and filetypes_allowlist
-        filetype_overrides = {},
-        -- filetypes_denylist: filetypes to not illuminate, this overrides filetypes_allowlist
-        filetypes_denylist = {
-            "dirbuf",
-            "dirvish",
-            "fugitive",
-        },
-        -- filetypes_allowlist: filetypes to illuminate, this is overridden by filetypes_denylist
-        -- You must set filetypes_denylist = {} to override the defaults to allow filetypes_allowlist to take effect
-        filetypes_allowlist = {},
-        -- modes_denylist: modes to not illuminate, this overrides modes_allowlist
-        -- See `:help mode()` for possible values
-        modes_denylist = {},
-        -- modes_allowlist: modes to illuminate, this is overridden by modes_denylist
-        -- See `:help mode()` for possible values
-        modes_allowlist = {},
-        -- providers_regex_syntax_denylist: syntax to not illuminate, this overrides providers_regex_syntax_allowlist
-        -- Only applies to the 'regex' provider
-        -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
-        providers_regex_syntax_denylist = {},
-        -- providers_regex_syntax_allowlist: syntax to illuminate, this is overridden by providers_regex_syntax_denylist
-        -- Only applies to the 'regex' provider
-        -- Use :echom synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
-        providers_regex_syntax_allowlist = {},
-        -- under_cursor: whether or not to illuminate under the cursor
-        under_cursor = true,
-        -- large_file_cutoff: number of lines at which to use large_file_config
-        -- The `under_cursor` option is disabled when this cutoff is hit
-        large_file_cutoff = nil,
-        -- large_file_config: config to use for large files (based on large_file_cutoff).
-        -- Supports the same keys passed to .configure
-        -- If nil, vim-illuminate will be disabled for large files.
-        large_file_overrides = nil,
-        -- min_count_to_highlight: minimum number of matches required to perform highlighting
-        min_count_to_highlight = 1,
-        -- should_enable: a callback that overrides all other settings to
-        -- enable/disable illumination. This will be called a lot so don't do
-        -- anything expensive in it.
-        should_enable = function(bufnr)
-            return true
-        end,
-        -- case_insensitive_regex: sets regex case sensitivity
-        case_insensitive_regex = false,
-    })
+    require("illuminate").configure()
     vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#4e306e" })
     vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#58268c" })
     vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#4e306e" })
@@ -156,14 +101,6 @@ M.config_smartyank = function()
             higroup = "IncSearch", -- highlight group of yanked text
             timeout = 1500, -- timeout for clearing the highlight
         },
-        clipboard = {
-            enabled = true,
-        },
-        tmux = {
-            enabled = true,
-            -- remove `-w` to disable copy to host client's clipboard
-            cmd = { "tmux", "set-buffer", "-w" },
-        },
         osc52 = {
             enabled = true,
             -- escseq = 'tmux',     -- use tmux escape sequence, only enable if
@@ -176,23 +113,15 @@ M.config_smartyank = function()
         -- user initiated a `y` motion (e.g. `yy`, `yiw`, etc). Set to `false`
         -- if you wish to copy indiscriminately:
         validate_yank = false,
-        -- For advanced customization set to a lua function returning a boolean
-        -- for example, the default condition is:
-        -- validate_yank = function() return vim.v.operator == "y" end,
-
-        -- TMUX
-        -- One (of the many) advantages of using tmux is the ability to view the yank history by using <prefix># (by default <C-a>#).
-        -- Using fzf-lua tmux_buffers we can fuzzy find the tmux paste buffers and by pressing <CR> copy the current selection into the "unnamed" register for easy pasting with p or P (similar functionality to what is achieved using nvim-neoclip.lua):
     })
+    require('neoclip').setup()
 end
 
 -- emileferreira/nvim-strict
 M.config_strict = function()
     require("strict").setup({
-        -- included_filetypes = nil,
         excluded_filetypes = nil,
         excluded_buftypes = { "help", "nofile", "terminal", "prompt" },
-        -- match_priority = -1,
         deep_nesting = {
             highlight = true,
             highlight_group = "DiffDelete",
@@ -312,64 +241,14 @@ M.opts_trouble = {
         help = "?", -- help menu
     },
 }
-M.keys_trouble = {
-    -- {
-    --     "<leader>ls",
-    --     ":TroubleToggle document_diagnostics<cr>", -- open trouble document_diagnostics
-    --     desc = "open trouble document_diagnostics"
-    -- }, {
-    --     "<leader>lw",
-    --     ":TroubleToggle workspace_diagnostics<cr>", -- open trouble workspace_diagnostics
-    --     desc = "open trouble workspace_diagnostics "
-    -- }, {
-    --     "<leader>lp",
-    --     ":TroubleToggle lsp_references<cr>", -- open trouble lsp_references
-    --     desc = "open trouble lsp_references"
-    -- }, {
-    --     "<leader>ld",
-    --     ":TroubleToggle lsp_definitions<cr>", -- open trouble lsp_definitions
-    --     desc = "open trouble lsp_definitions"
-    -- }, {
-    --     "<leader>lq",
-    --     ":TroubleToggle quickfix<cr>", -- open trouble quickfix
-    --     desc = "open trouble quickfix"
-    -- }
-}
+M.keys_trouble = {}
 
 -- folke/todo-comments.nvim
-M.opts_todo_comments = {
-    -- vim.keymap.set("n", "]t", function()
-    --     require("todo-comments").jump_next()
-    -- end, { desc = "next todo comment" }),
-    -- vim.keymap.set("n", "[t", function()
-    --     require("todo-comments").jump_prev()
-    -- end, { desc = "previous todo comment" }), -- You can also specify a list of valid jump keywords
-}
-M.keys_todo_comments = {
-    -- {
-    --     "<leader>lt",
-    --     ":TodoTrouble<cr>", -- 打开trouble todo
-    --     desc = "open trouble todo window"
-    -- }, {
-    --     "<leader>ft",
-    --     ":TodoTelescope<cr>", -- find todo in telescope
-    --     desc = "find todo in telescope"
-    -- }
-}
+M.opts_todo_comments = {}
+M.keys_todo_comments = {}
 
 -- folke/twilight.nvim
 M.opts_twilight = {
-    dimming = {
-        alpha = 0.25, -- amount of dimming
-        -- we try to get the foreground from the highlight groups or fallback color
-        color = { "Normal", "#ffffff" },
-        term_bg = "#000000", -- if guibg=NONE, this will be used to calculate text color
-        inactive = false, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
-    },
-    context = 10, -- amount of lines we will try to show around the current line
-    treesitter = true, -- use treesitter when available for the filetype
-    -- treesitter is used to automatically expand the visible text,
-    -- but you can further control the types of nodes that should always be fully expanded
     expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
         "function",
         "method",
@@ -397,25 +276,16 @@ M.opts_persisted = {}
 M.config_persisted = function()
     vim.o.sessionoptions = "buffers,curdir,folds,tabpages,winpos,winsize"
     require("persisted").setup({
-        save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), -- directory where session files are saved
-        silent = false, -- silent nvim message when sourcing session file
-        use_git_branch = true, -- create session files based on the branch of a git enabled repository
+        save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), use_git_branch = true, -- create session files based on the branch of a git enabled repository
         default_branch = "main", -- the branch to load if a session file is not found for the current branch
-        autosave = true, -- automatically save session files when exiting Neovim
-        should_autosave = nil, -- function to determine if a session should be autosaved
         autoload = true, -- automatically load the session for the cwd on Neovim startup
         on_autoload_no_session = nil, -- function to run when `autoload = true` but there is no session to load
-        follow_cwd = true, -- change session file name to match current working directory if it changes
-        allowed_dirs = nil, -- table of dirs that the plugin will auto-save and auto-load from
         ignored_dirs = {
-            os.getenv("HOME"),
-            "/home/tioeare/",
-            "/home/linuxbrew/",
-            "/home/Systemback/",
+            { "/", exact = true },
+            { "os.getenv('HOME')", exact = true },
+            { "/home/linuxbrew/", exact = true },
+            { "/home/Systemback/", exact = true },
         }, -- table of dirs that are ignored when auto-saving and auto-loading
-        telescope = {
-            reset_prompt = true, -- Reset the Telescope prompt after an action?
-        },
     })
     -- vim.api.nvim_create_autocmd({ "User" }, {
     -- 	pattern = "PersistedLoadPost",
@@ -442,12 +312,6 @@ M.config_lastplace = function()
 end
 
 -- willothy/flatten.nvim
-M.opts_flatten = {
-    -- nest_if_no_args = true,
-    -- window = {
-    --     open = "alternate",
-    -- },
-}
 M.config_flatten = function()
     require("flatten").setup({
         nest_if_no_args = true,
@@ -482,17 +346,10 @@ M.opts_toggleterm = {
     hide_numbers = true,
     start_in_insert = true,
     shade_terminals = true,
-    -- vim.api.nvim_set_keymap("n", "<C-\\>", "<cmd> ToggleTerm<CR>", { noremap = true, silent = true }),
-    -- vim.api.nvim_set_keymap("t", "<C-\\>", "<cmd> ToggleTerm<CR>", { noremap = true, silent = true }),
-    -- vim.api.nvim_set_keymap("t", "<A-l>", "<Cmd> wincmd l<CR>", { noremap = true, silent = true }),
-    -- vim.api.nvim_set_keymap("t", "<A-h>", "<Cmd> wincmd h<CR>", { noremap = true, silent = true }),
-    -- vim.api.nvim_set_keymap("t", "<A-j>", "<Cmd> wincmd j<CR>", { noremap = true, silent = true }),
-    -- vim.api.nvim_set_keymap("t", "<A-k>", "<Cmd> wincmd k<CR>", { noremap = true, silent = true }),
 }
 
 -- vidocqh/auto-indent.nvim
 M.opts_auto_indent = {
-    lightmode = true, -- Lightmode assumes tabstop and indentexpr not change within buffer's lifetime
     indentexpr = function(lnum)
         return require("nvim-treesitter.indent").get_indent(lnum)
     end, -- Use vim.bo.indentexpr by default, see 'Custom Indent Evaluate Method'
@@ -500,7 +357,6 @@ M.opts_auto_indent = {
 }
 
 -- kevinhwang91/nvim-ufo
-M.opts_ufo = {}
 M.config_ufo = function(_, opts)
     vim.o.foldcolumn = "1" -- '0' is not bad
     vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
@@ -597,24 +453,6 @@ M.config_ufo = function(_, opts)
             },
         },
     })
-
-    -- vim.keymap.set("n", "zo", require("ufo").openFoldsExceptKinds)
-    -- vim.keymap.set("n", "zc", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-    -- vim.keymap.set("n", "zO", require("ufo").openAllFolds)
-    -- vim.keymap.set("n", "zC", require("ufo").closeAllFolds)
-
-    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-    -- capabilities.textDocument.foldingRange = {
-    --     dynamicRegistration = false,
-    --     lineFoldingOnly = true,
-    -- }
-    -- local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
-    -- for _, ls in ipairs(language_servers) do
-    --     require("lspconfig")[ls].setup({
-    --         capabilities = capabilities,
-    --         -- you can add other fields for setting up lsp server in this table
-    --     })
-    -- end
 end
 
 -- folke/flash.nvim
@@ -690,96 +528,21 @@ M.config_nvim_window_picker = function()
         },
     })
 end
-M.opts_nvim_window_picker = {}
 
 -- mrjones2014/smart-splits.nvim
 M.config_smart_splits = function()
     require("smart-splits").setup({
         ignored_filetypes = { "nofile", "quickfix", "prompt" },
-        ignored_buftypes = {}, -- "NvimTree"
+        ignored_buftypes = { "NvimTree" },
         default_amount = 2,
         at_edge = "wrap",
         move_cursor_same_row = false,
-        -- whether the cursor should follow the buffer when swapping
-        -- buffers by default; it can also be controlled by passing
-        -- `{ move_cursor = true }` or `{ move_cursor = false }`
-        -- when calling the Lua function.
-        cursor_follows_swapped_bufs = false,
-        resize_mode = {
-            quit_key = "<ESC>",
-            resize_keys = { "h", "j", "k", "l" },
-            silent = false,
-            hooks = {
-                on_enter = nil,
-                on_leave = nil,
-            },
-        },
-        ignored_events = { "BufEnter", "WinEnter" },
-        disable_multiplexer_nav_when_zoomed = true,
-        kitty_password = nil,
-        log_level = "info",
     })
 end
 
 -- sindrets/winshift.nvim
 M.config_winshift = function()
-    require("winshift").setup({
-        highlight_moving_win = true, -- Highlight the window being moved
-        focused_hl_group = "Visual", -- The highlight group used for the moving window
-        moving_win_options = {
-            -- These are local options applied to the moving window while it's
-            -- being moved. They are unset when you leave Win-Move mode.
-            wrap = false,
-            cursorline = false,
-            cursorcolumn = false,
-            colorcolumn = "",
-        },
-        keymaps = {
-            disable_defaults = false, -- Disable the default keymaps
-            win_move_mode = {
-                ["h"] = "left",
-                ["j"] = "down",
-                ["k"] = "up",
-                ["l"] = "right",
-                ["H"] = "far_left",
-                ["J"] = "far_down",
-                ["K"] = "far_up",
-                ["L"] = "far_right",
-                ["<left>"] = "left",
-                ["<down>"] = "down",
-                ["<up>"] = "up",
-                ["<right>"] = "right",
-                ["<S-left>"] = "far_left",
-                ["<S-down>"] = "far_down",
-                ["<S-up>"] = "far_up",
-                ["<S-right>"] = "far_right",
-            },
-        },
-        ---A function that should prompt the user to select a window.
-        ---The window picker is used to select a window while swapping windows with
-        ---`:WinShift swap`.
-        ---@return integer? winid # Either the selected window ID, or `nil` to
-        ---   indicate that the user cancelled / gave an invalid selection.
-        window_picker = function()
-            return require("winshift.lib").pick_window({
-                -- A string of chars used as identifiers by the window picker.
-                picker_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-                filter_rules = {
-                    -- This table allows you to indicate to the window picker that a window
-                    -- should be ignored if its buffer matches any of the following criteria.
-                    cur_win = true, -- Filter out the current window
-                    floats = true, -- Filter out floating windows
-                    filetype = {}, -- List of ignored file types
-                    buftype = {}, -- List of ignored buftypes
-                    bufname = {}, -- List of vim regex patterns matching ignored buffer names
-                },
-                ---A function used to filter the list of selectable windows.
-                ---param winids integer[] # The list of selectable window IDs.
-                ---return integer[] filtered # The filtered list of window IDs.
-                filter_func = nil,
-            })
-        end,
-    })
+    require("winshift").setup({})
 end
 
 -- anuvyklack/windows.nvim
@@ -833,24 +596,9 @@ M.config_glow = function()
     })
 end
 
--- kylechui/nvim-surround
-M.config_nvim_surround = function()
-    --     Old text                    Command         New text
-    -- --------------------------------------------------------------------------------
-    --     surr*ound_words             ysiw)           (surround_words)
-    --     *make strings               ys$"            "make strings"
-    --     [delete ar*ound me!]        ds]             delete around me!
-    --     remove <b>HTML t*ags</b>    dst             remove HTML tags
-    --     'change quot*es'            cs'"            "change quotes"
-    --     <b>or tag* types</b>        csth1<CR>       <h1>or tag types</h1>
-    --     delete(functi*on calls)     dsf             function calls
-end
-
 -- echasnovski/mini.surround
 M.config_mini_surround = function()
     require("mini.surround").setup({
-        -- Add custom surroundings to be used on top of builtin ones. For more
-        -- information with examples, see `:h MiniSurround.config`.
         custom_surroundings = nil,
         -- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
         highlight_duration = 500,
@@ -868,16 +616,6 @@ M.config_mini_surround = function()
         },
         -- Number of lines within which surrounding is searched
         n_lines = 200,
-        -- Whether to respect selection type:
-        -- - Place surroundings on separate lines in linewise mode.
-        -- - Place surroundings on each line in blockwise mode.
-        respect_selection_type = false,
-        -- How to search for surrounding (first inside current line, then inside
-        -- neighborhood). One of 'cover', 'cover_or_next', 'cover_or_prev',
-        -- 'cover_or_nearest', 'next', 'prev', 'nearest'. For more details,
-        -- see `:h MiniSurround.config`.
-        search_method = "cover",
-        silent = false,
     })
 end
 
