@@ -23,7 +23,7 @@ return {
         cmd = "Generate implementations",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
     },
-    {
+    { -- breadcrumbs下拉
         "Bekaboo/dropbar.nvim",
         -- optional, but required for fuzzy finder support
         dependencies = {

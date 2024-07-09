@@ -80,20 +80,11 @@ M.config_lualine = function()
     }
     local function lsp_client_names()
         local client_names = {}
-        for _, client in ipairs(vim.lsp.get_active_clients()) do
+        for _, client in ipairs(vim.lsp.get_clients()) do
             table.insert(client_names, client.name)
         end
         return table.concat(client_names, ",")
     end
-    -- require("weather").setup({
-    --     openweathermap = {
-    --         app_id = {
-    --             var_name = "70e55ee4c82cef2997c087aa6540d9b8",
-    --             value = "70e55ee4c82cef2997c087aa6540d9b8",
-    --         },
-    --     },
-    --     -- default = "openweathermap",
-    -- })
 
     require("lualine").setup({
         options = {
@@ -354,54 +345,7 @@ M.config_bufferline = function()
             return v.hl_group
         end, vim.tbl_values(require("bufferline.config").highlights))
     )
-    -- require("close_buffers").setup({
-    -- 	filetype_ignore = {}, -- Filetype to ignore when running deletions
-    -- 	file_glob_ignore = {}, -- File name glob pattern to ignore when running deletions (e.g. '*.md')
-    -- 	file_regex_ignore = {}, -- File name regex pattern to ignore when running deletions (e.g. '.*[.]md')
-    -- 	preserve_window_layout = { "this", "nameless" }, -- Types of deletion that should preserve the window layout
-    -- 	next_buffer_cmd = function(windows)
-    -- 		require("bufferline").cycle(1)
-    -- 		local bufnr = vim.api.nvim_get_current_buf()
-    -- 		for _, window in ipairs(windows) do
-    -- 			vim.api.nvim_win_set_buf(window, bufnr)
-    -- 		end
-    -- 	end, -- Custom function to retrieve the next buffer when preserving window layout
-    -- })
 end
-M.keys_bufferline = {
-    -- {
-    --     "<leader>bn",
-    --     ":BufferLineCycleNext<cr>", -- 切换到下一个buffer
-    --     desc = "change to next buffer"
-    -- }, {
-    --     "<leader>bm",
-    --     ":BufferLineCyclePrev<cr>",   -- 切换到上一个buffer
-    --     desc = "change to preview buffer"
-    -- },
-    -- {
-    --     "<leader>bcr",
-    --     ":BufferLineCloseRight<cr>",
-    --     desc = "close right buffers"
-    -- }, {
-    --     "<leader>bcf",
-    --     ":BufferLineCloseLeft<cr>",
-    --     desc = "close left buffers"
-    -- }, {
-    --     "<leader>bco",
-    --     ":BufferLineCloseOthers<cr>",
-    --     desc = "close other buffers"
-    -- },
-    -- {
-    --     "<leader>bg",
-    --     ":BufferLinePick<cr>",
-    --     desc = "go to certain buffer"
-    -- },
-    -- {
-    --     "<leader>bD",
-    --     ":BufferLinePickClose<cr>",
-    --     desc = "close certain buffer"
-    -- }
-}
 
 -- goolord/alpha-nvim
 M.config_alpha = function()
@@ -874,145 +818,6 @@ M.config_incline = function()
         },
         hide = {
             cursorline = true, -- "focused_win",
-        },
-    })
-end
-
--- ldelossa/nvim-ide
-M.config_nvim_ide = function()
-    -- local bufferlist = require("ide.components.bufferlist")
-    local explorer = require("ide.components.explorer")
-    local outline = require("ide.components.outline")
-    local callhierarchy = require("ide.components.callhierarchy")
-    local timeline = require("ide.components.timeline")
-    local terminal = require("ide.components.terminal")
-    -- local terminalbrowser = require("ide.components.terminal.terminalbrowser")
-    local changes = require("ide.components.changes")
-    local commits = require("ide.components.commits")
-    local branches = require("ide.components.branches")
-    local bookmarks = require("ide.components.bookmarks")
-
-    require("ide").setup({
-        icon_set = "default", -- "nerd", "codicon", "default"
-        log_level = "info", -- "debug", "warn", "info", "error"
-        -- Component specific configurations and default config overrides.
-        components = {
-            -- The global keymap is applied to all Components before construction.
-            -- It allows common keymaps such as "hide" to be overridden, without having
-            -- to make an override entry for all Components.
-            --
-            -- If a more specific keymap override is defined for a specific Component
-            -- this takes precedence.
-            global_keymaps = {
-                -- example, change all Component's hide keymap to "h"
-                -- hide = h
-                close = "X",
-                collapse = "zc",
-                collapse_all = "zC",
-                details = "d",
-                expand = "zo",
-                help = "?",
-                hide = "<C-[>",
-                jump = "<CR>",
-            },
-            Bookmarks = {
-                default_height = nil,
-                disabled_keymaps = false,
-                hidden = false,
-                keymaps = {
-                    jump_split = "<c-x>",
-                    jump_tab = "<c-t>",
-                    jump_vsplit = "<c-v>",
-                    remove_bookmark = "D",
-                },
-            },
-            Branches = {
-                keymaps = {
-                    create_branch = "c",
-                    refresh = "r",
-                    pull = "p",
-                    push = "P",
-                    set_upstream = "s",
-                    help = "?",
-                },
-            },
-            Changes = {
-                keymaps = {
-                    add = "s",
-                    amend = "a",
-                    commit = "c",
-                    diff = "<CR>",
-                    diff_tab = "t",
-                    edit = "e",
-                    expand = "zo",
-                    help = "?",
-                    restore = "r",
-                },
-            },
-            Commits = {
-                keymaps = {
-                    checkout = "c",
-                    details_tab = "D",
-                    diff = "<CR>",
-                    diff_split = "s",
-                    diff_tab = "t",
-                    diff_vsplit = "v",
-                    help = "?",
-                    refresh = "r",
-                },
-            },
-            Timeline = {
-                keymaps = {
-                    help = "?",
-                    hide = "<C-[>",
-                    jump = "<CR>",
-                    jump_split = "<C-x>",
-                    jump_tab = "<c-t>",
-                    jump_vsplit = "<C-v>",
-                },
-            },
-            Explorer = {
-                keymaps = require("ide.components.explorer.presets").nvim_tree,
-            },
-            Outline = {
-                keymaps = {
-                    help = "?",
-                    hide = "<C-[>",
-                    jump = "<CR>",
-                    jump_split = "<C-x>",
-                    jump_tab = "<c-t>",
-                    jump_vsplit = "<C-v>",
-                },
-            },
-        },
-        -- default panel groups to display on left and right.
-        panels = {
-            left = "explorer",
-            right = "git",
-        },
-        -- panels defined by groups of components, user is free to redefine the defaults
-        -- and/or add additional.
-        panel_groups = {
-            explorer = {
-                explorer.Name,
-                outline.Name,
-                callhierarchy.Name,
-                bookmarks.Name, -- bufferlist.Name,
-                -- terminalbrowser.Name,
-            },
-            terminal = { terminal.Name },
-            git = { changes.Name, commits.Name, timeline.Name, branches.Name },
-        },
-        -- workspaces config
-        workspaces = {
-            -- which panels to open by default, one of: 'left', 'right', 'both', 'none'
-            auto_open = "left",
-        },
-        -- default panel sizes for the different positions
-        panel_sizes = {
-            left = 30,
-            right = 30,
-            bottom = 15,
         },
     })
 end

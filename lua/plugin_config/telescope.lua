@@ -166,7 +166,7 @@ M.config_telescope = function()
     require("telescope").load_extension("undo")
     require("telescope").load_extension("emoji")
     require("telescope").load_extension("projects")
-    require("telescope").load_extension("repo")
+    -- require("telescope").load_extension("repo")
     require("telescope").load_extension("ros")
     require("telescope").load_extension("docker")
     require("telescope").load_extension("dap")
@@ -181,25 +181,6 @@ M.config_telescope = function()
     --     }
     -- })
 end
-M.key_telescope = {
-    -- {
-    --     "<leader>ff",
-    --     ":Telescope find_files<cr>",
-    --     desc = "find files"
-    -- }, {
-    --     "<leader>fs",
-    --     ":Telescope grep_string<cr>",
-    --     desc = "grep string"
-    -- }, {
-    --     "<leader>fg",
-    --     ":Telescope live_grep<cr>",
-    --     desc = "live grep string"
-    -- }, {
-    --     "<leader>fr",
-    --     ":Telescope resume<cr>",
-    --     desc = "resume last search window"
-    -- }
-}
 
 -- tiagovla/scope.nvim
 M.config_scope = function()

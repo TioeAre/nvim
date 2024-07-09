@@ -22,14 +22,8 @@ return {
         lazy = false,
         dependencies = {
             "arkav/lualine-lsp-progress",
-            -- {
-            --     "wyattjsmith1/weather.nvim",
-            --     dependencies = {
-            --         "nvim-lua/plenary.nvim",
-            --     },
-            -- },
         },
-        -- enevt = { "VeryLazy", "FocusGained", "FocusLost", "FuncUndefined" },
+        -- event = { "VeryLazy", "FocusGained", "FocusLost", "FuncUndefined" },
         config = M.config_lualine,
     },
     -- tab栏状态
@@ -39,10 +33,8 @@ return {
         version = "*",
         dependencies = {
             "nvim-tree/nvim-web-devicons",
-            -- "kazhala/close-buffers.nvim",
         },
         config = M.config_bufferline,
-        keys = M.keys_bufferline,
     },
     -- 封面
     {
@@ -60,14 +52,6 @@ return {
         -- lazy = false,
         config = M.config_incline,
     },
-    -- ui
-    -- {
-    --     "ldelossa/nvim-ide",
-    --     lazy = false,
-    --     -- event = {"VeryLazy"},
-    --     config = M.config_nvim_ide,
-    -- },
-    -- ui
     -- { -- can't work
     --     "folke/edgy.nvim",
     --     event = "VeryLazy",

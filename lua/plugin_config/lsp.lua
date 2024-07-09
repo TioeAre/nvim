@@ -327,10 +327,10 @@ M.config_lspconfig = function()
                 package_uninstalled = "✗",
             },
         },
-        pip = {
-            upgrade_pip = false,
-            install_args = { "--proxy", "http://127.0.0.1:7890" },
-        },
+        -- pip = {
+        --     upgrade_pip = false,
+        --     install_args = { "--proxy", "http://127.0.0.1:7890" },
+        -- },
     })
 
     local exclude_servers = {

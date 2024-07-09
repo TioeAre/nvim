@@ -9,7 +9,7 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
-            "cljoly/telescope-repo.nvim",
+            -- "cljoly/telescope-repo.nvim",
             "xiyaowong/telescope-emoji.nvim",
             "bi0ha2ard/telescope-ros.nvim",
             "lpoto/telescope-docker.nvim",
@@ -27,10 +27,6 @@ return {
         cmd = "Telescope",
         event = { "VeryLazy" },
         config = M.config_telescope,
-        -- defaults = {
-        --     file_ignore_patterns = { "node_modules", ".git" },
-        -- },
-        keys = M.key_telescope,
     },
     -- -- 选项卡
     -- {

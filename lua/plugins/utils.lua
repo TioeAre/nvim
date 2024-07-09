@@ -37,6 +37,7 @@ return {
     -- smart yank
     {
         "ibhagwan/smartyank.nvim",
+        dependencies = {"AckslD/nvim-neoclip.lua"},
         event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_smartyank,
     },
@@ -81,12 +82,6 @@ return {
         opts = M.opts_twilight,
     },
     -- 保存上一次关闭时的工作区
-    -- {
-    -- 	"folke/persistence.nvim",
-    -- 	-- lazy = false, -- this will only start session saving when an actual file was opened
-    -- 	event = { "BufReadPre", "VeryLazy" },
-    -- 	opts = M.opts_persistence,
-    -- },
     {
         "olimorris/persisted.nvim",
         -- lazy = false, -- this will only start session saving when an actual file was opened
@@ -111,9 +106,6 @@ return {
     {
         "willothy/flatten.nvim",
         config = M.config_flatten,
-        -- or pass configuration with
-        opts = M.opts_flatten,
-        -- Ensure that it runs first to minimize delay when opening file from terminal
         lazy = false,
         priority = 1001,
     },
@@ -123,7 +115,6 @@ return {
         version = "*",
         cmd = "ToggleTerm",
         opts = M.opts_toggleterm,
-        dependencies = {},
     },
     -- 换行自动添加tab
     {
@@ -140,7 +131,6 @@ return {
             "luukvbaal/statuscol.nvim",
         },
         event = { "BufReadPost", "BufNewFile", "VeryLazy" },
-        opts = M.opts_ufo,
         config = M.config_ufo,
     },
     -- 跳转光标位置
@@ -156,7 +146,6 @@ return {
         event = "VeryLazy",
         -- version = "2.*",
         config = M.config_nvim_window_picker,
-        opts = M.opts_nvim_window_picker,
     },
     -- json5
     {
@@ -213,6 +202,7 @@ return {
         version = false,
         config = M.config_mini_surround,
     },
+    -- 匹配if else与括号
     {
         "andymass/vim-matchup",
         event = { "VeryLazy", "BufReadPost", "BufNewFile" },
