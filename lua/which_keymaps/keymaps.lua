@@ -701,149 +701,49 @@ wk.register({
 })
 
 -- other
-local term = vim.fn.getenv("TERM")
-
-if term == "screen-256color" then
-    wk.register({
-        -- aserowy/tmux.nvim
-        ["<C-Up>"] = {
-            "<cmd>lua require('tmux').resize_top()<cr>",
-            "Resize window",
-            -- mode = { "n" },
-            mode = { "n", "t" },
-        },
-        ["<C-Down>"] = {
-            "<cmd>lua require('tmux').resize_bottom()<cr>",
-            "Resize window",
-            -- mode = { "n" },
-            mode = { "n", "t" },
-        },
-        ["<C-Left>"] = {
-            "<cmd>lua require('tmux').resize_left()<cr>",
-            "Resize window",
-            -- mode = { "n" },
-            mode = { "n", "t" },
-        },
-        ["<C-Right>"] = {
-            "<cmd>lua require('tmux').resize_right()<cr>",
-            "Resize window",
-            -- mode = { "n" },
-            mode = { "n", "t" },
-        },
-    })
-else
-    wk.register({
-        -- mrjones2014/smart-splits.nvim
-        ["<C-Up>"] = {
-            -- "<cmd>resize -2<CR>",
-            "<cmd>lua require('smart-splits').resize_up() <cr>",
-            "Resize window",
-            -- mode = { "n" },
-            mode = { "n", "t" },
-        },
-        ["<C-Down>"] = {
-            -- "<cmd>resize +2<CR>",
-            "<cmd>lua require('smart-splits').resize_down() <cr>",
-            "Resize window",
-            -- mode = { "n" },
-            mode = { "n", "t" },
-        },
-        ["<C-Left>"] = {
-            -- "<cmd>vertical resize -2<CR>",
-            "<cmd>lua require('smart-splits').resize_left() <cr>",
-            "Resize window",
-            -- mode = { "n" },
-            mode = { "n", "t" },
-        },
-        ["<C-Right>"] = {
-            -- "<cmd>vertical resize +2<CR>",
-            "<cmd>lua require('smart-splits').resize_right() <cr>",
-            "Resize window",
-            -- mode = { "n" },
-            mode = { "n", "t" },
-        },
-    })
-end
-if term == "screen-256color" then
-    wk.register({
-        -- aserowy/tmux.nvim
-        ["<A-h>"] = {
-            -- "<C-w>h",
-            "<cmd>lua require('tmux').move_left()<cr>",
-            "move to left window",
-            mode = { "n", "t" },
-        },
-        ["<A-j>"] = {
-            -- "<C-w>j",
-            "<cmd>lua require('tmux').move_bottom()<cr>",
-            "move to down window",
-            mode = { "n", "t" },
-        },
-        ["<A-k>"] = {
-            -- "<C-w>k",
-            "<cmd>lua require('tmux').move_top()<cr>",
-            "move to up window",
-            mode = { "n", "t" },
-        },
-        ["<A-l>"] = {
-            -- "<C-w>l",
-            "<cmd>lua require('tmux').move_right()<cr>",
-            "move to right window",
-            mode = { "n", "t" },
-        },
-    })
-elseif term == "xterm-256color" then
-    wk.register({
-        -- knubie/vim-kitty-navigator
-        ["<A-h>"] = {
-            -- "<C-w>h",
-            "<cmd>KittyNavigateLeft<cr>",
-            "move to left window",
-            mode = { "n", "t" },
-        },
-        ["<A-j>"] = {
-            -- "<C-w>j",
-            "<cmd>KittyNavigateDown<cr>",
-            "move to down window",
-            mode = { "n", "t" },
-        },
-        ["<A-k>"] = {
-            -- "<C-w>k",
-            "<cmd>KittyNavigateUp<cr>",
-            "move to up window",
-            mode = { "n", "t" },
-        },
-        ["<A-l>"] = {
-            -- "<C-w>l",
-            "<cmd>KittyNavigateRight<cr>",
-            "move to right window",
-            mode = { "n", "t" },
-        },
-    })
-else
-    wk.register({
-        ["<A-h>"] = {
-            "<C-w>h",
-            "move to left window",
-            mode = { "n", "t" },
-        },
-        ["<A-j>"] = {
-            "<C-w>j",
-            "move to down window",
-            mode = { "n", "t" },
-        },
-        ["<A-k>"] = {
-            "<C-w>k",
-            "move to up window",
-            mode = { "n", "t" },
-        },
-        ["<A-l>"] = {
-            "<C-w>l",
-            "move to right window",
-            mode = { "n", "t" },
-        },
-    })
-end
+wk.register({
+    -- mrjones2014/smart-splits.nvim
+    ["<C-Up>"] = {
+        "<cmd>lua require('smart-splits').resize_up(2) <cr>",
+        "Resize window",
+        mode = { "n", "t" },
+    },
+    ["<C-Down>"] = {
+        "<cmd>lua require('smart-splits').resize_down(2) <cr>",
+        "Resize window",
+        mode = { "n", "t" },
+    },
+    ["<C-Left>"] = {
+        "<cmd>lua require('smart-splits').resize_left(2) <cr>",
+        "Resize window",
+        mode = { "n", "t" },
+    },
+    ["<C-Right>"] = {
+        "<cmd>lua require('smart-splits').resize_right(2) <cr>",
+        "Resize window",
+        mode = { "n", "t" },
+    },
+    ["<A-h>"] = {
+        "<cmd>lua require('smart-splits').move_cursor_left()<cr>",
+        "move to left window",
+        mode = { "n", "t" },
+    },
+    ["<A-j>"] = {
+        "<cmd>lua require('smart-splits').move_cursor_down()<cr>",
+        "move to down window",
+        mode = { "n", "t" },
+    },
+    ["<A-k>"] = {
+        "<cmd>lua require('smart-splits').move_cursor_up()<cr>",
+        "move to up window",
+        mode = { "n", "t" },
+    },
+    ["<A-l>"] = {
+        "<cmd>lua require('smart-splits').move_cursor_right()<cr>",
+        "move to right window",
+        mode = { "n", "t" },
+    },
+})
 
 wk.register({
     -- numToStr/Comment.nvim

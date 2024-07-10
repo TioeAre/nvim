@@ -158,7 +158,9 @@ return {
     -- window spilt and switch
     {
         "mrjones2014/smart-splits.nvim",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
+        lazy = false,
+        build = './kitty/install-kittens.bash',
         config = M.config_smart_splits,
     },
     -- move windows

@@ -531,13 +531,7 @@ end
 
 -- mrjones2014/smart-splits.nvim
 M.config_smart_splits = function()
-    require("smart-splits").setup({
-        ignored_filetypes = { "nofile", "quickfix", "prompt" },
-        ignored_buftypes = { "NvimTree" },
-        default_amount = 2,
-        at_edge = "wrap",
-        move_cursor_same_row = false,
-    })
+    require("smart-splits").setup()
 end
 
 -- sindrets/winshift.nvim
