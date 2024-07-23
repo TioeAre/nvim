@@ -1,4 +1,4 @@
-local M = require("plugin_config.lsp_navigator")
+local M = require("plugin_config.lsp")
 
 return {
     {
@@ -36,18 +36,18 @@ return {
             -- { -- documents for function args
             --     "ray-x/lsp_signature.nvim"
             -- },
-            {
-                "ray-x/navigator.lua",
-                dependencies = {
-                    {
-                        "ray-x/guihua.lua",
-                        build = "cd lua/fzy && make",
-                    },
-                    {
-                        "nvim-treesitter/nvim-treesitter"
-                    },
-                }
-            },
+            -- {
+            --     "ray-x/navigator.lua",
+            --     dependencies = {
+            --         {
+            --             "ray-x/guihua.lua",
+            --             build = "cd lua/fzy && make",
+            --         },
+            --         {
+            --             "nvim-treesitter/nvim-treesitter"
+            --         },
+            --     }
+            -- },
         },
         event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_lspconfig,
