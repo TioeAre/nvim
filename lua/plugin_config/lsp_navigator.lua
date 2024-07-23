@@ -195,64 +195,78 @@ M.config_lspconfig = function()
 		require("navigator.lspclient.mapping").setup({ client = client, bufnr = bufnr })
 
 		local wk = require("which-key")
-		wk.register({
-			g = {
-				name = "go to declaration/definitions/implementations/references",
-				d = {
-					-- "<cmd>TroubleToggle lsp_definitions<cr>",
-					"<cmd>Lspsaga finder def+tyd<cr>",
-					-- "<cmd>lua require'telescope.builtin'.lsp_definitions() <cr>",
-					"lsp find to (type)definition",
-					buffer = bufnr,
-				},
-				i = {
-					-- "<cmd>TroubleToggle lsp_implementations<cr>",
-					"<cmd>Lspsaga finder imp<cr>",
-					-- "<cmd>lua require'telescope.builtin'.lsp_implementations() <cr>",
-					"lsp find to implementation",
-					buffer = bufnr,
-				},
-				r = {
-					-- "<cmd>TroubleToggle lsp_references<cr>",
-					"<cmd>Lspsaga finder def+ref+imp+tyd<cr>",
-					-- "<cmd>lua require'telescope.builtin'.lsp_references() <cr>",
-					"lsp find to references",
-					buffer = bufnr,
-				},
-			},
-			["<leader>"] = {
-				f = {
-					name = "find telescope/todo/undo/buffer/project/dap configurations/lspsaga",
-					l = {
-						"<cmd>Lspsaga finder ++normal def+ref+imp+tyd<cr>",
-						"lspsaga find def+ref+imp+tyd",
-					},
-				},
-				d = {
-					name = "diagnostics/type_definition",
-					t = {
-						"<cmd>lua require'telescope.builtin'.diagnostics() <cr>",
-						"diagnostics",
-						buffer = bufnr,
-					},
-				},
-			},
+		wk.add({
+			mode = "n",
+			{"gd", "<cmd> Lspsaga finder def+tyd <cr>", desc = "lsp find to (type)definition", buffer = bufnr,},
+			{"gi", "<cmd> Lspsaga finder imp <cr>", desc = "lsp find to implementation", buffer = bufnr,},
+			{"gr", "<cmd> Lspsaga finder def+ref+imp+tyd <cr>", desc = "lsp find to references", buffer = bufnr,},
+
+			{"<leader>fl", "<cmd> Lspsaga finder ++normal def+ref+imp+tyd <cr>", desc = "lspsaga find def+ref+imp+tyd",},
+			{"<leader>dt", "<cmd> lua require'telescope.builtin'.diagnostics() <cr>", desc = "diagnostics", buffer = bufnr,},
 		})
+		-- wk.register({
+		-- 	g = {
+		-- 		name = "go to declaration/definitions/implementations/references",
+		-- 		d = {
+		-- 			-- "<cmd>TroubleToggle lsp_definitions<cr>",
+		-- 			"<cmd>Lspsaga finder def+tyd<cr>",
+		-- 			-- "<cmd>lua require'telescope.builtin'.lsp_definitions() <cr>",
+		-- 			"lsp find to (type)definition",
+		-- 			buffer = bufnr,
+		-- 		},
+		-- 		i = {
+		-- 			-- "<cmd>TroubleToggle lsp_implementations<cr>",
+		-- 			"<cmd>Lspsaga finder imp<cr>",
+		-- 			-- "<cmd>lua require'telescope.builtin'.lsp_implementations() <cr>",
+		-- 			"lsp find to implementation",
+		-- 			buffer = bufnr,
+		-- 		},
+		-- 		r = {
+		-- 			-- "<cmd>TroubleToggle lsp_references<cr>",
+		-- 			"<cmd>Lspsaga finder def+ref+imp+tyd<cr>",
+		-- 			-- "<cmd>lua require'telescope.builtin'.lsp_references() <cr>",
+		-- 			"lsp find to references",
+		-- 			buffer = bufnr,
+		-- 		},
+		-- 	},
+		-- 	["<leader>"] = {
+		-- 		f = {
+		-- 			name = "find telescope/todo/undo/buffer/project/dap configurations/lspsaga",
+		-- 			l = {
+		-- 				"<cmd>Lspsaga finder ++normal def+ref+imp+tyd<cr>",
+		-- 				"lspsaga find def+ref+imp+tyd",
+		-- 			},
+		-- 		},
+		-- 		d = {
+		-- 			name = "diagnostics/type_definition",
+		-- 			t = {
+		-- 				"<cmd>lua require'telescope.builtin'.diagnostics() <cr>",
+		-- 				"diagnostics",
+		-- 				buffer = bufnr,
+		-- 			},
+		-- 		},
+		-- 	},
+		-- })
 
 		require("navigator.dochighlight").documentHighlight(bufnr)
 		require("navigator.codeAction").code_action_prompt(bufnr)
 		if client.name == "pyright" then
-			wk.register({
-				["<leader>"] = {
-					o = {
-						name = "organize",
-						i = {
-							"<cmd>PyrightOrganizeImports <cr>",
-							"PyrightOrganizeImports",
-						},
-					},
-				},
+			wk.add({
+				mode = "n",
+				{"<leader>oi", "<cmd> PyrightOrganizeImports <cr>", desc = "PyrightOrganizeImports",},
 			})
+
+			-- wk.register({
+			-- 	["<leader>"] = {
+			-- 		o = {
+			-- 			name = "organize",
+			-- 			i = {
+			-- 				"<cmd>PyrightOrganizeImports <cr>",
+			-- 				"PyrightOrganizeImports",
+			-- 			},
+			-- 		},
+			-- 	},
+			-- })
 		end
 	end
 
