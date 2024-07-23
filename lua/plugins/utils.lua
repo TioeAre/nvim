@@ -223,14 +223,14 @@ return {
         config = M.config_tmux,
     },
     -- kitty
-    {
-        "knubie/vim-kitty-navigator",
-        dependencies = { "edluffy/hologram.nvim" },
-        event = { "VeryLazy" },
-        enabled = true,
-        build = "cp ./*.py ~/.config/kitty/",
-        config = M.config_vim_kitty_navigator,
-    },
+    -- {
+    --     "knubie/vim-kitty-navigator",
+    --     dependencies = { "edluffy/hologram.nvim" },
+    --     event = { "VeryLazy" },
+    --     enabled = true,
+    --     build = "cp ./*.py ~/.config/kitty/",
+    --     config = M.config_vim_kitty_navigator,
+    -- },
     -- stickybuf
     {
         "stevearc/stickybuf.nvim",
