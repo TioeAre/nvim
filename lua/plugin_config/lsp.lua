@@ -138,7 +138,7 @@ M.config_lspconfig = function()
             {
                 "K",
                 "<cmd> Lspsaga hover_doc <cr>",
-                dosc = "hover_doc",
+                desc = "hover_doc",
                 buffer = bufnr
             },
             {
