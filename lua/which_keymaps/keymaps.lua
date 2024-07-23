@@ -730,9 +730,18 @@ wk.add({
 		mode = "n",
 	},
 	{
+		"<leader>dt",
+		desc = "telescope diagnostics",
+	},
+	{
 		"<leader>da",
-		desc = "diagnostics",
-	}, -- mfussenegger/nvim-dap
+		desc = "lsp diagnostic_jump_prev",
+	},
+	{
+		"<leader>dw",
+		desc = "lsp diagnostic_jump_next",
+	},
+	-- mfussenegger/nvim-dap
 	{
 		"<leader>dr",
 		function()
@@ -786,7 +795,7 @@ wk.add({
 	},
 	{
 		"<leader>D",
-		desc = "type_definition_preview",
+		desc = "lsp type_definition_preview",
 	},
 	{
 		"<leader>r",

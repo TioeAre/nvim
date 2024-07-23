@@ -9,6 +9,56 @@ M.config_mason_lspconfig = function() end
 
 -- neovim/nvim-lspconfig
 M.config_lspconfig = function()
+    require("neoconf").setup()
+	require("neodev").setup({
+		library = { plugins = { "nvim-dap-ui" }, types = true },
+	})
+	require("fidget").setup()
+	require("mason").setup({
+		ui = {
+			icons = {
+				width = 0.6,
+				height = 0.7,
+				package_installed = "✓",
+				package_pending = "➜",
+				package_uninstalled = "✗",
+			},
+		},
+		-- pip = {
+		-- 	upgrade_pip = false,
+		-- 	install_args = { "--proxy", "http://127.0.0.1:7890" },
+		-- },
+		PATH = "append",
+	})
+	require("mason-tool-installer").setup({
+		ensure_installed = {
+			"shellcheck",
+			-- "clangtidy",
+			"cmakelint",
+			"hadolint",
+			"htmlhint",
+			"jsonlint",
+			"luacheck",
+			"flake8",
+			-- "yamllint",
+			"shfmt",
+			-- "clang-format",
+			"prettier",
+			"xmlformatter",
+			"latexindent",
+			"stylua",
+			-- "autopep8",
+		},
+	})
+	require("mason-nvim-dap").setup({
+		ensure_installed = {
+			"bash-debug-adapter",
+			"cpptools",
+			"debugpy",
+			"mockdebug",
+		},
+	})
+
     local util = require("lspconfig.util")
     local clangd_root_files = {
         "build/compile_commands.json",
@@ -78,191 +128,109 @@ M.config_lspconfig = function()
             -- 	},
             -- },
         },
-        dockerls = {},
         docker_compose_language_service = {},
-        html = {},
-        jsonls = {},
-        lua_ls = {
-            -- settings = {
-            --     Lua = {
-            --         telemetry = { enable = false },
-            --         -- make the language server recognize "vim" global
-            --         diagnostics = {
-            --             globals = { "vim" },
-            --         },
-            --         workspace = {
-            --             -- make language server aware of runtime files
-            --             library = {
-            --                 [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-            --                 [vim.fn.stdpath("config") .. "/lua"] = true,
-            --             },
-            --         },
-            --     },
-            -- },
-        },
-        pyright = {},
-        lemminx = {},
-        yamlls = {},
-        matlab_ls = {},
+		lemminx = {},
+		matlab_ls = {},
+		bashls = {},
+		pyright = {},
+		lua_ls = {
+			settings = {
+				Lua = {
+					telemetry = { enable = false },
+					-- make the language server recognize "vim" global
+					diagnostics = {
+						globals = { "vim" },
+					},
+					workspace = {
+						-- make language server aware of runtime files
+						library = {
+							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+							[vim.fn.stdpath("config") .. "/lua"] = true,
+						},
+					},
+				},
+			},
+		},
+		dockerls = {},
+		html = {},
+		jsonls = {},
+		yamlls = {},
     }
 
     local on_attach = function(client, bufnr)
         local wk = require("which-key")
-        wk.register({
-            K = {
-                "<cmd>Lspsaga hover_doc <cr>",
-                "show documentation for what is under cursor",
-                buffer = bufnr,
-            },
-            ["<c-h>"] = {
-                "<cmd>Lspsaga peek_definition<cr>",
-                "lsp peek definition",
-            },
-            ["<c-k>"] = {
-                "<cmd>lua vim.lsp.buf.signature_help() <cr>",
-                "Signature Documentation",
-                buffer = bufnr,
-            },
-            g = {
-                name = "go to declaration/definitions/implementations/references",
-                D = { "<cmd>lua vim.lsp.buf.declaration() <cr>", "go to declaration", buffer = bufnr },
-                d = {
-                    -- "<cmd>TroubleToggle lsp_definitions<cr>",
-                    "<cmd>Lspsaga finder def+tyd<cr>",
-                    -- "<cmd>lua require'telescope.builtin'.lsp_definitions() <cr>",
-                    "lsp find to (type)definition",
-                    buffer = bufnr,
-                },
-                i = {
-                    -- "<cmd>TroubleToggle lsp_implementations<cr>",
-                    "<cmd>Lspsaga finder imp<cr>",
-                    -- "<cmd>lua require'telescope.builtin'.lsp_implementations() <cr>",
-                    "lsp find to implementation",
-                    buffer = bufnr,
-                },
-                r = {
-                    -- "<cmd>TroubleToggle lsp_references<cr>",
-                    "<cmd>Lspsaga finder def+ref+imp+tyd<cr>",
-                    -- "<cmd>lua require'telescope.builtin'.lsp_references() <cr>",
-                    "lsp find to references",
-                    buffer = bufnr,
-                },
-            },
-            ["<leader>"] = {
-                f = {
-                    name = "find telescope/todo/undo/buffer/project/dap configurations/lspsaga",
-                    l = {
-                        "<cmd>Lspsaga finder ++normal def+ref+imp+tyd<cr>",
-                        "lspsaga find def+ref+imp+tyd",
-                    },
-                },
-                w = {
-                    name = "workspace",
-                    a = {
-                        "<cmd>lua vim.lsp.buf.add_workspace_folder() <cr>",
-                        "workspace add folder",
-                        buffer = bufnr,
-                    },
-                    r = {
-                        "<cmd>lua vim.lsp.buf.remove_workspace_folder() <cr>",
-                        "workspace remove folder",
-                        buffer = bufnr,
-                    },
-                    l = {
-                        function()
-                            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                        end,
-                        "workspace list folder",
-                        buffer = bufnr,
-                    },
-                },
-                c = {
-                    name = "close/code action",
-                    a = {
-                        "<cmd>Lspsaga code_action <cr>",
-                        "see available code actions",
-                        buffer = bufnr,
-                    },
-                },
-                d = {
-                    name = "diagnostics/type_definition",
-                    t = {
-                        "<cmd>lua require'telescope.builtin'.diagnostics() <cr>",
-                        "diagnostics",
-                        buffer = bufnr,
-                    },
-                    a = {
-                        "<cmd>Lspsaga diagnostic_jump_prev<cr>",
-                        "lsp diagnostic_jump_prev",
-                    },
-                    w = {
-                        "<cmd>Lspsaga diagnostic_jump_next<cr>",
-                        "lsp diagnostic_jump_next",
-                    },
-                },
-                D = {
-                    -- "<cmd>lua vim.lsp.buf.type_definition() <cr>",
-                    -- "<cmd>Lspsaga finder def+tyd<cr>",
-                    "<cmd>Lspsaga peek_type_definition<cr>",
-                    "lsp type definition",
-                    buffer = bufnr,
-                },
-                r = {
-                    name = "rename/remove",
-                    n = {
-                        "<cmd>Lspsaga rename ++project <cr>",
-                        "lsp rename",
-                        buffer = bufnr,
-                    },
-                    -- a = {
-                    --     "<cmd>Lspsaga project_replace<cr>",
-                    --     "use cmd Lspsaga project_replace old new",
-                    -- },
-                },
-                o = {
-                    name = "open layout/outline/gitgraph",
-                    s = {
-                        d = {
-                            "<cmd>Lspsaga outline<cr>",
-                            "open lsp document_symbols",
-                        }
-                    },
-                    c = {
-                        -- "vim.lsp.buf.outgoing_calls()",
-                        name = "open function callhierarchy",
-                        o = {
-                            "<cmd>Lspsaga outgoing_calls<cr>",
-                            "lsp outgoing calls",
-                        },
-                        i = {
-                            "<cmd>Lspsaga incoming_calls<cr>",
-                            "lsp incoming calls",
-                        },
-                    },
-                },
-            },
-        })
+        wk.add({
+			mode = "n",
+            {"K", "<cmd> Lspsaga hover_doc <cr>", dosc = "hover_doc", buffer = bufnr,},
+            {"<c-h>", "<cmd> Lspsaga peek_definition <cr>", desc = "lsp peek definition"},
+            {"<c-k>", "<cmd> lua vim.lsp.buf.signature_help() <cr>", desc = "Signature Documentation", buffer = bufnr,},
+
+            {"gD", "<cmd> lua vim.lsp.buf.declaration() <cr>", desc = "go to declaration", buffer = bufnr,},
+			{"gd", "<cmd> Lspsaga finder def+tyd <cr>", desc = "lsp find to (type)definition", buffer = bufnr,},
+			{"gi", "<cmd> Lspsaga finder imp <cr>", desc = "lsp find to implementation", buffer = bufnr,},
+			{"gr", "<cmd> Lspsaga finder def+ref+imp+tyd <cr>", desc = "lsp find to references", buffer = bufnr,},
+
+			{"<leader>fl", "<cmd> Lspsaga finder ++normal def+ref+imp+tyd <cr>", desc = "lspsaga find def+ref+imp+tyd",},
+
+            {"<leader>wa", "<cmd> lua vim.lsp.buf.add_workspace_folder() <cr>", desc = "lsp workspace add folder", buffer = bufnr,},
+            {"<leader>wr", "<cmd> lua vim.lsp.buf.remove_workspace_folder() <cr>", desc = "lsp workspace remove folder", buffer = bufnr,},
+            {"<leader>wl", function()
+                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end, desc = "lsp workspace list folder", buffer = bufnr,},
+
+            {"<leader>ca", "<cmd> Lspsaga code_action <cr>", desc = "available code actions", buffer = bufnr,},
+            {"<leader>dt", "<cmd> lua require'telescope.builtin'.diagnostics() <cr>", desc = "telescope diagnostics", buffer = bufnr,},
+            {"<leader>da", "<cmd> Lspsaga diagnostic_jump_prev <cr>", desc = "lsp diagnostic_jump_prev",},
+            {"<leader>dw", "<cmd> Lspsaga diagnostic_jump_next <cr>", desc = "lsp diagnostic_jump_next",},
+
+            {"<leader>D", "<cmd> Lspsaga peek_type_definition <cr>", desc = "lsp type definition", buffer = bufnr,},
+            {"<leader>rn", "<cmd> Lspsaga rename ++project <cr>", desc = "lsp rename", buffer = bufnr,},
+
+            {"<leader>osd", "<cmd> Lspsaga outline <cr>", desc = "open lsp document_symbols"},
+            {"<leader>oso", "<cmd> Lspsaga outgoing_calls <cr>", desc = "lsp outgoing calls"},
+            {"<leader>osi", "<cmd> Lspsaga incoming_calls <cr>", desc = "lsp incoming calls"},
+		})
 
         if client.name == "pyright" then
-            wk.register({
-                ["<leader>"] = {
-                    o = {
-                        name = "organize",
-                        i = {
-                            "<cmd>PyrightOrganizeImports <cr>",
-                            "PyrightOrganizeImports",
-                        },
-                    },
-                },
-            })
+            wk.add({
+				mode = "n",
+				{"<leader>oi", "<cmd> PyrightOrganizeImports <cr>", desc = "PyrightOrganizeImports",},
+			})
         end
     end
-    -- red setup()
-    require("neoconf").setup()
-    require("neodev").setup({
-        library = { plugins = { "nvim-dap-ui" }, types = true },
+
+    local exclude_servers = {
+        "ltex",
+    }
+    local installed_servers = vim.tbl_keys(servers)
+    local filtered_servers = {}
+    for _, server in ipairs(installed_servers) do
+        if not vim.tbl_contains(exclude_servers, server) then
+            table.insert(filtered_servers, server)
+        end
+    end
+    require("mason-lspconfig").setup({
+        ensure_installed = filtered_servers,
     })
-    require("fidget").setup()
+    -- neovim/nvim-lspconfig
+    for server, config in pairs(servers) do
+        require("lspconfig")[server].setup(vim.tbl_deep_extend("keep", {
+            on_attach = on_attach,
+            capabilities = capabilities,
+        }, config))
+    end
+
+    require("ltex_extra").setup({
+        load_langs = { "en-US", "zh-CN" },
+        init_check = true,
+        -- path = "",
+        log_level = "none",
+        server_opts = {
+            capabilities = capabilities,
+            on_attach = on_attach,
+        },
+    })
+
     require("lspsaga").setup({
         callhierarchy = {
             keys = {
@@ -317,84 +285,6 @@ M.config_lspconfig = function()
             -- show_code_action = false,
         },
     })
-    require("mason").setup({
-        ui = {
-            icons = {
-                width = 0.6,
-                height = 0.7,
-                package_installed = "✓",
-                package_pending = "➜",
-                package_uninstalled = "✗",
-            },
-        },
-        -- pip = {
-        --     upgrade_pip = false,
-        --     install_args = { "--proxy", "http://127.0.0.1:7890" },
-        -- },
-    })
-
-    local exclude_servers = {
-        "ltex",
-    }
-    local installed_servers = vim.tbl_keys(servers)
-    local filtered_servers = {}
-    for _, server in ipairs(installed_servers) do
-        if not vim.tbl_contains(exclude_servers, server) then
-            table.insert(filtered_servers, server)
-        end
-    end
-    require("mason-lspconfig").setup({
-        ensure_installed = filtered_servers,
-    })
-    -- neovim/nvim-lspconfig
-    for server, config in pairs(servers) do
-        require("lspconfig")[server].setup(vim.tbl_deep_extend("keep", {
-            on_attach = on_attach,
-            capabilities = capabilities,
-        }, config))
-    end
-
-    require("ltex_extra").setup({
-        load_langs = { "en-US", "zh-CN" },
-        init_check = true,
-        -- path = "",
-        log_level = "none",
-        server_opts = {
-            capabilities = capabilities,
-            on_attach = on_attach,
-        },
-    })
-
-    -- WhoIsSethDaniel/mason-tool-installer.nvim
-    require("mason-tool-installer").setup({
-        ensure_installed = {
-            "shellcheck",
-            -- "clangtidy",
-            "cmakelint",
-            "hadolint",
-            "htmlhint",
-            "jsonlint",
-            "luacheck",
-            "flake8",
-            -- "yamllint",
-            "shfmt",
-            -- "clang-format",
-            "prettier",
-            "xmlformatter",
-            "latexindent",
-            "stylua",
-            -- "autopep8",
-        },
-    })
-    -- jay-babu/mason-nvim-dap.nvim
-    require("mason-nvim-dap").setup({
-        ensure_installed = {
-            "bash-debug-adapter",
-            "cpptools",
-            "debugpy",
-            "mockdebug",
-        },
-    })
 
     local diagnostic_signs = { Error = " ", Warn = " ", Hint = "❃", Info = "" }
     for type, icon in pairs(diagnostic_signs) do
@@ -442,7 +332,6 @@ M.config_lspconfig = function()
     end
     -- call
     show_only_one_sign_in_sign_column()
-
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         signs = true,
         underline = true,
