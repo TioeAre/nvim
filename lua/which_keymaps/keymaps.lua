@@ -4,7 +4,7 @@ local lint = require("lint")
 
 wk.add({ -- echasnovski/mini.surround
 	{
-		"\\",
+		"m",
 		desc = "mini.surround",
 	}, -- folke/trouble.nvim
 	{
