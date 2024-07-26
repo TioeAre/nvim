@@ -4,7 +4,7 @@ local lint = require("lint")
 
 wk.add({ -- echasnovski/mini.surround
 	{
-		"\\",
+		"m",
 		desc = "mini.surround",
 	}, -- folke/trouble.nvim
 	{
@@ -171,6 +171,22 @@ wk.add({ -- echasnovski/mini.surround
 		"t",
 		desc = "toggle dap ui breakpoint",
 	},
+    {
+        "zg",
+        desc = "add word to ignore-spellcheck",
+    },
+    {
+        "zG",
+        desc = "add word to temp ignore-spellcheck",
+    },
+    {
+        "zw",
+        desc = "remove word from ignore-spellcheck",
+    },
+    {
+        "zW",
+        desc = "remove word from temp ignore-spellcheck",
+    },
 })
 
 -- plugin keymap
