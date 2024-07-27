@@ -74,7 +74,7 @@ vim.opt.laststatus = 3
 vim.opt.swapfile = false
 
 -- spell check
-vim.opt.spell = true
+vim.opt.spell = false
 vim.opt.spelllang = "en"
 vim.opt.spelloptions = "camel"
 
