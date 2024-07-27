@@ -1,22 +1,20 @@
 local M = {}
 
 -- williamboman/mason.nvim
-M.config_mason = function()
-end
+M.config_mason = function() end
 
 -- williamboman/mason-lspconfig.nvim
 M.opts_mason_lspconfig = {}
-M.config_mason_lspconfig = function()
-end
+M.config_mason_lspconfig = function() end
 
 -- neovim/nvim-lspconfig
 M.config_lspconfig = function()
     require("neoconf").setup()
     require("neodev").setup({
         library = {
-            plugins = {"nvim-dap-ui"},
-            types = true
-        }
+            plugins = { "nvim-dap-ui" },
+            types = true,
+        },
     })
     require("fidget").setup()
     require("mason").setup({
@@ -26,46 +24,71 @@ M.config_lspconfig = function()
                 height = 0.7,
                 package_installed = "✓",
                 package_pending = "➜",
-                package_uninstalled = "✗"
-            }
+                package_uninstalled = "✗",
+            },
         },
         -- pip = {
         -- 	upgrade_pip = false,
         -- 	install_args = { "--proxy", "http://127.0.0.1:7890" },
         -- },
-        PATH = "append"
+        PATH = "append",
     })
     require("mason-tool-installer").setup({
-        ensure_installed = {"shellcheck", -- "clangtidy",
-        "cmakelint", "hadolint", "htmlhint", "jsonlint", "luacheck", "flake8", -- "yamllint",
-        "shfmt", -- "clang-format",
-        "prettier", "xmlformatter", "latexindent", "stylua" -- "autopep8",
-        }
+        ensure_installed = {
+            "shellcheck", -- "clangtidy",
+            "cmakelint",
+            "hadolint",
+            "htmlhint",
+            "jsonlint",
+            "luacheck",
+            "flake8", -- "yamllint",
+            "shfmt", -- "clang-format",
+            "prettier",
+            "xmlformatter",
+            "latexindent",
+            "stylua", -- "autopep8",
+        },
     })
     require("mason-nvim-dap").setup({
-        ensure_installed = {"bash-debug-adapter", "cpptools", "debugpy", "mockdebug"}
+        ensure_installed = { "bash-debug-adapter", "cpptools", "debugpy", "mockdebug" },
     })
 
     local util = require("lspconfig.util")
-    local clangd_root_files = {"build/compile_commands.json", "compile_commands.json", ".clangd", ".clang-tidy",
-                               ".clang-format", -- "build",
-    "compile_flags.txt", "configure.ac" -- AutoTools
-    -- "CMakeLists.txt",
-    -- "Makefile",
-    -- ".catkin_workspace",
-    -- "devel",
-    -- ".vscode",
+    local clangd_root_files = {
+        "build/compile_commands.json",
+        "compile_commands.json",
+        ".clangd",
+        ".clang-tidy",
+        ".clang-format", -- "build",
+        "compile_flags.txt",
+        "configure.ac", -- AutoTools
+        -- "CMakeLists.txt",
+        -- "Makefile",
+        -- ".catkin_workspace",
+        -- "devel",
+        -- ".vscode",
     }
-    local cmake_root_files = {"build/compile_commands.json", "compile_commands.json", "src/CMakeLists.txt", "devel",
-                              "build", "CMakeLists.txt" -- ".vscode",
+    local cmake_root_files = {
+        "build/compile_commands.json",
+        "compile_commands.json",
+        "src/CMakeLists.txt",
+        "devel",
+        "build",
+        "CMakeLists.txt", -- ".vscode",
     }
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     capabilities.textDocument.foldingRange = {
         dynamicRegistration = true,
-        lineFoldingOnly = true
+        lineFoldingOnly = true,
     }
     local servers = {
-        bashls = {},
+        bashls = {
+            cmd = { "bash-language-server", "start" },
+            filetypes = { "sh" },
+            root_dir = function(fname)
+                util.find_git_ancestor(fname)
+            end,
+        },
         clangd = {
             root_dir = function(fname)
                 return util.root_pattern(unpack(clangd_root_files))(fname) -- or util.find_git_ancestor(fname)
@@ -74,12 +97,12 @@ M.config_lspconfig = function()
             -- 	return util.root_pattern("compile_commands.json")(fname)
             -- 		or util.root_pattern("build/compile_commands.json")(fname)
             -- end,
-            cmd = {"clangd", "--compile-commands-dir=./build"}
+            cmd = { "clangd", "--compile-commands-dir=./build" },
         },
         neocmake = {
             default_config = {
-                cmd = {"neocmakelsp", "--stdio"},
-                filetypes = {"cmake"},
+                cmd = { "neocmakelsp", "--stdio" },
+                filetypes = { "cmake" },
                 root_dir = function(fname)
                     return util.root_pattern(unpack(cmake_root_files))(fname) or util.find_git_ancestor(fname)
                     -- return require("lspconfig").util.find_git_ancestor(fname)
@@ -87,11 +110,11 @@ M.config_lspconfig = function()
                 single_file_support = true, -- suggested
                 init_options = {
                     format = {
-                        enable = false
+                        enable = false,
                     },
-                    scan_cmake_in_package = true -- default is true
-                }
-            }
+                    scan_cmake_in_package = true, -- default is true
+                },
+            },
             -- capabilities = {
             -- 	workspace = {
             -- 		didChangeWatchedFiles = {
@@ -108,26 +131,26 @@ M.config_lspconfig = function()
             settings = {
                 Lua = {
                     telemetry = {
-                        enable = false
+                        enable = false,
                     },
                     -- make the language server recognize "vim" global
                     diagnostics = {
-                        globals = {"vim"}
+                        globals = { "vim" },
                     },
                     workspace = {
                         -- make language server aware of runtime files
                         library = {
                             [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                            [vim.fn.stdpath("config") .. "/lua"] = true
-                        }
-                    }
-                }
-            }
+                            [vim.fn.stdpath("config") .. "/lua"] = true,
+                        },
+                    },
+                },
+            },
         },
         dockerls = {},
         html = {},
         jsonls = {},
-        yamlls = {}
+        yamlls = {},
     }
 
     local on_attach = function(client, bufnr)
@@ -138,62 +161,65 @@ M.config_lspconfig = function()
                 "K",
                 "<cmd> Lspsaga hover_doc <cr>",
                 desc = "hover_doc",
-                buffer = bufnr
+                buffer = bufnr,
             },
             {
                 "<c-h>",
                 "<cmd> Lspsaga peek_definition <cr>",
-                desc = "lsp peek definition"
+                desc = "lsp peek definition",
             },
             {
                 "<c-k>",
                 "<cmd> lua vim.lsp.buf.signature_help() <cr>",
                 desc = "Signature Documentation",
-                buffer = bufnr
+                buffer = bufnr,
             },
 
             {
                 "gD",
                 "<cmd> lua vim.lsp.buf.declaration() <cr>",
                 desc = "go to declaration",
-                buffer = bufnr
+                buffer = bufnr,
             },
             {
                 "gd",
                 "<cmd> Lspsaga finder def+tyd <cr>",
                 desc = "lsp find to (type)definition",
-                buffer = bufnr
+                buffer = bufnr,
             },
             {
                 "gi",
                 "<cmd> Lspsaga finder imp <cr>",
                 desc = "lsp find to implementation",
-                buffer = bufnr
+                buffer = bufnr,
             },
             {
                 "gr",
                 "<cmd> Lspsaga finder def+ref+imp+tyd <cr>",
                 desc = "lsp find to references",
-                buffer = bufnr
+                buffer = bufnr,
             },
-
             {
                 "<leader>fl",
                 "<cmd> Lspsaga finder ++normal def+ref+imp+tyd <cr>",
-                desc = "lspsaga find def+ref+imp+tyd"
+                desc = "lspsaga find def+ref+imp+tyd",
             },
-
+            -- {
+            -- 	"<leader>fw",
+            -- 	"<cmd> Lspsaga finder <cr>",
+            -- 	desc = "lspsaga finder",
+            -- },
             {
                 "<leader>wa",
                 "<cmd> lua vim.lsp.buf.add_workspace_folder() <cr>",
                 desc = "lsp workspace add folder",
-                buffer = bufnr
+                buffer = bufnr,
             },
             {
                 "<leader>wr",
                 "<cmd> lua vim.lsp.buf.remove_workspace_folder() <cr>",
                 desc = "lsp workspace remove folder",
-                buffer = bufnr
+                buffer = bufnr,
             },
             {
                 "<leader>wl",
@@ -201,60 +227,70 @@ M.config_lspconfig = function()
                     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
                 end,
                 desc = "lsp workspace list folder",
-                buffer = bufnr
+                buffer = bufnr,
             },
 
             {
                 "<leader>ca",
                 "<cmd> Lspsaga code_action <cr>",
                 desc = "available code actions",
-                buffer = bufnr
+                buffer = bufnr,
             },
             {
                 "<leader>dt",
                 "<cmd> lua require'telescope.builtin'.diagnostics() <cr>",
                 desc = "telescope diagnostics",
-                buffer = bufnr
+                buffer = bufnr,
             },
             {
                 "<leader>da",
                 "<cmd> Lspsaga diagnostic_jump_prev <cr>",
-                desc = "lsp diagnostic_jump_prev"
+                desc = "lsp diagnostic_jump_prev",
             },
             {
                 "<leader>dw",
                 "<cmd> Lspsaga diagnostic_jump_next <cr>",
-                desc = "lsp diagnostic_jump_next"
+                desc = "lsp diagnostic_jump_next",
             },
 
             {
                 "<leader>D",
                 "<cmd> Lspsaga peek_type_definition <cr>",
                 desc = "lsp type definition",
-                buffer = bufnr
+                buffer = bufnr,
             },
             {
                 "<leader>rn",
                 "<cmd> Lspsaga rename ++project <cr>",
                 desc = "lsp rename",
-                buffer = bufnr
+                buffer = bufnr,
             },
 
             {
                 "<leader>osd",
                 "<cmd> Lspsaga outline <cr>",
-                desc = "open lsp document_symbols"
+                desc = "open lsp document_symbols",
             },
             {
                 "<leader>oso",
                 "<cmd> Lspsaga outgoing_calls <cr>",
-                desc = "lsp outgoing calls"
+                desc = "lsp outgoing calls",
             },
             {
                 "<leader>osi",
                 "<cmd> Lspsaga incoming_calls <cr>",
-                desc = "lsp incoming calls"
-            }
+                desc = "lsp incoming calls",
+            },
+            {
+                "[e",
+                "<cmd> Lspsaga diagnostic_jump_prev <cr>",
+                desc = "lsp diagnostic_jump_prev",
+            },
+            {
+                "]e",
+                "<cmd> Lspsaga diagnostic_jump_next <cr>",
+                desc = "lsp diagnostic_jump_next",
+            },
         })
 
         if client.name == "pyright" then
@@ -263,13 +299,13 @@ M.config_lspconfig = function()
                 {
                     "<leader>oi",
                     "<cmd> PyrightOrganizeImports <cr>",
-                    desc = "PyrightOrganizeImports"
-                }
+                    desc = "PyrightOrganizeImports",
+                },
             })
         end
     end
 
-    local exclude_servers = {"ltex"}
+    local exclude_servers = { "ltex" }
     local installed_servers = vim.tbl_keys(servers)
     local filtered_servers = {}
     for _, server in ipairs(installed_servers) do
@@ -278,25 +314,25 @@ M.config_lspconfig = function()
         end
     end
     require("mason-lspconfig").setup({
-        ensure_installed = filtered_servers
+        ensure_installed = filtered_servers,
     })
     -- neovim/nvim-lspconfig
     for server, config in pairs(servers) do
         require("lspconfig")[server].setup(vim.tbl_deep_extend("keep", {
             on_attach = on_attach,
-            capabilities = capabilities
+            capabilities = capabilities,
         }, config))
     end
 
     require("ltex_extra").setup({
-        load_langs = {"en-US", "zh-CN"},
+        load_langs = { "en-US", "zh-CN" },
         init_check = true,
         -- path = "",
         log_level = "none",
         server_opts = {
             capabilities = capabilities,
-            on_attach = on_attach
-        }
+            on_attach = on_attach,
+        },
     })
 
     require("lspsaga").setup({
@@ -307,33 +343,33 @@ M.config_lspconfig = function()
                 split = "<C-x>",
                 -- tabe = "o",
                 tabnew = "<c-t>",
-                toggle_or_open = {"<CR>", "o"},
-                quit = {"<esc>", "q"}
-            }
+                toggle_or_open = { "<CR>", "o" },
+                quit = { "<esc>", "q" },
+            },
         },
         -- breadcrumbs
         symbol_in_winbar = {
-            enable = true
+            enable = true,
         },
         code_action = {
             extend_gitsigns = true,
-            show_server_name = true
+            show_server_name = true,
         },
         -- keybindings for navigation in lspsaga window
         move_in_saga = {
             prev = "<C-k>",
-            next = "<C-j>"
+            next = "<C-j>",
         },
         -- use enter to open file with finder
         finder_action_keys = {
-            open = {"<CR>", "o"}
+            open = { "<CR>", "o" },
         },
         -- use enter to open file with definition preview
         definition_action_keys = {
-            edit = "<CR>"
+            edit = "<CR>",
         },
         rename = {
-            in_select = false
+            in_select = false,
         },
         finder = {
             keys = {
@@ -342,33 +378,33 @@ M.config_lspconfig = function()
                 split = "<C-x>",
                 -- tabe = "o",
                 tabnew = "<c-t>",
-                toggle_or_open = {"<CR>", "o"},
-                quit = {"<esc>", "q"}
+                toggle_or_open = { "<CR>", "o" },
+                quit = { "<esc>", "q" },
             },
             methods = {
-                tyd = "textDocument/typeDefinition"
-            }
+                tyd = "textDocument/typeDefinition",
+            },
         },
         ui = {
-            code_action = "󰌵" -- "❃",
+            code_action = "󰌵", -- "❃",
         },
         diagnostic = {
             -- show_code_action = false,
-        }
+        },
     })
 
     local diagnostic_signs = {
         Error = " ",
         Warn = " ",
         Hint = "❃",
-        Info = ""
+        Info = "",
     }
     for type, icon in pairs(diagnostic_signs) do
         local hl = "DiagnosticSign" .. type
         vim.fn.sign_define(hl, {
             text = icon,
             texthl = hl,
-            numhl = ""
+            numhl = "",
         })
     end
 
@@ -407,7 +443,7 @@ M.config_lspconfig = function()
 
             hide = function(_, bufnr)
                 orig_signs_handler.hide(ns, bufnr)
-            end
+            end,
         }
     end
     -- call
@@ -417,10 +453,10 @@ M.config_lspconfig = function()
         underline = true,
         virtual_text = {
             spacing = 4,
-            severity_limit = "Warning"
+            severity_limit = "Warning",
             -- virt_text_priority = 15,
         },
-        update_in_insert = true
+        update_in_insert = true,
     })
     -- vim.diagnostic.config({
     -- 	severity_sort = true,
@@ -443,13 +479,13 @@ M.config_lsp_lens = function()
             -- git_authors = true,
             git_authors = function(latest_author, count)
                 return " " .. latest_author .. (count - 1 == 0 and "" or (" + " .. count - 1))
-            end
+            end,
         },
         ignore_filetype = {},
         -- Target Symbol Kinds to show lens information
-        target_symbol_kinds = {SymbolKind.Function, SymbolKind.Method, SymbolKind.Interface},
+        target_symbol_kinds = { SymbolKind.Function, SymbolKind.Method, SymbolKind.Interface },
         -- Symbol Kinds that may have target symbol kinds as children
-        wrapper_symbol_kinds = {SymbolKind.Class, SymbolKind.Struct}
+        wrapper_symbol_kinds = { SymbolKind.Class, SymbolKind.Struct },
     })
 end
 
@@ -459,8 +495,8 @@ M.config_whynothugo_lsp_lens = function()
         -- virtual_text = false,
         virtual_lines = {
             only_current_line = false,
-            highlight_whole_line = false
-        }
+            highlight_whole_line = false,
+        },
     })
     vim.cmd("lua require('lsp_lines').toggle()")
 end
@@ -483,20 +519,20 @@ M.config_glance = function()
         preview_win_opts = { -- Configure preview window options
             cursorline = true,
             number = true,
-            wrap = true
+            wrap = true,
         },
         border = {
             enable = false, -- Show window borders. Only horizontal borders allowed
             top_char = "―",
-            bottom_char = "―"
+            bottom_char = "―",
         },
         list = {
             position = "left", -- Position of the list window 'left'|'right'
-            width = 0.33 -- 33% width relative to the active window, min 0.1, max 0.5
+            width = 0.33, -- 33% width relative to the active window, min 0.1, max 0.5
         },
         theme = { -- This feature might not work properly in nvim-0.7.2
             enable = true, -- Will generate colors for the plugin based on your current colorscheme
-            mode = "auto" -- 'brighten'|'darken'|'auto', 'auto' will set mode based on the brightness of your colorscheme
+            mode = "auto", -- 'brighten'|'darken'|'auto', 'auto' will set mode based on the brightness of your colorscheme
         },
         mappings = {
             list = {
@@ -519,7 +555,7 @@ M.config_glance = function()
                 ["q"] = actions.close,
                 ["Q"] = actions.close,
                 ["<Esc>"] = actions.close,
-                ["<C-q>"] = actions.quickfix
+                ["<C-q>"] = actions.quickfix,
                 -- ['<Esc>'] = false -- disable a mapping
             },
             preview = {
@@ -527,22 +563,22 @@ M.config_glance = function()
                 ["Q"] = actions.close,
                 ["<Tab>"] = actions.next_location,
                 ["<S-Tab>"] = actions.previous_location,
-                ["<c-l>"] = actions.enter_win("list") -- Focus list window
-            }
+                ["<c-l>"] = actions.enter_win("list"), -- Focus list window
+            },
         },
         hooks = {},
         folds = {
             fold_closed = "",
             fold_open = "",
-            folded = true -- Automatically fold list on startup
+            folded = true, -- Automatically fold list on startup
         },
         indent_lines = {
             enable = true,
-            icon = "▏" -- "│",
+            icon = "▏", -- "│",
         },
         winbar = {
-            enable = true -- Available strating from nvim-0.8+
-        }
+            enable = true, -- Available strating from nvim-0.8+
+        },
     })
 end
 
