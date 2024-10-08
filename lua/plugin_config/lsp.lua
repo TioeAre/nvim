@@ -453,7 +453,7 @@ M.config_lspconfig = function()
         underline = true,
         virtual_text = {
             spacing = 4,
-            severity_limit = "Warning",
+            -- severity_limit = "Warning",
             -- virt_text_priority = 15,
         },
         update_in_insert = true,

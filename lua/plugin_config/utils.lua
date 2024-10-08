@@ -282,6 +282,7 @@ M.config_persisted = function()
         on_autoload_no_session = nil, -- function to run when `autoload = true` but there is no session to load
         ignored_dirs = {
             { "/", exact = true },
+            { "~", exact = true },
             { "os.getenv('HOME')", exact = true },
             { "/home/linuxbrew/", exact = true },
             { "/home/Systemback/", exact = true },
@@ -438,7 +439,7 @@ M.config_ufo = function(_, opts)
             return { "treesitter", "indent" }
         end,
         open_fold_hl_timeout = 150,
-        close_fold_kinds_for_ft = { "imports", "comment" },
+        close_fold_kinds_for_ft = { default = { 'imports', 'comment' } }, -- { "imports", "comment" },
         preview = {
             win_config = {
                 border = { "", "─", "", "", "", "─", "", "" },
