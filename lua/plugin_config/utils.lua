@@ -97,16 +97,16 @@ end
 M.config_smartyank = function()
     require("smartyank").setup({
         highlight = {
-            enabled = true, -- highlight yanked text
+            enabled = true,        -- highlight yanked text
             higroup = "IncSearch", -- highlight group of yanked text
-            timeout = 1500, -- timeout for clearing the highlight
+            timeout = 1500,        -- timeout for clearing the highlight
         },
         osc52 = {
             enabled = true,
             -- escseq = 'tmux',     -- use tmux escape sequence, only enable if
             -- you're using tmux and have issues (see #4)
-            ssh_only = true, -- false to OSC52 yank also in local sessions
-            silent = false, -- true to disable the "n chars copied" echo
+            ssh_only = true,       -- false to OSC52 yank also in local sessions
+            silent = false,        -- true to disable the "n chars copied" echo
             echo_hl = "Directory", -- highlight group of the OSC52 echo message
         },
         -- By default copy is only triggered by "intentional yanks" where the
@@ -182,27 +182,39 @@ M.config_strict = function()
 end
 
 -- okuuva/auto-save.nvim
-M.opts_auto_save = {
-    enabled = true,
-    execution_message = {
+M.config_auto_save = function()
+    require("auto-save").setup {
         enabled = true,
-        message = function() -- message to print on save
-            return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+        trigger_events = {                         -- See :h events
+            immediate_save = { "BufLeave", "FocusLost" }, -- vim events that trigger an immediate save
+            defer_save = { "InsertLeave", "TextChanged" }, -- vim events that trigger a deferred save (saves after `debounce_delay`)
+            cancel_deferred_save = { "InsertEnter" }, -- vim events that cancel a pending deferred save
+        },
+        condition = function(buf)
+            local fn = vim.fn
+            -- don't save for special-buffers
+            if fn.getbufvar(buf, "&buftype") ~= '' then
+              return false
+            end
+            return true
+          end,
+        write_all_buffers = false, -- write all buffers when the current one meets `condition`
+        noautocmd = false,     -- do not execute autocmds when saving
+        debounce_delay = 700,
+        debug = false,
+    }
+    local group = vim.api.nvim_create_augroup('autosave', {})
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'AutoSaveWritePost',
+        group = group,
+        callback = function(opts)
+            if opts.data.saved_buffer ~= nil then
+                local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
+                print('AutoSave: saved ' .. filename .. ' at ' .. vim.fn.strftime('%H:%M:%S'))
+            end
         end,
-        dim = 0.18, -- dim the color of `message`
-        cleaning_interval = 500, -- milliseconds
-    },
-    trigger_events = { -- See :h events
-        immediate_save = { "BufLeave" }, --  "FocusLost"
-        defer_save = { "FocusLost" }, --  "InsertLeave", "TextChanged"
-        cancel_defered_save = { "InsertEnter" },
-    },
-    condition = nil,
-    write_all_buffers = false, -- write all buffers when the current one meets `condition`
-    noautocmd = false, -- do not execute autocmds when saving
-    debounce_delay = 300,
-    debug = false,
-}
+    })
+end
 
 -- folke/trouble.nvim
 M.opts_trouble = {
@@ -211,34 +223,34 @@ M.opts_trouble = {
     width = 50, -- width of the list when position is left or right
     icons = true,
     mode = "workspace_diagnostics",
-    group = true, -- group results by file
-    padding = true, -- add an extra new line on top of the list
+    group = true,         -- group results by file
+    padding = true,       -- add an extra new line on top of the list
     cycle_results = true, -- cycle item list when reaching beginning or end of list
-    multiline = true, -- render multi-line messages
+    multiline = true,     -- render multi-line messages
     auto_preview = false, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
     auto_jump = { "lsp_references", "lsp_implementations", "lsp_definitions" },
     use_diagnostic_signs = true,
     action_keys = {
-        close = "q", -- close the list
-        cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
-        refresh = "r", -- manually refresh
-        jump = { "<cr>", "<2-leftmouse>" }, -- jump to the diagnostic or open / close folds
-        open_split = { "<c-x>" }, -- <c-x> open buffer in new split
-        open_vsplit = { "<c-v>" }, -- <c-v> open buffer in new vsplit
-        open_tab = { "<c-t>" }, -- open buffer in new tab
-        jump_close = { "o" }, -- jump to the diagnostic and close the list
-        toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
-        switch_severity = "<leader>ss", -- switch "diagnostics" severity filter level to HINT / INFO / WARN / ERROR
-        toggle_preview = "P", -- toggle auto_preview
-        hover = "K", -- opens a small popup with the full multiline message
-        preview = "p", -- preview the diagnostic location
-        open_code_href = "c", -- if present, open a URI with more information about the diagnostic error
-        close_folds = { "zc", "zC" }, -- close all folds
-        open_folds = { "zo", "zO" }, -- open all folds
+        close = "q",                           -- close the list
+        cancel = "<esc>",                      -- cancel the preview and get back to your last window / buffer / cursor
+        refresh = "r",                         -- manually refresh
+        jump = { "<cr>", "<2-leftmouse>" },    -- jump to the diagnostic or open / close folds
+        open_split = { "<c-x>" },              -- <c-x> open buffer in new split
+        open_vsplit = { "<c-v>" },             -- <c-v> open buffer in new vsplit
+        open_tab = { "<c-t>" },                -- open buffer in new tab
+        jump_close = { "o" },                  -- jump to the diagnostic and close the list
+        toggle_mode = "m",                     -- toggle between "workspace" and "document" diagnostics mode
+        switch_severity = "<leader>ss",        -- switch "diagnostics" severity filter level to HINT / INFO / WARN / ERROR
+        toggle_preview = "P",                  -- toggle auto_preview
+        hover = "K",                           -- opens a small popup with the full multiline message
+        preview = "p",                         -- preview the diagnostic location
+        open_code_href = "c",                  -- if present, open a URI with more information about the diagnostic error
+        close_folds = { "zc", "zC" },          -- close all folds
+        open_folds = { "zo", "zO" },           -- open all folds
         toggle_fold = { "za", "zA", "<tab>" }, -- toggle fold of current file
-        next = "j", -- next item
-        previous = "<c-h>", -- previous item
-        help = "?", -- help menu
+        next = "j",                            -- next item
+        previous = "<c-h>",                    -- previous item
+        help = "?",                            -- help menu
     },
 }
 M.keys_trouble = {}
@@ -261,9 +273,9 @@ M.opts_twilight = {
 -- folke/persistence.nvim
 M.opts_persistence = {
     dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-    options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
-    pre_save = nil, -- a function to call before saving the session
-    save_empty = false, -- don't save if there are no open file buffers
+    options = { "buffers", "curdir", "tabpages", "winsize" },     -- sessionoptions used for saving
+    pre_save = nil,                                               -- a function to call before saving the session
+    save_empty = false,                                           -- don't save if there are no open file buffers
     -- vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {}),
     -- -- restore the last session
     -- vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {}),
@@ -276,15 +288,16 @@ M.opts_persisted = {}
 M.config_persisted = function()
     vim.o.sessionoptions = "buffers,curdir,folds,tabpages,winpos,winsize"
     require("persisted").setup({
-        save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"), use_git_branch = true, -- create session files based on the branch of a git enabled repository
-        default_branch = "main", -- the branch to load if a session file is not found for the current branch
-        autoload = true, -- automatically load the session for the cwd on Neovim startup
-        on_autoload_no_session = nil, -- function to run when `autoload = true` but there is no session to load
+        save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"),
+        use_git_branch = true,                                                                   -- create session files based on the branch of a git enabled repository
+        default_branch = "main",                                                                 -- the branch to load if a session file is not found for the current branch
+        autoload = true,                                                                         -- automatically load the session for the cwd on Neovim startup
+        on_autoload_no_session = nil,                                                            -- function to run when `autoload = true` but there is no session to load
         ignored_dirs = {
-            { "/", exact = true },
-            { "~", exact = true },
+            { "/",                 exact = true },
+            { "~",                 exact = true },
             { "os.getenv('HOME')", exact = true },
-            { "/home/linuxbrew/", exact = true },
+            { "/home/linuxbrew/",  exact = true },
             { "/home/Systemback/", exact = true },
         }, -- table of dirs that are ignored when auto-saving and auto-loading
     })
@@ -353,14 +366,14 @@ M.opts_toggleterm = {
 M.opts_auto_indent = {
     indentexpr = function(lnum)
         return require("nvim-treesitter.indent").get_indent(lnum)
-    end, -- Use vim.bo.indentexpr by default, see 'Custom Indent Evaluate Method'
+    end,                  -- Use vim.bo.indentexpr by default, see 'Custom Indent Evaluate Method'
     ignore_filetype = {}, -- e.g. ignore_filetype = { 'javascript' }
 }
 
 -- kevinhwang91/nvim-ufo
 M.config_ufo = function(_, opts)
     vim.o.foldcolumn = "1" -- '0' is not bad
-    vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+    vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
     vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
@@ -395,7 +408,7 @@ M.config_ufo = function(_, opts)
             -- 	sign = { namespace = { "gitsign*" } },
             -- 	-- click = "v:lua.ScSa",
             -- },
-            { text = { builtin.lnumfunc, "" } }, -- click = "v:lua.ScLa" },
+            { text = { builtin.lnumfunc, "" } },  -- click = "v:lua.ScLa" },
             { text = { builtin.foldfunc, " " } }, -- click = "v:lua.ScFa" },
         },
     })
@@ -582,7 +595,7 @@ end
 M.config_glow = function()
     require("glow").setup({
         border = "shadow", -- floating window border config
-        style = "dark", -- light filled automatically with your current editor background, you can override using glow json style
+        style = "dark",    -- light filled automatically with your current editor background, you can override using glow json style
         pager = false,
         width = 80,
         height = 100,
@@ -599,15 +612,15 @@ M.config_mini_surround = function()
         highlight_duration = 500,
         -- Module mappings. Use `''` (empty string) to disable one.
         mappings = {
-            add = "ma", -- Add surrounding in Normal and Visual modes
-            delete = "md", -- Delete surrounding
-            find = "mf", -- Find surrounding (to the right)
-            find_left = "mF", -- Find surrounding (to the left)
-            highlight = "mh", -- Highlight surrounding
-            replace = "mr", -- Replace surrounding
+            add = "ma",            -- Add surrounding in Normal and Visual modes
+            delete = "md",         -- Delete surrounding
+            find = "mf",           -- Find surrounding (to the right)
+            find_left = "mF",      -- Find surrounding (to the left)
+            highlight = "mh",      -- Highlight surrounding
+            replace = "mr",        -- Replace surrounding
             update_n_lines = "mn", -- Update `n_lines`
-            suffix_last = "l", -- Suffix to search with "prev" method
-            suffix_next = "n", -- Suffix to search with "next" method
+            suffix_last = "l",     -- Suffix to search with "prev" method
+            suffix_next = "n",     -- Suffix to search with "next" method
         },
         -- Number of lines within which surrounding is searched
         n_lines = 200,
@@ -635,9 +648,9 @@ end
 -- LunarVim/bigfile.nvim
 M.config_bigfile = function()
     require("bigfile").setup({
-        filesize = 10, -- size of the file in MiB, the plugin round file sizes to the closest MiB
+        filesize = 10,     -- size of the file in MiB, the plugin round file sizes to the closest MiB
         pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
-        features = { -- features to disable
+        features = {       -- features to disable
             "indent_blankline",
             "illuminate",
             "lsp",
