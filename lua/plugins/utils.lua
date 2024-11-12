@@ -1,4 +1,5 @@
 local M = require("plugin_config.utils")
+local W = require("utils.windows_ignore")
 
 return {
     -- 查找按键
@@ -150,7 +151,7 @@ return {
     -- json5
     {
         "Joakker/lua-json5",
-        build = "bash install.sh",
+        build = W.windows_selectNO2string("./install.sh", "powershell ./install.ps1"),
         lazy = false,
         -- event = "VeryLazy",
         -- event = { "BufReadPre", "BufNewFile", "VeryLazy" },
