@@ -545,7 +545,7 @@ end
 
 -- mrjones2014/smart-splits.nvim
 M.config_smart_splits = function()
-    require("smart-splits").setup()
+    require("smart-splits").setup({})
 end
 
 -- sindrets/winshift.nvim

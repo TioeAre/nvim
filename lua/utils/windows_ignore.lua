@@ -8,7 +8,7 @@ function M.windows_ignore(...)
         -- print("Ignoring plugin on windows: ", args[1])
         return nil
     else
-        return table.unpack(args)
+        return args
     end
 end
 
