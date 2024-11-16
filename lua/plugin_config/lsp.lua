@@ -41,7 +41,7 @@ M.config_lspconfig = function()
             "hadolint",
             "htmlhint",
             "jsonlint",
-            W.windows_ignore("luacheck"),
+            W.windows_ignore_list("luacheck"),
             "flake8", -- "yamllint",
             "shfmt", -- "clang-format",
             "prettier",
