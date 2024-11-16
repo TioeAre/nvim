@@ -68,7 +68,10 @@ M.config_cmp = function()
         },
         {
             name = 'treesitter'
-        }
+        },
+        {
+            name = "copilot"
+        },
     })
 
     cmp.setup({
@@ -90,7 +93,7 @@ M.config_cmp = function()
                 select = false,
             }),
             ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
+                if cmp.visible() and has_words_before() then
                     cmp.select_next_item()
                     -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
                     -- they way you will only jump inside the snippet region
@@ -105,7 +108,7 @@ M.config_cmp = function()
                 end
             end, { "i", "s" }),
             ["<S-Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() then
+                if cmp.visible() and has_words_before() then
                     cmp.select_prev_item()
                 elseif luasnip.jumpable(-1) then
                     luasnip.jump(-1)
@@ -137,6 +140,7 @@ M.config_cmp = function()
             format = lspkind.cmp_format({
                 maxwidth = 120,
                 ellipsis_char = "...",
+                symbol_map = { Copilot = "" }
             }),
         },
         -- if file is too big

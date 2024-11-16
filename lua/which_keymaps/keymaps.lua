@@ -310,32 +310,32 @@ wk.add({
 	}, -- folke/trouble.nvim
 	{
 		"<leader>ld",
-		"<cmd>TroubleToggle document_diagnostics<cr>",
+		"<cmd>Trouble diagnostics toggle focus=true filter.buf=0<cr>",
 		desc = "open trouble document_diagnostics",
 	},
 	{
 		"<leader>lw",
-		"<cmd>TroubleToggle workspace_diagnostics<cr>",
+		"<cmd>Trouble diagnostics toggle focus=true<cr>",
 		desc = "open trouble workspace_diagnostics",
 	},
 	{
 		"<leader>lr",
-		"<cmd>TroubleToggle lsp_references<cr>",
+		"<cmd>Trouble lsp_references toggle focus=true<cr>",
 		desc = "open trouble lsp_references",
 	},
 	{
 		"<leader>ls",
-		"<cmd>TroubleToggle lsp_definitions<cr>",
+		"<cmd>Trouble lsp_definitions toggle focus=true<cr>",
 		desc = "open trouble lsp_definitions",
 	},
 	{
 		"<leader>lq",
-		"<cmd>TroubleToggle quickfix<cr>",
+		"<cmd>Trouble quickfix toggle focus=true<cr>",
 		desc = "open trouble quickfix",
 	},
 	{
 		"<leader>ll",
-		"<cmd>TroubleToggle loclist<cr>",
+		"<cmd>Trouble loclist toggle focus=true<cr>",
 		desc = "open trouble loclist",
 	}, -- folke/todo-comments.nvim
 	{
