@@ -1,4 +1,5 @@
 local M = {}
+local W = require("utils.windows_ignore")
 
 -- williamboman/mason.nvim
 M.config_mason = function() end
@@ -38,7 +39,7 @@ M.config_lspconfig = function()
             "hadolint",
             "htmlhint",
             "jsonlint",
-            "luacheck",
+            W.windows_ignore("luacheck"),
             "flake8",
             -- "yamllint",
             "shfmt",

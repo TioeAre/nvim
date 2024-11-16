@@ -9,5 +9,8 @@
         "gotoid",
         "hrtime",
         "winid"
+    ],
+    "Lua.diagnostics.globals": [
+        "vim"
     ]
 }

@@ -1,4 +1,5 @@
 local M = {}
+local W = require("utils.windows_ignore")
 
 -- stevearc/conform.nvim
 M.config_conform = function()
@@ -77,7 +78,7 @@ M.config_lint = function()
         quarto = {},
         rmd = {},
         rst = {},
-        lua = { "luacheck" },
+        lua = W.windows_ignore({ "luacheck" }),
         python = { "flake8" },
         -- yaml = { "yamllint" },
     }
@@ -86,7 +87,9 @@ M.config_lint = function()
         local current_dir = vim.fn.getcwd()
         local home_dir = os.getenv("HOME") -- vim.fn.expand("~")
         local file_names = { "compile_commands.json", "build/compile_commands.json" }
-        while current_dir ~= home_dir do
+        local max_levels = 2
+        local level = 0
+        while current_dir ~= home_dir and level < max_levels do
             for _, file_name in ipairs(file_names) do
                 local file_path = current_dir .. "/" .. file_name
                 if vim.fn.filereadable(file_path) == 1 then
@@ -94,6 +97,7 @@ M.config_lint = function()
                 end
             end
             current_dir = vim.fn.fnamemodify(current_dir, ":h")
+            level = level + 1
         end
         return nil
     end
