@@ -30,14 +30,14 @@ M.config_colorizer = function()
         -- all the sub-options of filetypes apply to buftypes
         buftypes = {},
     })
-    local group = vim.api.nvim_create_augroup("colorizer", {})
-    vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
-        pattern = "*",
-        group = group,
-        callback = function()
-            vim.cmd("ColorizerAttachToBuffer")
-        end,
-    })
+    -- local group = vim.api.nvim_create_augroup("colorizer", {})
+    -- vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
+    --     pattern = "*",
+    --     group = group,
+    --     callback = function()
+    --         vim.cmd("ColorizerAttachToBuffer")
+    --     end,
+    -- })
 end
 
 -- max397574/colortils.nvim
