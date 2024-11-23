@@ -602,7 +602,7 @@ wk.add({
 	-- r = {"neotree revert file",},
 	-- c = {"neotree commit file",},
 	-- p = {"neotree push file",},
-	-- stevearc/conform.nvim
+	-- mfussenegger/nvim-lint
 	{
 		"<leader>tl",
 		function()
