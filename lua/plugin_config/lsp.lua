@@ -43,7 +43,7 @@ M.config_lspconfig = function()
             "jsonlint",
             W.windows_ignore_list("luacheck"),
             "flake8", -- "yamllint",
-            "shfmt", -- "clang-format",
+            "beautysh", -- "shfmt", -- "clang-format",
             "prettier",
             "xmlformatter",
             "latexindent",

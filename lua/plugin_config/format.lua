@@ -6,7 +6,8 @@ M.config_conform = function()
 	local conform = require("conform")
 	conform.setup({
 		formatters_by_ft = {
-			sh = { "shfmt" },
+			sh = { "beautysh" }, -- { "shfmt" },
+            zsh = { "beautysh" }, -- { "shfmt" },
 			c = { "clang_format" },
 			cpp = { "clang_format" },
 			objc = { "clang_format" },
