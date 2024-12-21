@@ -7,9 +7,9 @@ return {
         -- "folke/tokyonight.nvim",
         -- "EdenEast/nightfox.nvim",
         "catppuccin/nvim",
-        dependencies = {
-            "folke/tokyonight.nvim",
-        },
+        -- dependencies = {
+        --     "folke/tokyonight.nvim",
+        -- },
         name = "catppuccin",
         -- 	"olimorris/onedarkpro.nvim",
         lazy = false,
