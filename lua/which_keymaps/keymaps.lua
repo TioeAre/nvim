@@ -1286,8 +1286,9 @@ wk.add({ -- ussenegger/nvim-dap
 	{
 		"<C-A-l>",
 		function()
-			local strict = require("strict")
-			strict.convert_tabs_to_spaces()
+			-- local strict = require("strict")
+			-- strict.convert_tabs_to_spaces()
+			require('whitespace-nvim').trim()
 			-- strict.remove_trailing_whitespace()
 			conform.format({
 				lsp_fallback = true,

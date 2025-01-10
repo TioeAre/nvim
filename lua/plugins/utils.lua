@@ -38,23 +38,31 @@ return {
     -- smart yank
     {
         "ibhagwan/smartyank.nvim",
-        dependencies = {"AckslD/nvim-neoclip.lua"},
+        dependencies = { "AckslD/nvim-neoclip.lua" },
         event = { "BufReadPost", "BufNewFile", "VeryLazy" },
         config = M.config_smartyank,
     },
     -- 高亮行尾空格, 保存时去除空格
+    -- {
+    --     "emileferreira/nvim-strict",
+    --     dependencies = {
+    --         "stevearc/conform.nvim",
+    --     },
+    --     event = { "InsertLeave", "TextChanged", "BufReadPost", "BufNewFile", "VeryLazy" },
+    --     config = M.config_strict,
+    -- },
     {
-        "emileferreira/nvim-strict",
-        dependencies = {
-            "stevearc/conform.nvim",
-        },
+        "johnfrankmorgan/whitespace.nvim",
+        -- dependencies = {
+        --     "stevearc/conform.nvim",
+        -- },
         event = { "InsertLeave", "TextChanged", "BufReadPost", "BufNewFile", "VeryLazy" },
-        config = M.config_strict,
+        config = M.config_whitespace,
     },
     -- auto save
     {
         "okuuva/auto-save.nvim",
-        cmd = "ASToggle", -- optional for lazy loading on command
+        cmd = "ASToggle",                         -- optional for lazy loading on command
         event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
         config = M.config_auto_save,
     },

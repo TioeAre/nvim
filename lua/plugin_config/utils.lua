@@ -181,6 +181,31 @@ M.config_strict = function()
 	})
 end
 
+-- johnfrankmorgan/whitespace.nvim
+M.config_whitespace = function()
+	require('whitespace-nvim').setup({
+		highlight = 'DiffDelete',
+		ignored_filetypes = { 'TelescopePrompt', 'Trouble', 'help', 'dashboard' },
+		ignore_terminal = true,
+		return_cursor = true,
+	})
+	local group = vim.api.nvim_create_augroup("autosave", {})
+	vim.api.nvim_create_autocmd("User", {
+		pattern = "AutoSaveWritePre",
+		group = group,
+		callback = function(opts)
+			if opts.data.saved_buffer ~= nil then
+				-- local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
+				require('whitespace-nvim').trim()
+				-- require("conform").format({
+				-- 	lsp_fallback = true,
+				-- 	async = false,
+				-- 	timeout_ms = 500,
+				-- })
+			end
+		end,
+	})
+end
 -- okuuva/auto-save.nvim
 M.config_auto_save = function()
 	require("auto-save").setup({
