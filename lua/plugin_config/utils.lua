@@ -183,9 +183,27 @@ end
 
 -- johnfrankmorgan/whitespace.nvim
 M.config_whitespace = function()
-	require('whitespace-nvim').setup({
-		highlight = 'DiffDelete',
-		ignored_filetypes = { 'TelescopePrompt', 'Trouble', 'help', 'dashboard' },
+	require("whitespace-nvim").setup({
+		highlight = "DiffDelete",
+		ignored_filetypes = {
+			"TelescopePrompt",
+			"Trouble",
+			"help",
+			"dashboard",
+			"lazy",
+            "NvimTree",
+            "mason",
+            "toggleterm",
+            "sagafinder",
+            "Outline",
+            "sagaoutline",
+            "floggraph",
+            "trouble",
+            "noice",
+            "spectre_panel",
+            "buffer_manager",
+            "dap-repl",
+		},
 		ignore_terminal = true,
 		return_cursor = true,
 	})
@@ -196,7 +214,7 @@ M.config_whitespace = function()
 		callback = function(opts)
 			if opts.data.saved_buffer ~= nil then
 				-- local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
-				require('whitespace-nvim').trim()
+				require("whitespace-nvim").trim()
 				-- require("conform").format({
 				-- 	lsp_fallback = true,
 				-- 	async = false,
