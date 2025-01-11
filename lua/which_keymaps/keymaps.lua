@@ -1288,8 +1288,8 @@ wk.add({ -- ussenegger/nvim-dap
 		function()
 			-- local strict = require("strict")
 			-- strict.convert_tabs_to_spaces()
-			require('whitespace-nvim').trim()
 			-- strict.remove_trailing_whitespace()
+			require('whitespace-nvim').trim()
 			conform.format({
 				lsp_fallback = true,
 				async = false,
