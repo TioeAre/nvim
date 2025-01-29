@@ -1,4 +1,5 @@
 local M = {}
+local filetype = require("utils.filetype")
 
 -- folke/which-key.nvim
 M.init_which_key = function()
@@ -120,8 +121,9 @@ end
 -- emileferreira/nvim-strict
 M.config_strict = function()
 	require("strict").setup({
-		excluded_filetypes = nil,
-		excluded_buftypes = { "help", "nofile", "terminal", "prompt" },
+		excluded_filetypes = filetype.excluded_filetypes, -- nil,
+		excluded_buftypes = filetype.excluded_buftypes,
+        -- { "help", "nofile", "terminal", "prompt" },
 		deep_nesting = {
 			highlight = true,
 			highlight_group = "DiffDelete",
@@ -185,25 +187,26 @@ end
 M.config_whitespace = function()
 	require("whitespace-nvim").setup({
 		highlight = "DiffDelete",
-		ignored_filetypes = {
-			"TelescopePrompt",
-			"Trouble",
-			"help",
-			"dashboard",
-			"lazy",
-            "NvimTree",
-            "mason",
-            "toggleterm",
-            "sagafinder",
-            "Outline",
-            "sagaoutline",
-            "floggraph",
-            "trouble",
-            "noice",
-            "spectre_panel",
-            "buffer_manager",
-            "dap-repl",
-		},
+		ignored_filetypes = filetype.excluded_filetypes,
+		-- {
+		-- 	"TelescopePrompt",
+		-- 	"Trouble",
+		-- 	"help",
+		-- 	"dashboard",
+		-- 	"lazy",
+		-- 	"NvimTree",
+		-- 	"mason",
+		-- 	"toggleterm",
+		-- 	"sagafinder",
+		-- 	"Outline",
+		-- 	"sagaoutline",
+		-- 	"floggraph",
+		-- 	"trouble",
+		-- 	"noice",
+		-- 	"spectre_panel",
+		-- 	"buffer_manager",
+		-- 	"dap-repl",
+		-- },
 		ignore_terminal = true,
 		return_cursor = true,
 	})
@@ -410,7 +413,7 @@ M.opts_auto_indent = {
 	indentexpr = function(lnum)
 		return require("nvim-treesitter.indent").get_indent(lnum)
 	end, -- Use vim.bo.indentexpr by default, see 'Custom Indent Evaluate Method'
-	ignore_filetype = {}, -- e.g. ignore_filetype = { 'javascript' }
+	ignore_filetype = filetype.excluded_filetypes, -- e.g. ignore_filetype = { 'javascript' }
 }
 
 -- kevinhwang91/nvim-ufo
@@ -573,14 +576,16 @@ M.config_nvim_window_picker = function()
 			--     return filtered_windows
 			-- end,
 			bo = {
-				filetype = {
-					"fidget",
-					"neo-tree-popup",
-					"notify",
-					"incline",
-					"scrollbar",
-				}, -- "nvim-tree", "symbols-outline", "neo-tree",
-				buftype = { "nofile" },
+				filetype = filetype.excluded_filetypes,
+    --             {
+				-- 	"fidget",
+				-- 	"neo-tree-popup",
+				-- 	"notify",
+				-- 	"incline",
+				-- 	"scrollbar",
+				-- }, -- "nvim-tree", "symbols-outline", "neo-tree",
+				buftype = filetype.excluded_buftypes,
+                -- { "nofile" },
 			},
 		},
 	})
@@ -610,19 +615,21 @@ M.config_windows = function()
 			},
 		},
 		ignore = { --			  |windows.ignore|
-			buftype = { "quickfix" },
-			filetype = {
-				"NvimTree",
-				"neo-tree",
-				"undotree",
-				"gundo",
-				"symbols-outline",
-				"lsp",
-				"SymbolsOutline",
-				"Outline",
-				"outline",
-				"aerial",
-			},
+			buftype = filetype.excluded_buftypes,
+            -- { "quickfix" },
+			filetype = filetype.excluded_filetypes,
+   --          {
+			-- 	"NvimTree",
+			-- 	"neo-tree",
+			-- 	"undotree",
+			-- 	"gundo",
+			-- 	"symbols-outline",
+			-- 	"lsp",
+			-- 	"SymbolsOutline",
+			-- 	"Outline",
+			-- 	"outline",
+			-- 	"aerial",
+			-- },
 		},
 		animation = {
 			enable = true,

@@ -1,5 +1,6 @@
 local M = {}
 local W = require("utils.windows_ignore")
+local filetypes = require("utils.filetype")
 
 -- williamboman/mason.nvim
 M.config_mason = function() end
@@ -482,7 +483,7 @@ M.config_lsp_lens = function()
                 return " " .. latest_author .. (count - 1 == 0 and "" or (" + " .. count - 1))
             end,
         },
-        ignore_filetype = {},
+        ignore_filetype = filetypes.excluded_filetypes,
         -- Target Symbol Kinds to show lens information
         target_symbol_kinds = { SymbolKind.Function, SymbolKind.Method, SymbolKind.Interface },
         -- Symbol Kinds that may have target symbol kinds as children

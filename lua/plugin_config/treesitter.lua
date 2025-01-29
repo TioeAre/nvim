@@ -1,4 +1,5 @@
 local M = {}
+local filetype = require("utils.filetype")
 
 -- nvim-treesitter/nvim-treesitter
 M.config_treesitter = function()
@@ -176,7 +177,8 @@ M.config_treesitter = function()
             java = false, -- don't check treesitter on java
         },
         enable_check_bracket_line = false,
-        disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
+        disable_filetype = filetype.excluded_filetypes,
+        -- { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
     })
     local ts_conds = require("nvim-autopairs.ts-conds")
     -- press % => %% only while inside a comment or string
