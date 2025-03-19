@@ -3,7 +3,7 @@ local M = require("plugin_config.copilot")
 return {
 	-- {
 	-- 	"github/copilot.vim",
-	-- 	event = { "BufReadPost", "BufNewFile" }, -- "InsertEnter",
+	-- 	event = { "BufReadPost" }, -- "InsertEnter",
 	-- },
 	{
 		"zbirenbaum/copilot.lua",
@@ -13,7 +13,7 @@ return {
 		dependencies = {
 			"zbirenbaum/copilot-cmp",
 			config = M.config_copilot_cmp,
-			event = { "InsertEnter", "LspAttach" },
+			event = { "InsertEnter" }, -- "LspAttach"
 			fix_pairs = true,
 		},
 	},

@@ -9,7 +9,7 @@ return {
                 dependencies = {
                     {
                         "williamboman/mason-lspconfig.nvim",
-                        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+                        event = { "BufReadPost" },
                         opts = M.opts_mason_lspconfig,
                         config = M.config_mason_lspconfig,
                     },
@@ -17,13 +17,10 @@ return {
                     "jay-babu/mason-nvim-dap.nvim",
                 },
                 cmd = "Mason",
-                event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+                event = { "BufReadPost" },
                 config = M.config_mason,
             },
-            "windwp/nvim-autopairs",
-            "hrsh7th/nvim-cmp",
-            -- "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-nvim-lsp",
+            -- "windwp/nvim-autopairs",
             {
                 -- lsp loaded notify
                 "j-hui/fidget.nvim",
@@ -50,23 +47,23 @@ return {
             -- },
             {
                 "barreiroleo/ltex_extra.nvim",
-                ft = { "markdown", "tex", "text", "*" },
+                ft = { "markdown", "tex", "text" },
                 dependencies = { "neovim/nvim-lspconfig" },
             },
         },
-        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost" },
         config = M.config_lspconfig,
     },
     -- 显示文内函数引用, 定义等
     {
         "VidocqH/lsp-lens.nvim",
-        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost" },
         config = M.config_lsp_lens,
     },
     -- lsp lens virtual text
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost" },
         config = M.config_whynothugo_lsp_lens,
     },
     -- lsp glance document flow like vscode

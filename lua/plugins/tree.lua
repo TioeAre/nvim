@@ -26,12 +26,12 @@ return {
 			-- },
 			{
 				"linux-cultist/venv-selector.nvim",
-				dependencies = {
-					"neovim/nvim-lspconfig",
-					"nvim-telescope/telescope.nvim",
-					"mfussenegger/nvim-dap-python",
-				},
-				event = "VeryLazy",
+				-- dependencies = {
+				-- 	"neovim/nvim-lspconfig",
+				-- 	"nvim-telescope/telescope.nvim",
+				-- 	"mfussenegger/nvim-dap-python",
+				-- },
+				event = "BufReadPost",
 				branch = "regexp",
 				cmd = { "VenvSelect", "VenvSelectCached" },
 				config = function()
@@ -39,7 +39,7 @@ return {
 				end,
 			},
 		},
-		event = { "VeryLazy", "BufReadPost", "BufNewFile" },
+		event = { "BufReadPost" },
 		config = M.config_project,
 	},
 	-- buffer manager
@@ -48,7 +48,7 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},
-		event = { "VeryLazy", "BufReadPost", "BufNewFile" },
+		event = { "BufReadPost" },
 		config = M.config_buffer_manager,
 	},
 }

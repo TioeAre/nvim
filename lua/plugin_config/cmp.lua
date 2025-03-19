@@ -144,7 +144,8 @@ M.config_cmp = function()
             }),
         },
         -- if file is too big
-        vim.api.nvim_create_autocmd("BufReadPre", {
+        vim.api.nvim_create_autocmd("FileReadPre", {
+            pattern = "*.*",
             callback = function(t)
                 if not bufIsBig(t.buf) then
                     -- sources1 = vim.tbl_deep_extend("keep",

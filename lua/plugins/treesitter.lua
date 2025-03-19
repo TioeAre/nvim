@@ -4,7 +4,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         -- lazy = false,
-        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost" },
         config = M.config_treesitter,
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
@@ -15,7 +15,7 @@ return {
     },
     { -- 显示向下翻页时仍函数名
         "nvim-treesitter/nvim-treesitter-context",
-        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost" },
         config = M.config_treesitter_context,
     },
     { -- 自动生成c++类函数实现
@@ -30,6 +30,6 @@ return {
             "nvim-telescope/telescope-fzf-native.nvim",
             "nvim-web-devicons",
         },
-        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost" },
     },
 }

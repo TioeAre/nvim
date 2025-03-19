@@ -27,7 +27,7 @@ return {
             --     dependencies = { "nvim-lua/plenary.nvim" },
             -- },
         },
-        event = "VeryLazy",
+        event = "BufReadPost",
         config = M.config_vs_task,
     },
 }

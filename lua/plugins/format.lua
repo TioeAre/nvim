@@ -7,7 +7,7 @@ return {
 		-- 	"emileferreira/nvim-strict",
 		-- },
 		lazy = true,
-		event = { "BufReadPost", "BufNewFile", "VeryLazy" }, -- to disable, comment this out
+		event = { "BufReadPost" }, -- to disable, comment this out
 		config = M.config_conform,
 	},
 	{
@@ -15,7 +15,7 @@ return {
 		dependencies = {
 			"Joakker/lua-json5",
 		},
-		event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+		event = { "BufReadPost" },
 		config = M.config_lint,
 	},
 }

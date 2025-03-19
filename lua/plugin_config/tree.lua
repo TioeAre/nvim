@@ -467,7 +467,7 @@ M.config_project = function()
         anaconda_base_path = "/home/tioeare/miniconda3",
         anaconda_envs_path = "/home/tioeare/miniconda3/envs",
     })
-    vim.api.nvim_create_autocmd("VimEnter", {
+    vim.api.nvim_create_autocmd("BufReadPost", {
         desc = "Auto select virtualenv Nvim open",
         pattern = { "*" },
         callback = function()

@@ -3,7 +3,7 @@ local M = require("plugin_config.git")
 return {
     -- {
     --     "kdheepak/lazygit.nvim",
-    --     event = { "VeryLazy", "BufReadPost", "BufNewFile" },
+    --     event = { "BufReadPost" },
     --     cmd = {
     --         "LazyGit",
     --         "LazyGitCurrentFile",
@@ -34,7 +34,7 @@ return {
     },
     {
         "lewis6991/gitsigns.nvim",
-        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost" },
         config = M.config_gitsigns,
     },
 }

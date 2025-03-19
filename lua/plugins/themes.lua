@@ -48,7 +48,7 @@ return {
         dependencies = {
             "lewis6991/gitsigns.nvim",
         },
-        event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+        event = { "BufReadPost" },
         -- lazy = false,
         config = M.config_incline,
     },
@@ -87,14 +87,14 @@ return {
     -- select ui
     {
         "stevearc/dressing.nvim",
-        event = { "VeryLazy", "BufReadPost", "BufNewFile" },
+        event = { "VeryLazy", "BufReadPost" },
         opts = M.opts_dressing,
         config = M.config_dressing,
     },
     -- scrollbar
     {
         "petertriho/nvim-scrollbar",
-        event = { "VeryLazy", "BufReadPost", "BufNewFile" },
+        event = { "BufReadPost" },
         config = M.config_nvim_scrollbar,
         dependencies = {
             "kevinhwang91/nvim-hlslens",

@@ -430,9 +430,9 @@ M.config_ufo = function(_, opts)
 		pattern = "*.*",
 		command = "mkview",
 	})
-	vim.api.nvim_create_autocmd("BufWinEnter", {
+	vim.api.nvim_create_autocmd("FileReadPre", {
 		group = "RememberFolds",
-		pattern = "*.*",
+		-- pattern = "*.*",
 		command = "silent! loadview",
 	})
 

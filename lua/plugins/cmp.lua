@@ -5,7 +5,7 @@ return {
 	{
 		"hrsh7th/nvim-cmp",
 		-- lazy = false,
-		event = { "VeryLazy", "BufReadPost", "BufNewFile" },
+		event = { "BufReadPost" },
 		config = M.config_cmp,
 		dependencies = {
 			"onsails/lspkind.nvim",
@@ -34,12 +34,7 @@ return {
 				"ray-x/cmp-treesitter",
 			},
 			"andersevenrud/cmp-tmux",
-			{
-				"zbirenbaum/copilot-cmp",
-				config = S.config_copilot_cmp,
-				event = { "InsertEnter", "LspAttach" },
-				fix_pairs = true,
-			},
+			"zbirenbaum/copilot-cmp",
 		},
 	},
 	-- docs
@@ -48,7 +43,7 @@ return {
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = M.config_neogen,
 		cmd = { "Neogen" },
-		-- event = {"BufReadPost", "BufNewFile", "BufReadPre"},
+		-- event = {"BufReadPost", "BufReadPre"},
 		-- Uncomment next line if you want to follow only stable versions
 		version = "*",
 	},
