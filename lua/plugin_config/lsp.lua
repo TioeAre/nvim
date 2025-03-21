@@ -12,12 +12,12 @@ M.config_mason_lspconfig = function() end
 -- neovim/nvim-lspconfig
 M.config_lspconfig = function()
     require("neoconf").setup()
-    require("neodev").setup({
-        library = {
-            plugins = { "nvim-dap-ui" },
-            types = true,
-        },
-    })
+    -- require("neodev").setup({
+    --     library = {
+    --         plugins = { "nvim-dap-ui" },
+    --         types = true,
+    --     },
+    -- })
     require("fidget").setup()
     require("mason").setup({
         ui = {
@@ -51,9 +51,9 @@ M.config_lspconfig = function()
             "stylua", -- "autopep8",
         },
     })
-    require("mason-nvim-dap").setup({
-        ensure_installed = { "bash-debug-adapter", "cpptools", "debugpy", "mockdebug" },
-    })
+    -- require("mason-nvim-dap").setup({
+    --     ensure_installed = { "bash-debug-adapter", "cpptools", "debugpy", "mockdebug" },
+    -- })
 
     local util = require("lspconfig.util")
     local clangd_root_files = {

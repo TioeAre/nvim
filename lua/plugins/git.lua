@@ -34,7 +34,7 @@ return {
     },
     {
         "lewis6991/gitsigns.nvim",
-        event = { "BufReadPost" },
+        event = { "BufReadPost", "VeryLazy" },
         config = M.config_gitsigns,
     },
 }

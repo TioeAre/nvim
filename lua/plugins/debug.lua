@@ -13,6 +13,7 @@ return {
             "Weissle/persistent-breakpoints.nvim",
             "Joakker/lua-json5",
             "nvim-neotest/nvim-nio",
+            "jay-babu/mason-nvim-dap.nvim",
         },
         config = M.config_dap,
     }

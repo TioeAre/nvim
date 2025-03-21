@@ -13,7 +13,7 @@ return {
                         config = M.config_mason_lspconfig,
                     },
                     "WhoIsSethDaniel/mason-tool-installer.nvim",
-                    "jay-babu/mason-nvim-dap.nvim",
+                    -- "jay-babu/mason-nvim-dap.nvim",
                 },
                 cmd = "Mason",
                 event = { "VeryLazy" },
@@ -50,19 +50,19 @@ return {
                 dependencies = { "neovim/nvim-lspconfig" },
             },
         },
-        event = { "BufReadPost" },
+        event = { "BufReadPost", "VeryLazy" },
         config = M.config_lspconfig,
     },
     -- 显示文内函数引用, 定义等
     {
         "VidocqH/lsp-lens.nvim",
-        event = { "BufReadPost" },
+        event = { "VeryLazy" },
         config = M.config_lsp_lens,
     },
     -- lsp lens virtual text
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        event = { "BufReadPost" },
+        event = { "VeryLazy" },
         config = M.config_whynothugo_lsp_lens,
     },
     -- lsp glance document flow like vscode

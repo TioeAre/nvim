@@ -51,7 +51,7 @@ return {
         dependencies = {
             "lewis6991/gitsigns.nvim",
         },
-        event = { "BufReadPost" },
+        event = { "VeryLazy" },
         -- lazy = false,
         config = M.config_incline,
     },

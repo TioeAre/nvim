@@ -128,6 +128,15 @@ M.config_dap = function()
     })
     -- nvim-telescope/telescope.nvim
     require("telescope").load_extension("dap")
+    require("neodev").setup({
+        library = {
+            plugins = { "nvim-dap-ui" },
+            types = true,
+        },
+    })
+    require("mason-nvim-dap").setup({
+        ensure_installed = { "bash-debug-adapter", "cpptools", "debugpy", "mockdebug" },
+    })
 end
 
 return M
