@@ -13,7 +13,7 @@ return {
 		dependencies = {
 			"zbirenbaum/copilot-cmp",
 			config = M.config_copilot_cmp,
-			event = { "InsertEnter" }, -- "LspAttach"
+			event = { "InsertEnter", "LspAttach" }, -- "LspAttach"
 			fix_pairs = true,
 		},
 	},

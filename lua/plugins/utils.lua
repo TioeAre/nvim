@@ -8,11 +8,15 @@ return {
         event = "VeryLazy",
         init = M.init_which_key,
         opts = M.opts_which_key,
+        config = function()
+            -- which keymap
+            require("which_keymaps.keymaps")
+        end
     },
     -- 添加注释
     {
         "numToStr/Comment.nvim",
-        event = { "BufReadPost" }, -- InsertEnter
+        event = { "BufReadPost", "InsertEnter" }, -- InsertEnter
         config = M.config_comment,
     },
     -- 彩虹色括号
@@ -32,14 +36,14 @@ return {
     -- 高亮选中词汇
     {
         "RRethy/vim-illuminate",
-        event = { "BufReadPost" },
+        event = { "BufReadPost", "VeryLazy" },
         config = M.config_vim_illuminate,
     },
     -- smart yank
     {
         "ibhagwan/smartyank.nvim",
         dependencies = { "AckslD/nvim-neoclip.lua" },
-        event = { "BufReadPost" },
+        event = { "BufReadPost", "VeryLazy" },
         config = M.config_smartyank,
     },
     -- 高亮行尾空格, 保存时去除空格
@@ -87,6 +91,7 @@ return {
     {
         "folke/twilight.nvim",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
+        cmd = "Twilight",
         event = { "BufReadPost" },
         opts = M.opts_twilight,
     },
@@ -101,7 +106,7 @@ return {
     -- buffers history
     {
         "gaborvecsei/memento.nvim",
-        event = { "BufReadPost", "VeryLazy" },
+        event = { "VeryLazy" },
         dependencies = { "nvim-lua/plenary.nvim" },
         config = M.config_memento,
     },
@@ -128,7 +133,7 @@ return {
     -- 换行自动添加tab
     {
         "vidocqh/auto-indent.nvim",
-        event = { "BufReadPost", "VeryLazy" },
+        event = { "InsertEnter" },
         opts = M.opts_auto_indent,
     },
     -- 折叠代码块
@@ -167,7 +172,7 @@ return {
     -- window spilt and switch
     {
         "mrjones2014/smart-splits.nvim",
-        -- event = "VeryLazy",
+        -- event = "UIEnter",
         lazy = false,
         build = './kitty/install-kittens.bash',
         config = M.config_smart_splits,
@@ -185,7 +190,7 @@ return {
             "anuvyklack/middleclass",
             "anuvyklack/animation.nvim",
         },
-        event = { "BufReadPost" },
+        event = { "BufReadPost", "VeryLazy" },
         -- lazy = false,
         config = M.config_windows,
     },
@@ -222,7 +227,7 @@ return {
     -- big file
     {
         "LunarVim/bigfile.nvim",
-        event = { "VeryLazy", "BufReadPre" },
+        event = { "VeryLazy", "FileReadPre" },
         config = M.config_bigfile,
     },
     -- tmux
@@ -250,7 +255,7 @@ return {
     {
         "nvim-pack/nvim-spectre",
         dependencies = { "nvim-lua/plenary.nvim" },
-        event = { "BufReadPost" },
+        event = { "BufReadPost", "VeryLazy" },
         config = M.config_nvim_spectre,
     },
     -- Chinese words spilt

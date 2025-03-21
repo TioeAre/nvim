@@ -4,7 +4,7 @@ return {
     {
         -- "norcalli/nvim-colorizer.lua",
         "NvChad/nvim-colorizer.lua",
-        event = { "BufReadPost", "BufAdd" },
+        event = { "BufReadPost" },
         config = M.config_colorizer,
     },
     {

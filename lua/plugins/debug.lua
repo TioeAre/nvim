@@ -3,7 +3,7 @@ local M = require("plugin_config.debug")
 return {
     {
         "mfussenegger/nvim-dap",
-        event = { "BufReadPost" },
+        event = { "VeryLazy" },
         -- lazy = false,
         dependencies = {
             "rcarriga/nvim-dap-ui",

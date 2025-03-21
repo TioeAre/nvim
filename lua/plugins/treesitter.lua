@@ -4,7 +4,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         -- lazy = false,
-        event = { "BufReadPost" },
+        event = { "BufReadPost", "BufNewFile" },
         config = M.config_treesitter,
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
@@ -28,7 +28,7 @@ return {
         -- optional, but required for fuzzy finder support
         dependencies = {
             "nvim-telescope/telescope-fzf-native.nvim",
-            "nvim-web-devicons",
+            "nvim-tree/nvim-web-devicons",
         },
         event = { "BufReadPost" },
     },

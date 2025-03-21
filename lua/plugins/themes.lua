@@ -19,7 +19,8 @@ return {
     -- 底部状态栏
     {
         "nvim-lualine/lualine.nvim",
-        lazy = false,
+        -- lazy = false,
+        event = { "UIEnter" },
         dependencies = {
             "arkav/lualine-lsp-progress",
         },
@@ -29,17 +30,19 @@ return {
     -- tab栏状态
     {
         "akinsho/bufferline.nvim",
-        lazy = false,
+        -- lazy = false,
         version = "*",
         dependencies = {
             "nvim-tree/nvim-web-devicons",
         },
+        event = { "BufReadPre" },
         config = M.config_bufferline,
     },
     -- 封面
     {
         "goolord/alpha-nvim",
-        lazy = false,
+        -- lazy = false,
+        event = { "VimEnter" },
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = M.config_alpha,
     },
@@ -65,7 +68,8 @@ return {
     -- 界面半透明
     {
         "xiyaowong/transparent.nvim",
-        lazy = false,
+        -- lazy = false,
+        event = { "VimEnter" },
         config = M.config_transparent,
     },
     -- noice
@@ -87,14 +91,14 @@ return {
     -- select ui
     {
         "stevearc/dressing.nvim",
-        event = { "VeryLazy", "BufReadPost" },
+        event = { "VeryLazy" },
         opts = M.opts_dressing,
         config = M.config_dressing,
     },
     -- scrollbar
     {
         "petertriho/nvim-scrollbar",
-        event = { "BufReadPost" },
+        event = { "VeryLazy" },
         config = M.config_nvim_scrollbar,
         dependencies = {
             "kevinhwang91/nvim-hlslens",

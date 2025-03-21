@@ -8,7 +8,6 @@ return {
         -- tag = '0.1.4',
         dependencies = {
             "nvim-lua/plenary.nvim",
-            -- "nvim-treesitter/nvim-treesitter",
             -- "cljoly/telescope-repo.nvim",
             "xiyaowong/telescope-emoji.nvim",
             "bi0ha2ard/telescope-ros.nvim",
@@ -22,7 +21,6 @@ return {
             "s1n7ax/nvim-window-picker",
             "olimorris/persisted.nvim",
             "FabianWirth/search.nvim",
-            -- "s1n7ax/nvim-window-picker",
         },
         cmd = "Telescope",
         event = { "VeryLazy" },

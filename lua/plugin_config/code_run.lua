@@ -34,7 +34,7 @@ M.config_cmake_tools = function()
 		ctest_command = "ctest",                                    -- this is used to specify ctest command path
 		cmake_regenerate_on_save = true,                            -- auto generate when save CMakeLists.txt
 		cmake_generate_options = { "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" }, -- this will be passed when invoke `CMakeGenerate`
-		cmake_build_options = { "-j5" },                            -- this will be passed when invoke `CMakeBuild`
+		cmake_build_options = { "-j10" },                           -- this will be passed when invoke `CMakeBuild`
 		-- support macro expansion:
 		--       ${kit}
 		--       ${kitGenerator}
@@ -204,6 +204,8 @@ M.config_vs_task = function()
 	-- REQUIRED
 	-- harpoon:setup()
 	-- REQUIRED
+	-- nvim-telescope/telescope.nvim
+	require("telescope").load_extension("vstask")
 end
 
 return M

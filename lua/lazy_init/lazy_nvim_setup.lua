@@ -39,6 +39,3 @@ local opts = {
 }
 
 require("lazy").setup("plugins", opts)
-
--- which keymap
-require("which_keymaps.keymaps")

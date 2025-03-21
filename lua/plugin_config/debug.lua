@@ -126,6 +126,8 @@ M.config_dap = function()
 
         on_load_breakpoint = nil,
     })
+    -- nvim-telescope/telescope.nvim
+    require("telescope").load_extension("dap")
 end
 
 return M

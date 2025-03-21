@@ -457,6 +457,12 @@ M.config_project = function()
         show_hidden = true,
         silent_chdir = false,
     })
+    -- nvim-telescope/telescope.nvim
+    require("telescope").load_extension("projects")
+end
+
+-- linux-cultist/venv-selector.nvim
+M.config_venv = function()
     require("venv-selector").setup({
         -- Your options go here
         name = { "venv" },
@@ -464,10 +470,10 @@ M.config_project = function()
         path = nil,
         dap_enabled = true,
         parents = 4,
-        anaconda_base_path = "/home/tioeare/miniconda3",
-        anaconda_envs_path = "/home/tioeare/miniconda3/envs",
+        anaconda_base_path = "/home/tioeare/anaconda3",
+        anaconda_envs_path = "/home/tioeare/anaconda3/envs",
     })
-    vim.api.nvim_create_autocmd("BufReadPost", {
+    vim.api.nvim_create_autocmd("UIEnter", {
         desc = "Auto select virtualenv Nvim open",
         pattern = { "*" },
         callback = function()

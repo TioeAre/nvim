@@ -5,7 +5,7 @@ return {
 	{
 		"hrsh7th/nvim-cmp",
 		-- lazy = false,
-		event = { "BufReadPost" },
+		event = { "BufReadPost", "InsertEnter" },
 		config = M.config_cmp,
 		dependencies = {
 			"onsails/lspkind.nvim",
@@ -43,7 +43,7 @@ return {
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = M.config_neogen,
 		cmd = { "Neogen" },
-		-- event = {"BufReadPost", "BufReadPre"},
+		event = { "BufReadPost" },
 		-- Uncomment next line if you want to follow only stable versions
 		version = "*",
 	},

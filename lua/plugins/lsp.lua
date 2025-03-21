@@ -9,7 +9,6 @@ return {
                 dependencies = {
                     {
                         "williamboman/mason-lspconfig.nvim",
-                        event = { "BufReadPost" },
                         opts = M.opts_mason_lspconfig,
                         config = M.config_mason_lspconfig,
                     },
@@ -17,7 +16,7 @@ return {
                     "jay-babu/mason-nvim-dap.nvim",
                 },
                 cmd = "Mason",
-                event = { "BufReadPost" },
+                event = { "VeryLazy" },
                 config = M.config_mason,
             },
             -- "windwp/nvim-autopairs",

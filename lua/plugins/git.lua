@@ -21,12 +21,12 @@ return {
     -- },
     {
         "sindrets/diffview.nvim",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
+        cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewRefresh", "DiffviewFileHistory" },
         config = M.config_diffview,
     },
     {
         "rbong/vim-flog",
-        event = "VeryLazy",
         cmd = { "Flog", "Flogsplit", "Floggit" },
         dependencies = {
             "tpope/vim-fugitive",

@@ -19,28 +19,24 @@ return {
 	-- project in trees
 	{
 		"ahmedkhalf/project.nvim",
-		dependencies = {
-			-- {
-			--     "AckslD/swenv.nvim",
-			--     dependencies = {"nvim-lua/plenary.nvim",}
-			-- },
-			{
-				"linux-cultist/venv-selector.nvim",
-				-- dependencies = {
-				-- 	"neovim/nvim-lspconfig",
-				-- 	"nvim-telescope/telescope.nvim",
-				-- 	"mfussenegger/nvim-dap-python",
-				-- },
-				event = "BufReadPost",
-				branch = "regexp",
-				cmd = { "VenvSelect", "VenvSelectCached" },
-				config = function()
-					require("venv-selector").setup()
-				end,
-			},
-		},
-		event = { "BufReadPost" },
+		event = { "VeryLazy" },
 		config = M.config_project,
+	},
+	-- {
+	--     "AckslD/swenv.nvim",
+	--     dependencies = {"nvim-lua/plenary.nvim",}
+	-- },
+	{
+		"linux-cultist/venv-selector.nvim",
+		dependencies = {
+			-- "neovim/nvim-lspconfig",
+			"nvim-telescope/telescope.nvim",
+			-- "mfussenegger/nvim-dap-python",
+		},
+		event = "VeryLazy",
+		branch = "regexp",
+		cmd = { "VenvSelect", "VenvSelectCached" },
+		config = M.config_venv,
 	},
 	-- buffer manager
 	{
