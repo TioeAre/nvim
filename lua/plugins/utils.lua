@@ -25,14 +25,14 @@ return {
         event = { "BufReadPost", "VeryLazy" },
         config = M.config_rainbow_delimiters,
     },
-    -- 彩色缩进
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = { "VeryLazy" },
-        main = "ibl",
-        opts = M.opts_indent_blankline,
-        config = M.config_indent_blankline,
-    },
+    -- -- 彩色缩进
+    -- {
+    --     "lukas-reineke/indent-blankline.nvim",
+    --     event = { "VeryLazy" },
+    --     main = "ibl",
+    --     opts = M.opts_indent_blankline,
+    --     config = M.config_indent_blankline,
+    -- },
     -- 高亮选中词汇
     {
         "RRethy/vim-illuminate",
