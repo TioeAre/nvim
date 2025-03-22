@@ -37,7 +37,7 @@ return {
                 dependencies = { "neovim/nvim-lspconfig" },
             },
         },
-        event = { "VeryLazy" }, -- BufReadPost
+        event = { "BufReadPost", "VeryLazy" }, -- BufReadPost
         config = M.config_lspconfig,
     },
     -- 显示文内函数引用, 定义等

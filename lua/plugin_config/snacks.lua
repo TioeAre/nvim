@@ -120,7 +120,7 @@ M.opt_snacks = {
         },
     },
     profiler = { enable = false }, -- only can be used to profile `autocmd`
-    quickfile = { exclude = {}, },
+    quickfile = { enable = false }, -- { exclude = {}, },
     rename = { enabled = false },
     scope = { enabled = true },
     scratch = { enabled = true },
