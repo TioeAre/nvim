@@ -40,12 +40,13 @@ M.opt_snacks = {
         },
         -- style "out"|"up_down"|"down"|"up"
         animate = {
-            style = "out",
-            easing = "linear",
-            duration = {
-                step = 10,   -- ms per step
-                total = 200, -- maximum duration
-            },
+            -- style = "out",
+            -- easing = "linear",
+            -- duration = {
+            --     step = 10,   -- ms per step
+            --     total = 200, -- maximum duration
+            -- },
+            enabled = false,
         },
         scope = {
             enabled = true, -- enable highlighting the current scope

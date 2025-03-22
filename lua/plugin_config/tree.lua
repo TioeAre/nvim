@@ -417,10 +417,10 @@ end
 -- ahmedkhalf/project.nvim
 M.config_project = function()
     require("project_nvim").setup({
-        manual_mode = false,
+        manual_mode = true,
         detection_methods = { "lsp", "pattern" },
         patterns = {
-            ".git",
+            -- ".git",
             -- "_darcs",
             -- ".hg",
             -- ".bzr",
@@ -434,14 +434,7 @@ M.config_project = function()
             "requirements.txt",
             "devel",
             "build",
-            "readme.md",
-            "README",
-            "README.md",
-            "readme.txt",
-            "README.txt",
-            "main.*",
             ".gitignore",
-            ".history",
         },
         exclude_dirs = {
             "**/src/**",
