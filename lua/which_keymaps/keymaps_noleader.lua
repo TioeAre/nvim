@@ -105,12 +105,6 @@ wk.add({
         end,
         desc = "format file or range",
         mode = { "n", "v" },
-    }, -- danymat/neogen
-    {
-        "<C-A-g>",
-        "<cmd> Neogen <cr>",
-        desc = "neogen generate docs",
-        mode = { "n", "i" },
     },
     -- folke/todo-comments.nvim
     {

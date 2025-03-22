@@ -176,23 +176,23 @@ M.config_lualine = function()
                 "filesize",
                 "encoding",
                 "fileformat",
-                -- {
-                --     'swenv',
-                --     icon = "",
-                -- },
                 {
-                    function()
-                        local has_venv_selector = vim.fn.exists("g:loaded_venv_selector") == 1
-                        local active_venv = ""
-                        if has_venv_selector then
-                            active_venv = require("venv-selector").get_active_venv()
-                        end
-                        return active_venv:match("[^/]*$")
-                    end,
-                    color = {
-                        fg = "#ff9e64",
-                    },
+                    'swenv',
+                    icon = "",
                 },
+                -- {
+                --     function()
+                --         local has_venv_selector = vim.fn.exists("g:loaded_venv_selector") == 1
+                --         local active_venv = ""
+                --         if has_venv_selector then
+                --             active_venv = require("venv-selector").get_active_venv()
+                --         end
+                --         return active_venv:match("[^/]*$")
+                --     end,
+                --     color = {
+                --         fg = "#ff9e64",
+                --     },
+                -- },
                 lsp_client_names,
                 -- {
                 -- 	"lsp_progress",
@@ -1058,8 +1058,6 @@ M.config_noice = function()
             lsp_doc_border = true,        -- add a border to hover docs and signature help
         },
     })
-    -- nvim-telescope/telescope.nvim
-    require("telescope").load_extension("noice")
     -- nvim-lualine/lualine.nvim
     require("lualine").setup({
         sections = {

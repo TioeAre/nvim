@@ -7,14 +7,7 @@ M.config_treesitter = function()
         build = ":TSUpdate",
         indent = {
             enable = true,
-        },
-        autotag = {
-            enable = true,
-        },
-        matchup = {
-            enable = true, -- mandatory, false will disable the whole extension
-            -- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
-            -- [options]
+            disable = { "bigfile" },
         },
         event = { "BufReadPost", "BufNewFile" },
         ensure_installed = {
@@ -60,17 +53,12 @@ M.config_treesitter = function()
         auto_install = true,
         highlight = {
             enable = true,
-            disable = function(lang, buf)
-                local max_filesize = 3 * 1024 * 1024 -- 1024 KB
-                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                if ok and stats and stats.size > max_filesize then
-                    return true
-                end
-            end,
+            disable = { "bigfile" },
             additional_vim_regex_highlighting = false,
         },
         incremental_selection = {
             enable = true,
+            disable = { "bigfile" },
             keymaps = {
                 init_selection = "<Leader>ta",
                 node_incremental = "<Leader>ta",
@@ -81,6 +69,7 @@ M.config_treesitter = function()
         textobjects = {
             select = {
                 enable = true,
+                disable = { "bigfile" },
                 -- Automatically jump forward to textobj, similar to targets.vim
                 lookahead = true,
                 keymaps = {
@@ -110,13 +99,14 @@ M.config_treesitter = function()
                 -- mapping query_strings to modes.
                 selection_modes = {
                     ["@parameter.outer"] = "v", -- charwise
-                    ["@function.outer"] = "V", -- linewise
+                    ["@function.outer"] = "V",  -- linewise
                     ["@class.outer"] = "<c-v>", -- blockwise
                 },
                 include_surrounding_whitespace = false,
             },
             move = {
                 enable = true,
+                disable = { "bigfile" },
                 set_jumps = true, -- whether to set jumps in the jumplist
                 goto_next_start = {
                     ["]m"] = "@function.outer",
@@ -155,6 +145,7 @@ M.config_treesitter = function()
             },
             lsp_interop = {
                 enable = true,
+                disable = { "bigfile" },
                 border = "none",
                 floating_preview_opts = {},
                 peek_definition_code = {
@@ -174,11 +165,10 @@ M.config_treesitter = function()
         ts_config = {
             lua = { "string" }, -- it will not add a pair on that treesitter node
             javascript = { "template_string" },
-            java = false, -- don't check treesitter on java
+            java = false,       -- don't check treesitter on java
         },
         enable_check_bracket_line = false,
         disable_filetype = filetype.excluded_filetypes,
-        -- { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
     })
     local ts_conds = require("nvim-autopairs.ts-conds")
     -- press % => %% only while inside a comment or string
@@ -233,7 +223,7 @@ M.config_treesitter = function()
     end, parsers.available_parsers())
     augroup("TreesitterFolding", {
         {
-            events = { "Filetype" },
+            events = { "BufReadPost" },
             targets = ts_fts,
             command = "setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()",
             -- command = "lua vim.treeesitter.foldexpr()"
@@ -245,16 +235,16 @@ end
 M.config_treesitter_context = function()
     require("treesitter-context").setup({
         enable = true,
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-        min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+        max_lines = 0,            -- How many lines the window should span. Values <= 0 mean no limit.
+        min_window_height = 0,    -- Minimum editor window height to enable context. Values <= 0 mean no limit.
         line_numbers = true,
         multiline_threshold = 10, -- Maximum number of lines to show for a single context
-        trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-        mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+        trim_scope = "outer",     -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+        mode = "cursor",          -- Line used to calculate context. Choices: 'cursor', 'topline'
         -- Separator between context and content. Should be a single character string, like '-'.
         -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
         separator = "-", -- "-"
-        zindex = 20, -- The Z-index of the context window
+        zindex = 20,     -- The Z-index of the context window
         on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
     })
 end

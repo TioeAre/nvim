@@ -95,6 +95,12 @@ wk.add({
             "<cmd> BufferLineCloseLeft <cr>",
             desc = "close left buffers",
         },
+        -- danymat/neogen
+        {
+            "<leader>cg",
+            "<cmd> Neogen <cr>",
+            desc = "neogen generate docs",
+        },
         {
             "<leader>co",
             "<cmd> BufferLineCloseOthers <cr>",
@@ -120,19 +126,16 @@ wk.add({
     { -- <leader> f
         {
             "<leader>fb",
-            -- "<cmd>lua require('telescope.builtin').buffers()<cr>",
             "<cmd>lua require('snacks').picker.buffers() <cr>",
             desc = "snacks find buffers",
         },
         {
             "<leader>ff",
-            -- "<cmd>Telescope find_files<cr>",
             "<cmd>lua require('snacks').picker.smart() <cr>",
             desc = "snacks find files",
         },
         {
             "<leader>fg",
-            -- "<cmd>Telescope live_grep<cr>",
             "<cmd>lua require('snacks').picker.grep() <cr>",
             desc = "snacks live grep string",
         },
@@ -143,7 +146,6 @@ wk.add({
         },
         {
             "<leader>fpp",
-            -- "<cmd>lua require'telescope'.extensions.projects.projects()<cr>",
             "<cmd>lua require('snacks').picker.projects() <cr>",
             desc = "snacks find projects",
         },
@@ -166,14 +168,12 @@ wk.add({
         },
         {
             "<leader>fu",
-            -- "<cmd> Telescope undo <cr>",
             "<cmd>lua require('snacks').picker.undo() <cr>",
             desc = "snacks find undo",
         },
         -- AckslD/nvim-neoclip.lua
         {
             "<leader>fv",
-            -- "<cmd> Telescope neoclip <cr>",
             "<cmd>lua require('snacks').picker.registers() <cr>",
             desc = "snacks find clipboard",
         },
@@ -250,7 +250,6 @@ wk.add({
         },
         {
             "<leader>mn",
-            -- "<cmd> Noice telescope <cr>",
             "<cmd>lua require('snacks').picker.notifications() <cr>",
             desc = "noice messages snacks",
         },
@@ -555,6 +554,13 @@ wk.add({
         "<cmd>lua require('snacks').terminal.toggle() <cr>",
         desc = "toggle term",
         mode = { "n", "t" },
+    },
+    -- danymat/neogen
+    {
+        "<C-A-g>",
+        "<cmd> Neogen <cr>",
+        desc = "neogen generate docs",
+        mode = { "n", "i" },
     },
     {
         "<C-A-n>",

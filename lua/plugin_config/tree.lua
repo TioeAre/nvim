@@ -197,7 +197,7 @@ M.config_outline = function()
         preview_window = {
             auto_preview = false,
             open_hover_on_preview = true,
-            width = 50, -- Percentage or integer of columns
+            width = 50,     -- Percentage or integer of columns
             min_width = 35, -- This is the number of columns
             relative_width = true,
             -- Border option for floating preview window.
@@ -457,51 +457,63 @@ M.config_project = function()
         show_hidden = true,
         silent_chdir = false,
     })
-    -- nvim-telescope/telescope.nvim
-    require("telescope").load_extension("projects")
 end
 
--- linux-cultist/venv-selector.nvim
 M.config_venv = function()
-    require("venv-selector").setup({
-        -- Your options go here
-        name = { "venv" },
-        auto_refresh = true,
-        path = nil,
-        dap_enabled = true,
-        parents = 4,
-        anaconda_base_path = "/home/tioeare/anaconda3",
-        anaconda_envs_path = "/home/tioeare/anaconda3/envs",
-    })
-    vim.api.nvim_create_autocmd("UIEnter", {
-        desc = "Auto select virtualenv Nvim open",
-        pattern = { "*" },
-        callback = function()
-            local venv = vim.fn.findfile("pyproject.toml", vim.fn.getcwd() .. ";")
-            if venv ~= "" then
-                require("venv-selector").retrieve_from_cache()
-            end
-        end,
-        once = true,
-    })
-    -- require("swenv").setup({
-    -- -- Should return a list of tables with a `name` and a `path` entry each.
-    -- -- Gets the argument `venvs_path` set below.
-    -- -- By default just lists the entries in `venvs_path`.
-    -- get_venvs = function(venvs_path)
-    --     return require("swenv.api").get_venvs(venvs_path)
-    -- end,
-    -- -- Path passed to `get_venvs`.
-    -- venvs_path = vim.fn.expand("~/venvs"),
-    -- -- Something to do after setting an environment, for example call vim.cmd.LspRestart
-    -- post_set_venv = nil,
+    -- -- linux-cultist/venv-selector.nvim
+    -- require("venv-selector").setup({
+    --     -- Your options go here
+    --     name = { "venv" },
+    --     auto_refresh = true,
+    --     path = nil,
+    --     dap_enabled = true,
+    --     parents = 4,
+    --     anaconda_base_path = "/home/tioeare/anaconda3",
+    --     anaconda_envs_path = "/home/tioeare/anaconda3/envs",
     -- })
-    -- vim.api.nvim_create_autocmd("FileType", {
-    --     pattern = { "python" },
+    -- vim.api.nvim_create_autocmd("UIEnter", {
+    --     desc = "Auto select virtualenv Nvim open",
+    --     pattern = { "*" },
     --     callback = function()
-    --         require("swenv.api").auto_venv()
+    --         local venv = vim.fn.findfile("pyproject.toml", vim.fn.getcwd() .. ";")
+    --         if venv ~= "" then
+    --             require("venv-selector").retrieve_from_cache()
+    --         end
     --     end,
+    --     once = true,
     -- })
+
+    -- AckslD/swenv.nvim
+    require("swenv").setup({
+        get_venvs = function(venvs_path)
+            return require("swenv.api").get_venvs(venvs_path)
+        end,
+        venvs_path = vim.fn.expand("venv"),
+        post_set_venv = function()
+            local client = vim.lsp.get_clients({ name = "basedpyright" })[1]
+            if not client then
+                return
+            end
+            local venv = require("swenv.api").get_current_venv()
+            if not venv then
+                return
+            end
+            local venv_python = venv.path .. "/bin/python"
+            if client.settings then
+                client.settings = vim.tbl_deep_extend("force", client.settings, { python = { pythonPath = venv_python } })
+            else
+                client.config.settings =
+                    vim.tbl_deep_extend("force", client.config.settings, { python = { pythonPath = venv_python } })
+            end
+            client.notify("workspace/didChangeConfiguration", { settings = nil })
+        end,
+    })
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "python" },
+        callback = function()
+            require("swenv.api").auto_venv()
+        end,
+    })
 end
 
 -- j-morano/buffer_manager.nvim

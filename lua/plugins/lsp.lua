@@ -13,36 +13,23 @@ return {
                         config = M.config_mason_lspconfig,
                     },
                     "WhoIsSethDaniel/mason-tool-installer.nvim",
-                    -- "jay-babu/mason-nvim-dap.nvim",
                 },
                 cmd = "Mason",
                 event = { "VeryLazy" },
                 config = M.config_mason,
             },
-            -- "windwp/nvim-autopairs",
-            {
-                -- lsp loaded notify
-                "j-hui/fidget.nvim",
-                tag = "legacy",
-            },
             {
                 "nvimdev/lspsaga.nvim",
                 dependencies = { "lewis6991/gitsigns.nvim" },
             },
-            -- { -- documents for function args
-            --     "ray-x/lsp_signature.nvim"
-            -- },
             -- {
-            --     "ray-x/navigator.lua",
+            --     'ray-x/navigator.lua',
             --     dependencies = {
             --         {
-            --             "ray-x/guihua.lua",
-            --             build = "cd lua/fzy && make",
+            --             'ray-x/guihua.lua',
+            --             build = 'cd lua/fzy && make'
             --         },
-            --         {
-            --             "nvim-treesitter/nvim-treesitter"
-            --         },
-            --     }
+            --     },
             -- },
             {
                 "barreiroleo/ltex_extra.nvim",
@@ -50,7 +37,7 @@ return {
                 dependencies = { "neovim/nvim-lspconfig" },
             },
         },
-        event = { "BufReadPost", "VeryLazy" },
+        event = { "VeryLazy" }, -- BufReadPost
         config = M.config_lspconfig,
     },
     -- 显示文内函数引用, 定义等

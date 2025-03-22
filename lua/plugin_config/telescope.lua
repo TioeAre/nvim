@@ -121,24 +121,6 @@ M.config_telescope = function()
                 -- to send the env. and command to a tmux terminal or floaterm
                 -- or something other than a built in terminal.
             },
-            undo = {
-                -- telescope-undo.nvim config, see below
-                mappings = {
-                    i = {
-                        ["<cr>"] = require("telescope-undo.actions").yank_additions,
-                        ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
-                        ["<C-cr>"] = require("telescope-undo.actions").restore,
-                        -- alternative defaults, for users whose terminals do questionable things with modified <cr>
-                        ["<C-y>"] = require("telescope-undo.actions").yank_deletions,
-                        ["<C-r>"] = require("telescope-undo.actions").restore,
-                    },
-                    n = {
-                        ["y"] = require("telescope-undo.actions").yank_additions,
-                        ["Y"] = require("telescope-undo.actions").yank_deletions,
-                        ["u"] = require("telescope-undo.actions").restore,
-                    },
-                },
-            },
             fzf = {
                 fuzzy = true,                   -- false will only do exact matching
                 override_generic_sorter = true, -- override the generic sorter
@@ -164,19 +146,11 @@ M.config_telescope = function()
 
     -- require("telescope").load_extension("scope")
     require("telescope").load_extension("fzf")
-    require("telescope").load_extension("undo")
     require("telescope").load_extension("emoji")
-    -- require("telescope").load_extension("repo")
     require("telescope").load_extension("ros")
     require("telescope").load_extension("docker")
     require("telescope").load_extension("diff")
     require("telescope").load_extension("persisted")
-    -- require("telescope").load_extension("lazygit")
-    -- require("telescope").extensions.docker.containers({
-    --     env = {
-    --         DOCKER_HOST = "ssh://...."
-    --     }
-    -- })
 end
 
 -- tiagovla/scope.nvim

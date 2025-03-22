@@ -18,7 +18,7 @@ M.config_lspconfig = function()
     --         types = true,
     --     },
     -- })
-    require("fidget").setup()
+    -- require("fidget").setup()
     require("mason").setup({
         ui = {
             icons = {
@@ -43,7 +43,7 @@ M.config_lspconfig = function()
             "htmlhint",
             "jsonlint",
             W.windows_ignore_list("luacheck"),
-            "flake8", -- "yamllint",
+            "flake8",   -- "yamllint",
             "beautysh", -- "shfmt", -- "clang-format",
             "prettier",
             "xmlformatter",
@@ -63,7 +63,7 @@ M.config_lspconfig = function()
         ".clang-tidy",
         ".clang-format", -- "build",
         "compile_flags.txt",
-        "configure.ac", -- AutoTools
+        "configure.ac",  -- AutoTools
         -- "CMakeLists.txt",
         -- "Makefile",
         -- ".catkin_workspace",
@@ -142,8 +142,8 @@ M.config_lspconfig = function()
                     workspace = {
                         -- make language server aware of runtime files
                         library = {
-                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                            [vim.fn.stdpath("config") .. "/lua"] = true,
+                            vim.fn.expand("$VIMRUNTIME/lua"),
+                            vim.fn.expand("$XDG_CONFIG_HOME") .. "/nvim/lua",
                         },
                     },
                 },
@@ -236,12 +236,6 @@ M.config_lspconfig = function()
                 "<leader>ca",
                 "<cmd> Lspsaga code_action <cr>",
                 desc = "available code actions",
-                buffer = bufnr,
-            },
-            {
-                "<leader>dt",
-                "<cmd> lua require'telescope.builtin'.diagnostics() <cr>",
-                desc = "telescope diagnostics",
                 buffer = bufnr,
             },
             {
@@ -466,6 +460,50 @@ M.config_lspconfig = function()
     -- 		severity_limit = "Warning",
     -- 	},
     -- })
+    -- ---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
+    -- local progress = vim.defaulttable()
+    -- vim.api.nvim_create_autocmd("LspProgress", {
+    --     ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
+    --     callback = function(ev)
+    --         local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    --         local value = ev.data.params
+    --             .value --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
+    --         if not client or type(value) ~= "table" then
+    --             return
+    --         end
+    --         local p = progress[client.id]
+
+    --         for i = 1, #p + 1 do
+    --             if i == #p + 1 or p[i].token == ev.data.params.token then
+    --                 p[i] = {
+    --                     token = ev.data.params.token,
+    --                     msg = ("[%3d%%] %s%s"):format(
+    --                         value.kind == "end" and 100 or value.percentage or 100,
+    --                         value.title or "",
+    --                         value.message and (" **%s**"):format(value.message) or ""
+    --                     ),
+    --                     done = value.kind == "end",
+    --                 }
+    --                 break
+    --             end
+    --         end
+
+    --         local msg = {} ---@type string[]
+    --         progress[client.id] = vim.tbl_filter(function(v)
+    --             return table.insert(msg, v.msg) or not v.done
+    --         end, p)
+
+    --         local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+    --         vim.notify(table.concat(msg, "\n"), "info", {
+    --             id = "lsp_progress",
+    --             title = client.name,
+    --             opts = function(notif)
+    --                 notif.icon = #progress[client.id] == 0 and " "
+    --                     or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+    --             end,
+    --         })
+    --     end,
+    -- })
 end
 
 -- VidocqH/lsp-lens.nvim
@@ -474,7 +512,7 @@ M.config_lsp_lens = function()
     require("lsp-lens").setup({
         enable = true,
         include_declaration = true, -- Reference include declaration
-        sections = { -- Enable / Disable specific request, formatter example looks 'Format Requests'
+        sections = {                -- Enable / Disable specific request, formatter example looks 'Format Requests'
             definition = true,
             references = true,
             implements = true,
@@ -530,19 +568,19 @@ M.config_glance = function()
         },
         list = {
             position = "left", -- Position of the list window 'left'|'right'
-            width = 0.33, -- 33% width relative to the active window, min 0.1, max 0.5
+            width = 0.33,      -- 33% width relative to the active window, min 0.1, max 0.5
         },
-        theme = { -- This feature might not work properly in nvim-0.7.2
-            enable = true, -- Will generate colors for the plugin based on your current colorscheme
-            mode = "auto", -- 'brighten'|'darken'|'auto', 'auto' will set mode based on the brightness of your colorscheme
+        theme = {              -- This feature might not work properly in nvim-0.7.2
+            enable = true,     -- Will generate colors for the plugin based on your current colorscheme
+            mode = "auto",     -- 'brighten'|'darken'|'auto', 'auto' will set mode based on the brightness of your colorscheme
         },
         mappings = {
             list = {
-                ["j"] = actions.next, -- Bring the cursor to the next item in the list
+                ["j"] = actions.next,     -- Bring the cursor to the next item in the list
                 ["k"] = actions.previous, -- Bring the cursor to the previous item in the list
                 ["<Down>"] = actions.next,
                 ["<Up>"] = actions.previous,
-                ["<Tab>"] = actions.next_location, -- Bring the cursor to the next location skipping groups in the list
+                ["<Tab>"] = actions.next_location,       -- Bring the cursor to the next location skipping groups in the list
                 ["<S-Tab>"] = actions.previous_location, -- Bring the cursor to the previous location skipping groups in the list
                 ["<c-u>"] = actions.preview_scroll_win(5),
                 ["<c-d>"] = actions.preview_scroll_win(-5),

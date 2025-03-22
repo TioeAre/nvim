@@ -42,25 +42,23 @@ M.config_autotag = function()
         "wbr",
         "menuitem",
     }
-    -- nvim-treesitter/nvim-treesitter
-    require("nvim-treesitter.configs").setup({
-        autotag = {
-            enable = true,
-            enable_rename = true,
-            enable_close = true,
-            enable_close_on_slash = true,
-            filetypes = filetypes,
-            skip_tags = skip_tags,
-        },
+    require('nvim-ts-autotag').setup({
+        per_filetype = {
+            ["bigfile"] = {
+                enable_close = false
+            }
+        }
     })
 end
 
 -- windwp/nvim-autopairs
 M.opts_auto_pairs = {}
 M.config_auto_pairs = function()
+    local filetype = require("utils.filetype")
     require('nvim-autopairs').setup({
         check_ts = true,
-        enable_check_bracket_line = false
+        enable_check_bracket_line = false,
+        disable_filetype = filetype.excluded_filetypes,
       })
 end
 

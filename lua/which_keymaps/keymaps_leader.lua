@@ -31,12 +31,6 @@ wk.add({
             "<leader>ca",
             desc = "available code actions",
         },
-        -- danymat/neogen
-        {
-            "<leader>cg",
-            "<cmd> Neogen <cr>",
-            desc = "neogen generate docs",
-        },
     },
     { -- <leader> d
         {
@@ -109,11 +103,6 @@ wk.add({
     { -- <leader> f
         {
             "<leader>fc",
-            -- function()
-            --     require("telescope").extensions.diff.diff_current({
-            --         hidden = true,
-            --     })
-            -- end,
             "<cmd>lua require('snacks').picker.git_diff() <cr>",
             desc = "snacks diff current",
         },
@@ -167,14 +156,12 @@ wk.add({
         },
         { -- NOTE
             "<leader>fa",
-            -- "<cmd>Telescope grep_string<cr>",
             "<cmd>lua require('snacks').picker.grep_word() <cr>",
             desc = "snacks grep string",
         },
         -- folke/todo-comments.nvim
         {
             "<leader>ft",
-            -- "<cmd>TodoTelescope<cr>",
             "<cmd>lua require('snacks').picker.todo_comments() <cr>",
             desc = "snacks find todo",
         },
@@ -472,15 +459,15 @@ wk.add({
 
     },
     { -- <leader> v
-        {
+        { -- AckslD/swenv.nvim linux-cultist/venv-selector.nvim
             "<leader>vs",
-            "<cmd> VenvSelect <cr>",
-            desc = "python venv selevt",
+            "<cmd> lua require('swenv.api').pick_venv() <cr>",
+            desc = "python venv select",
         },
         {
             "<leader>vc",
-            "<cmd> VenvSelectCached <cr>",
-            desc = "python venv selevt from cache",
+            "<cmd> lua require('swenv.api').auto_venv() <cr>",
+            desc = "python venv auto select",
         },
     },
     { -- <leader> w

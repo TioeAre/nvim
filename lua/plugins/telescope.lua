@@ -12,7 +12,6 @@ return {
             "xiyaowong/telescope-emoji.nvim",
             "bi0ha2ard/telescope-ros.nvim",
             "lpoto/telescope-docker.nvim",
-            "debugloop/telescope-undo.nvim",
             {
                 "nvim-telescope/telescope-fzf-native.nvim",
                 build = "make",

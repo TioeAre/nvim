@@ -151,6 +151,11 @@ return {
     {
         "folke/flash.nvim",
         event = "VeryLazy",
+        opts = {
+            search = {
+                exclude = { "bigfile" }
+            },
+        },
         keys = M.keys_flash,
     },
     -- 跳转窗口

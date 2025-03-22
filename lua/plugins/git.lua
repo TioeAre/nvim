@@ -1,24 +1,6 @@
 local M = require("plugin_config.git")
 
 return {
-    -- {
-    --     "kdheepak/lazygit.nvim",
-    --     event = { "BufReadPost" },
-    --     cmd = {
-    --         "LazyGit",
-    --         "LazyGitCurrentFile",
-    --         "LazyGitConfig",
-    --         "LazyGitFilter",
-    --         "LazyGitFilterCurrentFile"
-    --     },
-    --     dependencies = {
-    --         "nvim-lua/plenary.nvim", -- required
-    --         "sindrets/diffview.nvim", -- optional - Diff integration
-    --         "nvim-telescope/telescope.nvim", -- optional
-    --         "ibhagwan/fzf-lua", -- optional
-    --     },
-    --     config = M.config_lazygit,
-    -- },
     {
         "sindrets/diffview.nvim",
         -- event = "VeryLazy",

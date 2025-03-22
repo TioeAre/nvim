@@ -75,13 +75,17 @@ M.opt_snacks = {
         },
         -- filter for buffers to enable indent guides
         filter = function(buf)
-            return vim.g.snacks_indent ~= false and vim.b[buf].snacks_indent ~= false and vim.bo[buf].buftype == ""
+            return vim.g.snacks_indent ~= false and vim.b[buf].snacks_indent ~= false and
+                vim.bo[buf].buftype ~= "nofile" -- and vim.bo[buf].filetype ~= "bigfile"
         end,
     },
     input = { enabled = true },
     lazygit = { enabled = true },
-    notifier = { enabled = true },
-    picker = { -- Snacks.picker(), Snacks.picker.pick({source = "files", ...})
+    notifier = {
+        level = vim.log.levels.WARN,
+        refresh = 50, -- refresh at most every 50ms
+    },
+    picker = {
         -- layout = {
         --     cycle = true,
         --     preset = "vscode",
@@ -101,6 +105,18 @@ M.opt_snacks = {
             cwd_bonus = false,     -- give bonus for matching files in the cwd
             frecency = false,      -- frecency bonus
             history_bonus = false, -- give more weight to chronological order
+        },
+        win = {
+            input = {
+                keys = {
+                    ["<c-x>"] = { "edit_split", mode = { "i", "n" } },
+                },
+            },
+            list = {
+                keys = {
+                    ["<c-x>"] = { "edit_split", mode = { "i", "n" } },
+                },
+            },
         },
     },
     profiler = { enable = false }, -- only can be used to profile `autocmd`

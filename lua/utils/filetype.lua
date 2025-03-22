@@ -35,6 +35,7 @@ M.excluded_filetypes = {
 	"trouble",
 	"Trouble",
     "undotree",
+	"bigfile"
 }
 -- echo &buftype
 M.excluded_buftypes = {
