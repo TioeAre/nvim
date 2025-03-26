@@ -212,9 +212,9 @@ end
 M.config_auto_save = function()
 	require("auto-save").setup({
 		enabled = true,
-		trigger_events = {                   -- See :h events
+		trigger_events = { -- See :h events
 			immediate_save = { "FocusLost" }, -- "BufLeave",  vim events that trigger an immediate save
-			defer_save = { "BufLeave" },     -- vim events that trigger a deferred save (saves after `debounce_delay`)
+			defer_save = { "BufLeave" }, -- vim events that trigger a deferred save (saves after `debounce_delay`)
 			cancel_deferred_save = { "InsertEnter" }, -- vim events that cancel a pending deferred save
 		},
 		condition = function(buf)
@@ -226,7 +226,7 @@ M.config_auto_save = function()
 			return true
 		end,
 		write_all_buffers = false, -- write all buffers when the current one meets `condition`
-		noautocmd = false,   -- do not execute autocmds when saving
+		noautocmd = false, -- do not execute autocmds when saving
 		debounce_delay = 700,
 		debug = false,
 	})
@@ -250,34 +250,34 @@ M.opts_trouble = {
 	width = 50, -- width of the list when position is left or right
 	-- icons = true,
 	mode = "workspace_diagnostics",
-	group = true,      -- group results by file
-	padding = true,    -- add an extra new line on top of the list
+	group = true, -- group results by file
+	padding = true, -- add an extra new line on top of the list
 	cycle_results = true, -- cycle item list when reaching beginning or end of list
-	multiline = true,  -- render multi-line messages
+	multiline = true, -- render multi-line messages
 	auto_preview = false, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
 	auto_jump = { "lsp_references", "lsp_implementations", "lsp_definitions" },
 	use_diagnostic_signs = true,
 	action_keys = {
-		close = "q",                     -- close the list
-		cancel = "<esc>",                -- cancel the preview and get back to your last window / buffer / cursor
-		refresh = "r",                   -- manually refresh
+		close = "q", -- close the list
+		cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+		refresh = "r", -- manually refresh
 		jump = { "<cr>", "<2-leftmouse>" }, -- jump to the diagnostic or open / close folds
-		open_split = { "<c-x>" },        -- <c-x> open buffer in new split
-		open_vsplit = { "<c-v>" },       -- <c-v> open buffer in new vsplit
-		open_tab = { "<c-t>" },          -- open buffer in new tab
-		jump_close = { "o" },            -- jump to the diagnostic and close the list
-		toggle_mode = "m",               -- toggle between "workspace" and "document" diagnostics mode
-		switch_severity = "<leader>ss",  -- switch "diagnostics" severity filter level to HINT / INFO / WARN / ERROR
-		toggle_preview = "P",            -- toggle auto_preview
-		hover = "K",                     -- opens a small popup with the full multiline message
-		preview = "p",                   -- preview the diagnostic location
-		open_code_href = "c",            -- if present, open a URI with more information about the diagnostic error
-		close_folds = { "zc", "zC" },    -- close all folds
-		open_folds = { "zo", "zO" },     -- open all folds
+		open_split = { "<c-x>" }, -- <c-x> open buffer in new split
+		open_vsplit = { "<c-v>" }, -- <c-v> open buffer in new vsplit
+		open_tab = { "<c-t>" }, -- open buffer in new tab
+		jump_close = { "o" }, -- jump to the diagnostic and close the list
+		toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+		switch_severity = "<leader>ss", -- switch "diagnostics" severity filter level to HINT / INFO / WARN / ERROR
+		toggle_preview = "P", -- toggle auto_preview
+		hover = "K", -- opens a small popup with the full multiline message
+		preview = "p", -- preview the diagnostic location
+		open_code_href = "c", -- if present, open a URI with more information about the diagnostic error
+		close_folds = { "zc", "zC" }, -- close all folds
+		open_folds = { "zo", "zO" }, -- open all folds
 		toggle_fold = { "za", "zA", "<tab>" }, -- toggle fold of current file
-		next = "j",                      -- next item
-		previous = "<c-h>",              -- previous item
-		help = "?",                      -- help menu
+		next = "j", -- next item
+		previous = "<c-h>", -- previous item
+		help = "?", -- help menu
 	},
 }
 M.keys_trouble = {}
@@ -286,7 +286,7 @@ M.keys_trouble = {}
 M.opts_todo_comments = {
 	highlight = {
 		exclude = filetype.excluded_filetypes,
-	}
+	},
 }
 M.keys_todo_comments = {}
 
@@ -304,9 +304,9 @@ M.opts_twilight = {
 -- folke/persistence.nvim
 M.opts_persistence = {
 	dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-	options = { "buffers", "curdir", "tabpages", "winsize" },  -- sessionoptions used for saving
-	pre_save = nil,                                            -- a function to call before saving the session
-	save_empty = false,                                        -- don't save if there are no open file buffers
+	options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
+	pre_save = nil, -- a function to call before saving the session
+	save_empty = false, -- don't save if there are no open file buffers
 	-- vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {}),
 	-- -- restore the last session
 	-- vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {}),
@@ -320,15 +320,15 @@ M.config_persisted = function()
 	vim.o.sessionoptions = "buffers,curdir,folds,tabpages,winpos,winsize"
 	require("persisted").setup({
 		save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"),
-		use_git_branch = true,  -- create session files based on the branch of a git enabled repository
+		use_git_branch = true, -- create session files based on the branch of a git enabled repository
 		default_branch = "main", -- the branch to load if a session file is not found for the current branch
-		autoload = true,        -- automatically load the session for the cwd on Neovim startup
+		autoload = true, -- automatically load the session for the cwd on Neovim startup
 		on_autoload_no_session = nil, -- function to run when `autoload = true` but there is no session to load
 		ignored_dirs = {
-			{ "/",                 exact = true },
-			{ "~",                 exact = true },
+			{ "/", exact = true },
+			{ "~", exact = true },
 			{ "os.getenv('HOME')", exact = true },
-			{ "/home/linuxbrew/",  exact = true },
+			{ "/home/linuxbrew/", exact = true },
 			{ "/home/Systemback/", exact = true },
 		}, -- table of dirs that are ignored when auto-saving and auto-loading
 	})
@@ -397,7 +397,7 @@ M.opts_toggleterm = {
 M.opts_auto_indent = {
 	indentexpr = function(lnum)
 		return require("nvim-treesitter.indent").get_indent(lnum)
-	end,                                        -- Use vim.bo.indentexpr by default, see 'Custom Indent Evaluate Method'
+	end, -- Use vim.bo.indentexpr by default, see 'Custom Indent Evaluate Method'
 	ignore_filetype = filetype.excluded_filetypes, -- e.g. ignore_filetype = { 'javascript' }
 }
 
@@ -480,6 +480,9 @@ M.config_ufo = function(_, opts)
 		fold_virt_text_handler = handler,
 		-- INFO: Uncomment to use treeitter as fold provider, otherwise nvim lsp is used
 		provider_selector = function(bufnr, filetype, buftype)
+			if filetype == "bigfile" then
+				return { "indent" }
+			end
 			return { "treesitter", "indent" }
 		end,
 		open_fold_hl_timeout = 150,
@@ -647,9 +650,9 @@ M.config_mini_surround = function()
 		highlight_duration = 500,
 		-- Module mappings. Use `''` (empty string) to disable one.
 		mappings = {
-			add = "ma",   -- Add surrounding in Normal and Visual modes
+			add = "ma", -- Add surrounding in Normal and Visual modes
 			delete = "md", -- Delete surrounding
-			find = "mf",  -- Find surrounding (to the right)
+			find = "mf", -- Find surrounding (to the right)
 			find_left = "mF", -- Find surrounding (to the left)
 			highlight = "mh", -- Highlight surrounding
 			replace = "mr", -- Replace surrounding

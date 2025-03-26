@@ -113,7 +113,7 @@ M.config_nvim_tree = function()
         respect_buf_cwd = true,
         update_focused_file = {
             enable = true,
-            update_root = true,
+            update_root = false,
         },
     })
     -- vim.api.nvim_exec([[autocmd VimEnter * NvimTreeToggle]], false)
