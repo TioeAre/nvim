@@ -60,7 +60,7 @@ return {
 		-- dependencies = {
 		--     "stevearc/conform.nvim",
 		-- },
-		event = { "InsertLeave", "TextChanged", "VeryLazy" },
+		event = { "TextChanged", "VeryLazy" },
 		config = M.config_whitespace,
 	},
 	-- auto save
@@ -143,6 +143,11 @@ return {
 			"kevinhwang91/promise-async",
 			"nvim-treesitter/nvim-treesitter",
 			"luukvbaal/statuscol.nvim",
+
+			{
+				"chrisgrieser/nvim-origami",
+				config = M.config_origami,
+			},
 		},
 		event = { "VeryLazy" },
 		config = M.config_ufo,
@@ -257,12 +262,18 @@ return {
 		config = M.config_stickybuf,
 	},
 	-- find and replace
-	{
-		"nvim-pack/nvim-spectre",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		event = { "VeryLazy" },
-		config = M.config_nvim_spectre,
-	},
+	-- {
+	-- 	"nvim-pack/nvim-spectre",
+	-- 	dependencies = { "nvim-lua/plenary.nvim" },
+	-- 	event = { "VeryLazy" },
+	-- 	config = M.config_nvim_spectre,
+	-- },
+    -- MagicDuck/grug-far.nvim
+    {
+        "MagicDuck/grug-far.nvim",
+        event = {"VeryLazy"},
+        config = M.config_grug_far,
+    },
 	-- Chinese words spilt
 	-- {
 	--     'noearc/jieba.nvim',

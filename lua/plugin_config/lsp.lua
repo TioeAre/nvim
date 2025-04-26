@@ -538,7 +538,7 @@ M.config_whynothugo_lsp_lens = function()
             highlight_whole_line = false,
         },
     })
-    vim.cmd("lua require('lsp_lines').toggle()")
+    -- vim.cmd("lua require('lsp_lines').toggle()")
 end
 
 M.config_glance = function()

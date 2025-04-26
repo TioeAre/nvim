@@ -196,7 +196,11 @@ M.config_whitespace = function()
 		pattern = "AutoSaveWritePre",
 		group = group,
 		callback = function(opts)
-			if opts.data.saved_buffer ~= nil then
+			-- print(opts.data.saved_buffer)
+			if
+				opts.data.saved_buffer ~= nil
+				and not filetype.is_value_in_list(opts.data.saved_buffer, filetype.excluded_buftypes)
+			then
 				-- local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
 				require("whitespace-nvim").trim()
 				-- require("conform").format({
@@ -208,6 +212,7 @@ M.config_whitespace = function()
 		end,
 	})
 end
+
 -- okuuva/auto-save.nvim
 M.config_auto_save = function()
 	require("auto-save").setup({
@@ -402,7 +407,7 @@ M.opts_auto_indent = {
 }
 
 -- kevinhwang91/nvim-ufo
-M.config_ufo = function(_, opts)
+M.config_ufo = function()
 	vim.o.foldcolumn = "1" -- '0' is not bad
 	vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 	vim.o.foldlevelstart = 99
@@ -499,6 +504,36 @@ M.config_ufo = function(_, opts)
 				-- jumpTop = "[",
 				-- jumpBot = "]",
 			},
+		},
+	})
+end
+
+-- chrisgrieser/nvim-origami
+M.config_origami = function()
+	require("origami").setup({
+		-- requires with `nvim-ufo`
+		keepFoldsAcrossSessions = package.loaded["ufo"] ~= nil,
+
+		pauseFoldsOnSearch = true,
+
+		setupFoldKeymaps = false,
+
+		-- incompatible with `nvim-ufo`
+		foldtextWithLineCount = {
+			enabled = package.loaded["ufo"] == nil,
+			template = "   %s lines", -- `%s` gets the number of folded lines
+			hlgroupForCount = "Comment",
+		},
+
+		foldKeymaps = {
+			setup = true, -- modifies `h` and `l`
+			hOnlyOpensOnFirstColumn = false,
+		},
+
+		-- redundant with `nvim-ufo`
+		autoFold = {
+			enabled = false,
+			kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
 		},
 	})
 end
@@ -765,6 +800,43 @@ end
 -- nvim-pack/nvim-spectre
 M.config_nvim_spectre = function()
 	require("plugin_config.user_spectre")
+end
+
+-- MagicDuck/grug-far.nvim
+M.config_grug_far = function()
+	require("grug-far").setup({
+		disableBufferLineNumbers = false,
+		startInInsertMode = false,
+		wrap = true,
+		keymaps = {
+			replace = { n = "<localleader>r" },
+			qflist = { n = "<localleader>q" },
+			syncLocations = { n = "<localleader>s" },
+			syncLine = { n = "<localleader>l" },
+			close = { n = "<localleader>c" },
+			historyOpen = { n = "<localleader>t" },
+			historyAdd = { n = "<localleader>a" },
+			refresh = { n = "<localleader>f" },
+			openLocation = { n = "<localleader>o" },
+			openNextLocation = { n = "<down>" },
+			openPrevLocation = { n = "<up>" },
+			gotoLocation = { n = "<enter>" },
+			pickHistoryEntry = { n = "<enter>" },
+			abort = { n = "<localleader>b" },
+			help = { n = "g?" },
+			toggleShowCommand = { n = "<localleader>w" },
+			swapEngine = { n = "<localleader>e" },
+			previewLocation = { n = "<localleader>i" },
+			swapReplacementInterpreter = { n = "<localleader>x" },
+			applyNext = { n = "<localleader>j" },
+			applyPrev = { n = "<localleader>k" },
+			syncNext = { n = "<localleader>n" },
+			syncPrev = { n = "<localleader>p" },
+			syncFile = { n = "<localleader>v" },
+			nextInput = { n = "<tab>" },
+			prevInput = { n = "<s-tab>" },
+		},
+	})
 end
 
 return M

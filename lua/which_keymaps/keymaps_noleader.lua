@@ -207,9 +207,11 @@ wk.add({
         desc = "select @function.inner",
     },
     -- nvim-pack/nvim-spectre
+    -- MagicDuck/grug-far.nvim
     {
         "sw",
-        "<esc><cmd> lua require('spectre').open_visual() <cr>",
+        -- "<esc><cmd> lua require('spectre').open_visual() <cr>",
+        "<cmd> lua require('grug-far').with_visual_selection() <cr>",
         desc = "search current word",
     },
 })

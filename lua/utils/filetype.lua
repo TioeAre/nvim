@@ -1,8 +1,21 @@
 local M = {}
 
+-- Helper function to check if a list contains a value
+M.is_value_in_list = function(value, list)
+	if not list then
+		return false
+	end -- Handle nil list case
+	for _, item in ipairs(list) do -- Use ipairs for sequential lists
+		if item == value then
+			return true
+		end
+	end
+	return false
+end
+
 -- echo &filetype
-M.excluded_filetypes = {
-    "aerial",
+M.exlluded_filetypes = {
+	"aerial",
 	"alpha",
 	"buffer_manager",
 	"cmp_docs",
@@ -11,9 +24,9 @@ M.excluded_filetypes = {
 	"dashboard",
 	"fidget",
 	"floggraph",
-    "gundo",
+	"gundo",
 	"help",
-    "incline",
+	"incline",
 	"lazy",
 	"lsp",
 	"mason",
@@ -22,20 +35,23 @@ M.excluded_filetypes = {
 	"noice",
 	"notify",
 	"NvimTree",
-    "outline",
+	"outline",
 	"Outline",
 	"sagafinder",
 	"sagaoutline",
 	"scrollbar",
 	"spectre_panel",
-    "symbols-outline",
-    "SymbolsOutline",
+	"symbols-outline",
+	"SymbolsOutline",
 	"TelescopePrompt",
 	"toggleterm",
 	"trouble",
 	"Trouble",
-    "undotree",
-	"bigfile"
+	"undotree",
+	"bigfile",
+    "grug-far",
+    "grug-far-history",
+    "grug-far-help",
 }
 -- echo &buftype
 M.excluded_buftypes = {
