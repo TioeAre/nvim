@@ -127,7 +127,7 @@ M.opt_snacks = {
 	rename = { enabled = false },
 	scope = { enabled = true },
 	scratch = { enabled = true },
-	scroll = { enabled = true },
+	scroll = { enabled = false},
 	statuscolumn = { enabled = true },
 	terminal = { enabled = true },
 	words = { enabled = true },
