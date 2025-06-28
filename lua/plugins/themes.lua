@@ -21,9 +21,9 @@ return {
         "nvim-lualine/lualine.nvim",
         -- lazy = false,
         event = { "UIEnter" },
-        dependencies = {
-            "arkav/lualine-lsp-progress",
-        },
+        -- dependencies = {
+            -- "arkav/lualine-lsp-progress", -- lsp notify
+        -- },
         -- event = { "VeryLazy", "FocusGained", "FocusLost", "FuncUndefined" },
         config = M.config_lualine,
     },
@@ -84,7 +84,7 @@ return {
             --   If not available, we use `mini` as the fallback
             -- {
             --     "rcarriga/nvim-notify",
-            --     config = M.config_notify,
+            -- --     config = M.config_notify,
             -- },
         },
     },
