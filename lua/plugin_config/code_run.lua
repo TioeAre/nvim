@@ -39,16 +39,16 @@ M.config_cmake_tools = function()
 		--       ${kit}
 		--       ${kitGenerator}
 		--       ${variant:xx}
-		cmake_build_directory = "build",                                                                             -- /${variant:buildTypffe}",
+		cmake_build_directory = "build",                                                                              -- /${variant:buildTypffe}",
 		-- this is used to specify generate directory for cmake, allows macro expansion, relative to vim.loop.cwd()
-		cmake_soft_link_compile_commands = false,                                                                    -- this will automatically make a soft link from compile commands file to project root dir
-		cmake_compile_commands_from_lsp = false,                                                                     -- this will automatically set compile commands file location using lsp, to use it, please set `cmake_soft_link_compile_commands` to false
+		cmake_soft_link_compile_commands = false,                                                                     -- this will automatically make a soft link from compile commands file to project root dir
+		cmake_compile_commands_from_lsp = false,                                                                      -- this will automatically set compile commands file location using lsp, to use it, please set `cmake_soft_link_compile_commands` to false
 		cmake_kits_path = W.windows_selectNO2home("/.config/nvim/config/CMakeKits.json", "\\nvim\\config\\CMakeKits.json"), -- this is used to specify global cmake kits path, see CMakeKits for detailed usage
 		cmake_variants_message = {
-			short = { show = true },                                                                                 -- whether to show short message
-			long = { show = true, max_length = 0 },                                                                  -- whether to show long message
+			short = { show = true },                                                                                  -- whether to show short message
+			long = { show = true, max_length = 0 },                                                                   -- whether to show long message
 		},
-		cmake_dap_configuration = {                                                                                  -- debug settings for cmake
+		cmake_dap_configuration = {                                                                                   -- debug settings for cmake
 			name = "cpp",
 			type = "codelldb",
 			request = "launch",

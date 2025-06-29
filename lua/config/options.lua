@@ -5,9 +5,9 @@ opt.relativenumber = true
 opt.number = true
 opt.termguicolors = true -- 启用更多色彩
 opt.colorcolumn = "120"
-opt.signcolumn = "yes" -- 标志列, 如git状态
+opt.signcolumn = "yes"   -- 标志列, 如git状态
 opt.cmdheight = 1
-opt.scrolloff = 10 -- 光标移动时距离上下界的最小行数
+opt.scrolloff = 10       -- 光标移动时距离上下界的最小行数
 
 -- 缩进
 opt.tabstop = 4
@@ -36,14 +36,14 @@ opt.splitbelow = true
 opt.ignorecase = true
 opt.smartcase = true
 opt.incsearch = true -- search as characters are entered
-opt.hlsearch = true -- 高亮搜索
+opt.hlsearch = true  -- 高亮搜索
 
 -- others
 opt.completeopt = "menuone,noinsert,noselect"
 opt.backspace = "indent,eol,start"
-opt.autochdir = false -- 随文件切换更改缓存区
+opt.autochdir = false     -- 随文件切换更改缓存区
 opt.iskeyword:append("-") -- 识别'-'为一个词
-opt.modifiable = true -- 缓存区是否能够修改
+opt.modifiable = true     -- 缓存区是否能够修改
 opt.encoding = "UTF-8"
 opt.autoread = true
 opt.updatetime = 50
@@ -56,14 +56,14 @@ opt.exrc = true
 
 -- autocmd for changed files
 vim.api.nvim_exec(
-    [[
+  [[
   augroup AutoRefresh
     autocmd!
     autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * silent! checktime
     autocmd FileChangedShellPost * echohl InfoMsg | echo "File changed on disk. Buffer reloaded." | echohl None | checktime
   augroup END
 ]],
-    false
+  false
 )
 
 vim.g.python3_host_prog = "python3"
@@ -77,4 +77,3 @@ vim.opt.swapfile = false
 vim.opt.spell = false
 vim.opt.spelllang = "en"
 vim.opt.spelloptions = "camel"
-

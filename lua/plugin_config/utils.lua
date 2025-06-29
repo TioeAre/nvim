@@ -89,9 +89,9 @@ end
 -- RRethy/vim-illuminate
 M.config_vim_illuminate = function()
 	require("illuminate").configure()
-	vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#4e306e" })
-	vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#58268c" })
-	vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#4e306e" })
+	-- vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#4e306e" })
+	-- vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#58268c" })
+	-- vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#4e306e" })
 end
 
 -- ibhagwan/smartyank.nvim
@@ -526,7 +526,7 @@ M.config_origami = function()
 		},
 
 		foldKeymaps = {
-			setup = true, -- modifies `h` and `l`
+			setup = false, -- modifies `h` and `l`
 			hOnlyOpensOnFirstColumn = false,
 		},
 
@@ -708,10 +708,10 @@ M.config_vim_matchup = function()
 	vim.g.matchup_matchparen_deferred_show_delay = 20
 	vim.g.matchup_matchparen_deferred_hide_delay = 20
 	vim.cmd([[
-        hi MatchParen ctermfg=DarkRed guifg=yellow guibg=##2F2F4A cterm=underline gui=underline
-        hi MatchWord ctermfg=DarkRed guifg=yellow guibg=##2F2F4A cterm=underline gui=underline
-        hi MatchParenCur ctermfg=DarkRed guifg=yellow guibg=##2F2F4A cterm=underline gui=underline
-        hi MatchWordCur ctermfg=DarkRed guifg=yellow guibg=##2F2F4A cterm=underline gui=underline
+        hi MatchParen ctermfg=DarkRed guifg=#a80000 guibg=##2F2F4A cterm=underline gui=underline
+        hi MatchWord ctermfg=DarkRed guifg=#a80000 guibg=##2F2F4A cterm=underline gui=underline
+        hi MatchParenCur ctermfg=DarkRed guifg=#a80000 guibg=##2F2F4A cterm=underline gui=underline
+        hi MatchWordCur ctermfg=DarkRed guifg=#a80000 guibg=##2F2F4A cterm=underline gui=underline
     ]])
 	-- vim.g.matchup_matchparen_timeout = 6000000
 	-- vim.g.matchup_matchparen_insert_timeout = 6000000

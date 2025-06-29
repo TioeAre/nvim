@@ -28,8 +28,8 @@ M.theme_config = function()
             rainbow_delimiters = true,
             indent_blankline = {
                 enabled = true,
-                scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-                colored_indent_levels = false,
+                -- scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+                colored_indent_levels = true,
             },
             -- mini = {
             --     enabled = true,
@@ -833,12 +833,12 @@ M.config_incline = function()
         },
         highlight = {
             groups = {
-                InclineNormal = { guibg = "#000000", gui = "bold" },
+                InclineNormal = { guibg = "#ab6f60", gui = "bold" },
                 InclineNormalNC = {
                     default = true,
                     group = "NormalFloat",
                 },
-                InclineActive = { guibg = "#000000", gui = "bold" },
+                InclineActive = { guibg = "FF5F3737", gui = "bold" },
                 InclineInactive = {
                     default = true,
                     group = "NormalFloat",
