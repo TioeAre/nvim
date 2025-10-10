@@ -107,7 +107,7 @@ M.config_lspconfig = function()
                 filetypes = { "cmake" },
                 root_dir = function(fname)
                     return util.root_pattern(unpack(cmake_root_files))(fname) or util.find_git_ancestor(fname)
-                    -- return require("lspconfig").util.find_git_ancestor(fname)
+                    -- return vim.lsp.config.util.find_git_ancestor(fname)
                 end,
                 single_file_support = true, -- suggested
                 init_options = {
@@ -314,10 +314,16 @@ M.config_lspconfig = function()
     })
     -- neovim/nvim-lspconfig
     for server, config in pairs(servers) do
-        require("lspconfig")[server].setup(vim.tbl_deep_extend("keep", {
-            on_attach = on_attach,
-            capabilities = capabilities,
-        }, config))
+        -- vim.lsp.config[server].setup(vim.tbl_deep_extend("keep", {
+        --     on_attach = on_attach,
+        --     capabilities = capabilities,
+        -- }, config))
+        vim.lsp.config[server] = {
+            vim.tbl_deep_extend("keep", {
+                on_attach = on_attach,
+                capabilities = capabilities,
+            }, config)
+        }
     end
 
     require("ltex_extra").setup({

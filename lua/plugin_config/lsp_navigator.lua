@@ -106,7 +106,7 @@ M.config_lspconfig = function()
                 filetypes = { "cmake" },
                 root_dir = function(fname)
                     return util.root_pattern(unpack(cmake_root_files))(fname) or util.find_git_ancestor(fname)
-                    -- return require("lspconfig").util.find_git_ancestor(fname)
+                    -- return vim.lsp.config.util.find_git_ancestor(fname)
                 end,
                 single_file_support = true, -- suggested
                 init_options = {
@@ -186,7 +186,7 @@ M.config_lspconfig = function()
                 filetypes = { "cmake" },
                 root_dir = function(fname)
                     return util.root_pattern(unpack(cmake_root_files))(fname) or util.find_git_ancestor(fname)
-                    -- return require("lspconfig").util.find_git_ancestor(fname)
+                    -- return vim.lsp.config.util.find_git_ancestor(fname)
                 end,
                 single_file_support = true, -- suggested
                 init_options = {
@@ -208,12 +208,12 @@ M.config_lspconfig = function()
         local wk = require("which-key")
         wk.add({
             mode = "n",
-            {"gd", "<cmd> Lspsaga finder def+tyd <cr>", desc = "lsp find to (type)definition", buffer = bufnr,},
-            {"gi", "<cmd> Lspsaga finder imp <cr>", desc = "lsp find to implementation", buffer = bufnr,},
-            {"gr", "<cmd> Lspsaga finder def+ref+imp+tyd <cr>", desc = "lsp find to references", buffer = bufnr,},
+            { "gd",         "<cmd> Lspsaga finder def+tyd <cr>",                       desc = "lsp find to (type)definition", buffer = bufnr, },
+            { "gi",         "<cmd> Lspsaga finder imp <cr>",                           desc = "lsp find to implementation",   buffer = bufnr, },
+            { "gr",         "<cmd> Lspsaga finder def+ref+imp+tyd <cr>",               desc = "lsp find to references",       buffer = bufnr, },
 
-            {"<leader>fl", "<cmd> Lspsaga finder ++normal def+ref+imp+tyd <cr>", desc = "lspsaga find def+ref+imp+tyd",},
-            {"<leader>dt", "<cmd> lua require'telescope.builtin'.diagnostics() <cr>", desc = "diagnostics", buffer = bufnr,},
+            { "<leader>fl", "<cmd> Lspsaga finder ++normal def+ref+imp+tyd <cr>",      desc = "lspsaga find def+ref+imp+tyd", },
+            { "<leader>dt", "<cmd> lua require'telescope.builtin'.diagnostics() <cr>", desc = "diagnostics",                  buffer = bufnr, },
         })
         -- wk.register({
         -- 	g = {
@@ -264,7 +264,7 @@ M.config_lspconfig = function()
         if client.name == "pyright" then
             wk.add({
                 mode = "n",
-                {"<leader>oi", "<cmd> PyrightOrganizeImports <cr>", desc = "PyrightOrganizeImports",},
+                { "<leader>oi", "<cmd> PyrightOrganizeImports <cr>", desc = "PyrightOrganizeImports", },
             })
 
             -- wk.register({
@@ -295,10 +295,16 @@ M.config_lspconfig = function()
         ensure_installed = filtered_servers,
     })
     for server, config in pairs(user_lspconfig_servers) do
-        require("lspconfig")[server].setup(vim.tbl_deep_extend("keep", {
-            on_attach = on_attach,
-            capabilities = capabilities,
-        }, config))
+        -- vim.lsp.config[server].setup(vim.tbl_deep_extend("keep", {
+        --     on_attach = on_attach,
+        --     capabilities = capabilities,
+        -- }, config))
+        vim.lsp.config[server] = {
+            vim.tbl_deep_extend("keep", {
+                on_attach = on_attach,
+                capabilities = capabilities,
+            }, config)
+        }
     end
     require("ltex_extra").setup({
         load_langs = { "en-US", "zh-CN" },
@@ -507,7 +513,7 @@ M.config_lsp_lens = function()
     require("lsp-lens").setup({
         enable = true,
         include_declaration = true, -- Reference include declaration
-        sections = { -- Enable / Disable specific request, formatter example looks 'Format Requests'
+        sections = {                -- Enable / Disable specific request, formatter example looks 'Format Requests'
             definition = true,
             references = true,
             implements = true,
@@ -563,19 +569,19 @@ M.config_glance = function()
         },
         list = {
             position = "left", -- Position of the list window 'left'|'right'
-            width = 0.33, -- 33% width relative to the active window, min 0.1, max 0.5
+            width = 0.33,      -- 33% width relative to the active window, min 0.1, max 0.5
         },
-        theme = { -- This feature might not work properly in nvim-0.7.2
-            enable = true, -- Will generate colors for the plugin based on your current colorscheme
-            mode = "auto", -- 'brighten'|'darken'|'auto', 'auto' will set mode based on the brightness of your colorscheme
+        theme = {              -- This feature might not work properly in nvim-0.7.2
+            enable = true,     -- Will generate colors for the plugin based on your current colorscheme
+            mode = "auto",     -- 'brighten'|'darken'|'auto', 'auto' will set mode based on the brightness of your colorscheme
         },
         mappings = {
             list = {
-                ["j"] = actions.next, -- Bring the cursor to the next item in the list
+                ["j"] = actions.next,     -- Bring the cursor to the next item in the list
                 ["k"] = actions.previous, -- Bring the cursor to the previous item in the list
                 ["<Down>"] = actions.next,
                 ["<Up>"] = actions.previous,
-                ["<Tab>"] = actions.next_location, -- Bring the cursor to the next location skipping groups in the list
+                ["<Tab>"] = actions.next_location,       -- Bring the cursor to the next location skipping groups in the list
                 ["<S-Tab>"] = actions.previous_location, -- Bring the cursor to the previous location skipping groups in the list
                 ["<c-u>"] = actions.preview_scroll_win(5),
                 ["<c-d>"] = actions.preview_scroll_win(-5),

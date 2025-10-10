@@ -259,26 +259,26 @@ M.config_bufferline = function()
     local mocha = require("catppuccin.palettes").get_palette("mocha")
     local latte = require("catppuccin.palettes").get_palette("latte")
     require("bufferline").setup({
-        highlights = require("catppuccin.groups.integrations.bufferline").get({
-            styles = { "italic", "bold" },
-            custom = {
-                all = {
-                    fill = {
-                        bg = "#000000",
-                    },
-                },
-                mocha = {
-                    background = {
-                        fg = mocha.text,
-                    },
-                },
-                latte = {
-                    background = {
-                        fg = latte.text,
-                    },
-                },
-            },
-        }),
+        -- highlights = require("catppuccin.groups.integrations.bufferline").get({
+        --     styles = { "italic", "bold" },
+        --     custom = {
+        --         all = {
+        --             fill = {
+        --                 bg = "#000000",
+        --             },
+        --         },
+        --         mocha = {
+        --             background = {
+        --                 fg = mocha.text,
+        --             },
+        --         },
+        --         latte = {
+        --             background = {
+        --                 fg = latte.text,
+        --             },
+        --         },
+        --     },
+        -- }),
         options = {
             mode = "buffers", -- "buffers" "tabs"
             move_wraps_at_ends = true,

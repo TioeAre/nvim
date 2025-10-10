@@ -137,21 +137,21 @@ return {
 		opts = M.opts_auto_indent,
 	},
 	-- 折叠代码块
-	{
-		"kevinhwang91/nvim-ufo",
-		dependencies = {
-			"kevinhwang91/promise-async",
-			"nvim-treesitter/nvim-treesitter",
-			"luukvbaal/statuscol.nvim",
+	-- {
+	-- 	"kevinhwang91/nvim-ufo",
+	-- 	dependencies = {
+	-- 		"kevinhwang91/promise-async",
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"luukvbaal/statuscol.nvim",
 
-			{
-				"chrisgrieser/nvim-origami",
-				config = M.config_origami,
-			},
-		},
-		event = { "VeryLazy" },
-		config = M.config_ufo,
-	},
+	-- 		{
+	-- 			"chrisgrieser/nvim-origami",
+	-- 			config = M.config_origami,
+	-- 		},
+	-- 	},
+	-- 	event = { "VeryLazy" },
+	-- 	config = M.config_ufo,
+	-- },
 	-- 跳转光标位置
 	{
 		"folke/flash.nvim",
