@@ -315,7 +315,7 @@ return {
 	-- askfiy/nvim-picgo
 	{
 		"askfiy/nvim-picgo",
-		-- enabled = not vim.g.only_text_editor,
+		enabled = not vim.g.only_text_editor,
 		event = { "VeryLazy" },
 		config = function()
 			-- it doesn't require you to do any configuration
