@@ -4,6 +4,7 @@ local S = require("plugin_config.copilot")
 return {
 	{
 		"hrsh7th/nvim-cmp",
+		enabled = not vim.g.if_text_editor,
 		-- lazy = false,
 		event = { "VeryLazy", "InsertEnter" },
 		config = M.config_cmp,
@@ -40,6 +41,7 @@ return {
 	-- docs
 	{
 		"danymat/neogen",
+		enabled = not vim.g.if_text_editor,
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = M.config_neogen,
 		cmd = { "Neogen" },

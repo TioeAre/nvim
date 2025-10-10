@@ -3,6 +3,7 @@ local M = require("plugin_config.debug")
 return {
     {
         "mfussenegger/nvim-dap",
+        enabled = not vim.g.if_text_editor,
         event = { "VeryLazy" },
         -- lazy = false,
         dependencies = {

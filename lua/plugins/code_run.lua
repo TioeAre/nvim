@@ -3,12 +3,14 @@ local M = require("plugin_config.code_run")
 return {
     {
         "Civitasv/cmake-tools.nvim",
+        enabled = not vim.g.if_text_editor,
         -- lazy = true,
         config = M.config_cmake_tools,
         event = "VeryLazy",
     },
     {
         "michaelb/sniprun",
+        enabled = not vim.g.if_text_editor,
         branch = "master",
         build = "sh install.sh 1",
         config = M.config_sniprun,
@@ -16,6 +18,7 @@ return {
     },
     {
         "EthanJWright/vs-tasks.nvim",
+        enabled = not vim.g.if_text_editor,
         dependencies = {
             "nvim-lua/popup.nvim",
             "nvim-lua/plenary.nvim",
