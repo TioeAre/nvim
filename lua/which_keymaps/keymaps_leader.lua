@@ -1,5 +1,4 @@
 local wk = require("which-key")
-local lint = require("lint")
 
 wk.add({
 	{ -- <leader> b
@@ -455,9 +454,9 @@ wk.add({
 		-- mfussenegger/nvim-lint
 		{
 			"<leader>tl",
-			function()
-				lint.try_lint()
-			end,
+			-- function()
+			-- 	lint.try_lint()
+			-- end,
 			desc = "lint current file",
 		},
 	},

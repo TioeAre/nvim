@@ -3,7 +3,7 @@ local M = require("plugin_config.lsp")
 return {
     {
         "neovim/nvim-lspconfig",
-        enabled = not vim.g.if_text_editor,
+        enabled = not vim.g.only_text_editor,
         dependencies = {
             {
                 "williamboman/mason.nvim",
@@ -44,14 +44,14 @@ return {
     -- 显示文内函数引用, 定义等
     {
         "VidocqH/lsp-lens.nvim",
-        enabled = not vim.g.if_text_editor,
+        enabled = not vim.g.only_text_editor,
         event = { "VeryLazy" },
         config = M.config_lsp_lens,
     },
     -- lsp lens virtual text
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        enabled = not vim.g.if_text_editor,
+        enabled = not vim.g.only_text_editor,
         event = { "VeryLazy" },
         config = M.config_whynothugo_lsp_lens,
     },

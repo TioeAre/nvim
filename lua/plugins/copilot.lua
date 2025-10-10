@@ -7,7 +7,7 @@ return {
 	-- },
 	{
 		"zbirenbaum/copilot.lua",
-		enabled = not vim.g.if_text_editor,
+		enabled = not vim.g.only_text_editor,
 		cmd = "Copilot",
 		event = "InsertEnter",
 		config = M.config_copilot,

@@ -44,4 +44,13 @@ local opts = {
     },
 }
 
-require("lazy").setup("plugins", opts)
+-- require("lazy").setup("plugins", opts)
+local all_plugins = require("plugins")
+local enabled_plugins = {}
+for _, plugin in ipairs(all_plugins) do
+    if plugin.enabled == nil or plugin.enabled == true then
+        table.insert(enabled_plugins, plugin)
+    end
+end
+
+require("lazy").setup(enabled_plugins, opts)

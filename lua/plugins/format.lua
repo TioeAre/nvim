@@ -3,7 +3,7 @@ local M = require("plugin_config.format")
 return {
 	{
 		"stevearc/conform.nvim",
-		enabled = not vim.g.if_text_editor,
+		-- enabled = not vim.g.only_text_editor,
 		-- dependencies = {
 		-- 	"emileferreira/nvim-strict",
 		-- },
@@ -13,7 +13,7 @@ return {
 	},
 	{
 		"mfussenegger/nvim-lint",
-		enabled = not vim.g.if_text_editor,
+		enabled = not vim.g.only_text_editor,
 		dependencies = {
 			"Joakker/lua-json5",
 		},

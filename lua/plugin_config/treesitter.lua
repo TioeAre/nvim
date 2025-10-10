@@ -31,8 +31,8 @@ M.config_treesitter = function()
             "java",
             "json",
             "json5",
-            "jsonc",
-            "latex",
+            -- "jsonc",
+            -- "latex", -- required node
             "lua",
             "luadoc",
             "make",

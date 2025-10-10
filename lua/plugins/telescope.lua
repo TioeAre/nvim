@@ -4,7 +4,7 @@ return {
     -- find files or strings
     {
         "nvim-telescope/telescope.nvim",
-        enabled = not vim.g.if_text_editor,
+        -- enabled = not vim.g.only_text_editor,
         -- lazy = false,
         -- tag = '0.1.4',
         dependencies = {

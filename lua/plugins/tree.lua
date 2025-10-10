@@ -4,7 +4,7 @@ return {
 	-- tree explore
 	{
 		"nvim-tree/nvim-tree.lua",
-		enabled = not vim.g.if_text_editor,
+		-- enabled = not vim.g.only_text_editor,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		-- lazy = false,
 		event = { "VeryLazy" },
@@ -13,7 +13,7 @@ return {
 	},
 	{
 		"hedyhli/outline.nvim",
-		enabled = not vim.g.if_text_editor,
+		-- enabled = not vim.g.only_text_editor,
 		cmd = { "Outline", "OutlineOpen" },
 		opts = M.opts_outline,
 		config = M.config_outline,
@@ -21,13 +21,13 @@ return {
 	-- project in trees
 	{
 		"ahmedkhalf/project.nvim",
-		enabled = not vim.g.if_text_editor,
+		-- enabled = not vim.g.only_text_editor,
 		event = { "VeryLazy" },
 		config = M.config_project,
 	},
 	{
 		"AckslD/swenv.nvim",
-		enabled = not vim.g.if_text_editor,
+		-- enabled = not vim.g.only_text_editor,
 		dependencies = { "nvim-lua/plenary.nvim", }
 	},
 	-- {
@@ -45,7 +45,7 @@ return {
 	-- buffer manager
 	{
 		"j-morano/buffer_manager.nvim",
-		enabled = not vim.g.if_text_editor,
+		-- enabled = not vim.g.only_text_editor,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 		},

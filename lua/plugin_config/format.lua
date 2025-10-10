@@ -120,6 +120,25 @@ M.config_lint = function()
 			lint.try_lint()
 		end,
 	})
+
+	local wk = require("which-key")
+	wk.add({
+		{ -- <leader> t
+			-- nvim-treesitter/nvim-treesitter
+			{
+				"<leader>ta",
+				desc = "treesitter incremental selection",
+			},
+			-- mfussenegger/nvim-lint
+			{
+				"<leader>tl",
+				function()
+					lint.try_lint()
+				end,
+				desc = "lint current file",
+			},
+		},
+	})
 end
 
 return M
