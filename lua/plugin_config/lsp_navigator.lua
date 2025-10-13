@@ -131,6 +131,55 @@ M.config_lspconfig = function()
         jsonls = {},
         yamlls = {},
     }
+    local on_attach = function(client, bufnr)
+        -- package.loaded["navigator.lspclient.mapping"] = require("plugin_config.navigator_mapping")
+        require("navigator.lspclient.mapping").setup({ client = client, bufnr = bufnr })
+        require("navigator.dochighlight").documentHighlight(bufnr)
+        require("navigator.codeAction").code_action_prompt(bufnr)
+        local wk = require("which-key")
+        if client.name == "pyright" then
+            wk.add({
+                mode = "n",
+                {
+                    "<leader>oi",
+                    "<cmd> PyrightOrganizeImports <cr>",
+                    desc = "PyrightOrganizeImports",
+                },
+            })
+        end
+    end
+
+    local exclude_servers = { "ltex" }
+    local installed_servers = vim.tbl_keys(user_lspconfig_servers)
+    local filtered_servers = {}
+    for _, server in ipairs(installed_servers) do
+        if not vim.tbl_contains(exclude_servers, server) then
+            table.insert(filtered_servers, server)
+        end
+    end
+    require("mason-lspconfig").setup({
+        ensure_installed = filtered_servers,
+    })
+    -- neovim/nvim-lspconfig
+    for server, config in pairs(user_lspconfig_servers) do
+        vim.lsp.config[server] = {
+            vim.tbl_deep_extend("keep", {
+                on_attach = on_attach,
+                capabilities = capabilities,
+            }, config)
+        }
+    end
+
+    require("ltex_extra").setup({
+        load_langs = { "en-US", "zh-CN" },
+        init_check = true,
+        -- path = "",
+        log_level = "none",
+        server_opts = {
+            capabilities = capabilities,
+            on_attach = on_attach,
+        },
+    })
     local navigator_servers = {
         bashls = {},
         dockerls = {},
@@ -187,56 +236,6 @@ M.config_lspconfig = function()
         lemminx = {},
         matlab_ls = {},
     }
-    local on_attach = function(client, bufnr)
-        -- package.loaded["navigator.lspclient.mapping"] = require("plugin_config.navigator_mapping")
-        require("navigator.lspclient.mapping").setup({ client = client, bufnr = bufnr })
-        require("navigator.dochighlight").documentHighlight(bufnr)
-        require("navigator.codeAction").code_action_prompt(bufnr)
-        local wk = require("which-key")
-        if client.name == "pyright" then
-            wk.add({
-                mode = "n",
-                {
-                    "<leader>oi",
-                    "<cmd> PyrightOrganizeImports <cr>",
-                    desc = "PyrightOrganizeImports",
-                },
-            })
-        end
-    end
-
-    local exclude_servers = { "ltex" }
-    local installed_servers = vim.tbl_keys(user_lspconfig_servers)
-    local filtered_servers = {}
-    for _, server in ipairs(installed_servers) do
-        if not vim.tbl_contains(exclude_servers, server) then
-            table.insert(filtered_servers, server)
-        end
-    end
-    require("mason-lspconfig").setup({
-        ensure_installed = filtered_servers,
-    })
-    -- neovim/nvim-lspconfig
-    for server, config in pairs(user_lspconfig_servers) do
-        vim.lsp.config[server] = {
-            vim.tbl_deep_extend("keep", {
-                on_attach = on_attach,
-                capabilities = capabilities,
-            }, config)
-        }
-    end
-
-    require("ltex_extra").setup({
-        load_langs = { "en-US", "zh-CN" },
-        init_check = true,
-        -- path = "",
-        log_level = "none",
-        server_opts = {
-            capabilities = capabilities,
-            on_attach = on_attach,
-        },
-    })
-
     require("navigator").setup({
         ts_fold = {
             enable = true,
@@ -536,7 +535,7 @@ M.config_navigator = function()
                 virtual_lines = {
                     current_line = false, -- show diagnostic only on current line
                 },
-                register = 'D',           -- yank the error into register
+                -- register = 'D',           -- yank the error into register
             },
 
             hover = {

@@ -2,6 +2,7 @@
 -- true: will disable some plugins required them
 -- false: will enable all ide plugins
 vim.g.only_text_editor = true
+vim.g.only_text_editor = false
 
 -- lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
