@@ -186,19 +186,19 @@ M.config_lspconfig = function()
             {
                 "gd",
                 "<cmd> Lspsaga finder def+tyd <cr>",
-                desc = "lsp find to (type)definition",
+                desc = "lsp find definition",
                 buffer = bufnr,
             },
             {
                 "gi",
                 "<cmd> Lspsaga finder imp <cr>",
-                desc = "lsp find to implementation",
+                desc = "lsp find implementation",
                 buffer = bufnr,
             },
             {
                 "gr",
                 "<cmd> Lspsaga finder def+ref+imp+tyd <cr>",
-                desc = "lsp find to references",
+                desc = "lsp find references",
                 buffer = bufnr,
             },
             {

@@ -17,22 +17,22 @@ wk.add({
 	},
 	{
 		"zc",
-		"<cmd>lua require('ufo').closeFoldsWith()<cr>",
+		-- "<cmd>lua require('ufo').closeFoldsWith()<cr>",
 		desc = "ufo/trouble close fold",
 	},
 	{
 		"zC",
-		"<cmd>lua require('ufo').closeAllFolds()<cr>",
+		-- "<cmd>lua require('ufo').closeAllFolds()<cr>",
 		desc = "ufo/trouble close all folds",
 	},
 	{
 		"zo",
-		"<cmd>lua require('ufo').openFoldsExceptKinds()<cr>",
+		-- "<cmd>lua require('ufo').openFoldsExceptKinds()<cr>",
 		desc = "ufo/trouble open fold",
 	},
 	{
 		"zO",
-		"<cmd>lua require('ufo').openAllFolds()<cr>",
+		-- "<cmd>lua require('ufo').openAllFolds()<cr>",
 		desc = "ufo/trouble open all folds",
 	},
 })

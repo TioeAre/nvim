@@ -88,7 +88,7 @@ M.config_cmp = function()
             ["<C-b>"] = cmp.mapping.scroll_docs(-4),
             ["<C-f>"] = cmp.mapping.scroll_docs(4),
             ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-            ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+            ["<C-e>"] = cmp.mapping.abort(),        -- close completion window
             ["<CR>"] = cmp.mapping.confirm({
                 select = false,
             }),
@@ -99,7 +99,7 @@ M.config_cmp = function()
                     -- they way you will only jump inside the snippet region
                 elseif luasnip.expand_or_jumpable() then
                     luasnip.expand_or_jump()
-                -- elseif has_words_before() then
+                    -- elseif has_words_before() then
                     -- cmp.complete()
                 elseif neogen.jumpable() then
                     neogen.jump_next()
@@ -189,6 +189,10 @@ M.config_cmp = function()
     -- auto pairs when <cr>
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+    -- lsp ray-x/navigator.lua
+    if vim.o.ft == 'clap_input' and vim.o.ft == 'guihua' and vim.o.ft == 'guihua_rust' then
+        require 'cmp'.setup.buffer { completion = { enable = false } }
+    end
 end
 
 -- danymat/neogen
@@ -201,12 +205,12 @@ M.config_neogen = function()
             lua = {
                 template = {
                     annotation_convention = "emmylua" -- for a full list of annotation_conventions,
-                    }
+                }
             },
             python = {
                 template = {
                     annotation_convention = "numpydoc" -- for a full list of annotation_conventions,
-                    }
+                }
             },
         },
     })

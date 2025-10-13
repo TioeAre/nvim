@@ -648,7 +648,7 @@ M.config_alpha = function()
         dashboard.button("p", "🗟  > projects", "<cmd>lua require'telescope'.extensions.projects.projects{}<CR>"),
         dashboard.button("r", "  > recent", ":Telescope oldfiles<CR>"),
         dashboard.button("e", "  > new file", ":ene <BAR> startinsert <CR>"),
-        dashboard.button("f", "🗒 > find file", ":Telescope find_files<CR>"),
+        dashboard.button("f", "🗒  > find file", ":Telescope find_files<CR>"),
         dashboard.button("q", "🖬  > quit nvim", ":qa<CR>"),
     }
     alpha.setup(dashboard.opts)

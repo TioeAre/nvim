@@ -14,7 +14,7 @@ M.is_value_in_list = function(value, list)
 end
 
 -- echo &filetype
-M.exlluded_filetypes = {
+M.excluded_filetypes = {
 	"aerial",
 	"alpha",
 	"buffer_manager",
@@ -24,6 +24,9 @@ M.exlluded_filetypes = {
 	"dashboard",
 	"fidget",
 	"floggraph",
+	"guihua",
+	"guihua_rust",
+	"clap_input",
 	"gundo",
 	"help",
 	"incline",

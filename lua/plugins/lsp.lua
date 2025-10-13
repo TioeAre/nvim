@@ -1,4 +1,5 @@
-local M = require("plugin_config.lsp")
+-- local M = require("plugin_config.lsp")
+local M = require("plugin_config.lsp_navigator")
 
 return {
     {
@@ -19,19 +20,19 @@ return {
                 event = { "VeryLazy" },
                 config = M.config_mason,
             },
-            {
-                "nvimdev/lspsaga.nvim",
-                dependencies = { "lewis6991/gitsigns.nvim" },
-            },
             -- {
-            --     'ray-x/navigator.lua',
-            --     dependencies = {
-            --         {
-            --             'ray-x/guihua.lua',
-            --             build = 'cd lua/fzy && make'
-            --         },
-            --     },
+            --     "nvimdev/lspsaga.nvim",
+            --     dependencies = { "lewis6991/gitsigns.nvim" },
             -- },
+            {
+                'ray-x/navigator.lua',
+                dependencies = {
+                    {
+                        'ray-x/guihua.lua',
+                        build = 'cd lua/fzy && make'
+                    },
+                },
+            },
             {
                 "barreiroleo/ltex_extra.nvim",
                 ft = { "markdown", "tex", "text" },
@@ -40,6 +41,18 @@ return {
         },
         event = { "BufReadPost", "VeryLazy" }, -- BufReadPost
         config = M.config_lspconfig,
+    },
+    {
+        'ray-x/navigator.lua',
+        -- enabled = not vim.g.only_text_editor,
+        dependencies = {
+            {
+                'ray-x/guihua.lua',
+                build = 'cd lua/fzy && make'
+            },
+        },
+        event = { "BufReadPost", "VeryLazy" },
+        config = M.config_navigator
     },
     -- 显示文内函数引用, 定义等
     {
