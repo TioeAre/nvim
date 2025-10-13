@@ -413,7 +413,7 @@ wk.add({
 	},
 	{ -- <leader> s
 		{ -- NOTE
-            -- MagicDuck/grug-far.nvim
+			-- MagicDuck/grug-far.nvim
 			"<leader>sc",
 			-- "<cmd>lua require('spectre').open_file_search({select_word=true})<cr>",
 			"<cmd> lua require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>'), paths = vim.fn.expand('%') } }) <cr>",

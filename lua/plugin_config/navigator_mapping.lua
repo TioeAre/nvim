@@ -25,147 +25,147 @@ local function fallback_fn(key)
     end
 end
 
-local double = {"╔", "═", "╗", "║", "╝", "═", "╚", "║"}
-local single = {"╭", "─", "╮", "│", "╯", "─", "╰", "│"}
+local double = { "╔", "═", "╗", "║", "╝", "═", "╚", "║" }
+local single = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 -- stylua: ignore start
 local key_maps = {
-{
-    mode = 'i',
-    key = '<M-k>',
-    func = vim.lsp.buf.signature_help,
-    desc = 'signature_help'
-},
-{
-    key = '<c-k>',
-    func = vim.lsp.buf.signature_help,
-    desc = 'signature_help'
-},
-{
-    key = '<c-h>',
-    func = require('navigator.definition').definition_preview,
-    desc = 'definition_preview'
-},
-{
-  key = 'gD',
-  func = vim.lsp.buf.declaration,
-  desc = 'declaration',
-  fallback = fallback_fn('gD')
-}, -- fallback used
--- {
---     key = 'gd',
---     func = require('navigator.definition').definition,
---     desc = 'definition'
--- },
--- {
---   key = 'gi',
---   func = vim.lsp.buf.implementation,
---   desc = 'implementation',
---   fallback = fallback_fn('gi')
--- },
--- {
---     key = 'gr',
---     func = require('navigator.reference').async_ref,
---     desc = 'async_ref'
--- },
-{
-  key = '<Leader>wa',
-  func = require('navigator.workspace').add_workspace_folder,
-  desc = 'add_workspace_folder'
-},
-{
-  key = '<Leader>wr',
-  func = require('navigator.workspace').remove_workspace_folder,
-  desc = 'remove_workspace_folder'
-},
-{
-  key = '<Leader>wl',
-  func = require('navigator.workspace').list_workspace_folders,
-  desc = 'list_workspace_folders'
-},
--- for lsp handler
-{
-    key = '<Leader>ca',
-    mode = 'n',
-    func = require('navigator.codeAction').code_action,
-    desc = 'code_action'
-},
-{
-    key = '<Leader>ca',
-    mode = 'v',
-    func = require('navigator.codeAction').range_code_action,
-    desc = 'range_code_action'
-}, -- { key = '<Leader>re', func = 'rename()' },
-{
-    key = '<Leader>rn',
-    func = require('navigator.rename').rename,
-    desc = 'rename'
-},
-{
-  key = '<Leader>osl',
-  func = require('navigator.symbols').document_symbols,
-  desc = 'document_symbols'
-},
-{
-  key = '<Leader>osg',
-  func = require('navigator.workspace').workspace_symbol_live,
-  desc = 'workspace_symbol_live'
-},
-{
-  key = '<Leader>osd',
-  func = require('navigator.treesitter').buf_ts,
-  desc = 'buf_ts'
-},
-{
-  key = '<Leader>osw',
-  func = require('navigator.treesitter').bufs_ts,
-  desc = 'bufs_ts'
-},
-{
-  key = '<Leader>oci',
-  func = vim.lsp.buf.incoming_calls,
-  desc = 'incoming_calls'
-},
-{
-  key = '<Leader>oco',
-  func = vim.lsp.buf.outgoing_calls,
-  desc = 'outgoing_calls'
-},
+    {
+        mode = 'i',
+        key = '<M-k>',
+        func = vim.lsp.buf.signature_help,
+        desc = 'signature_help'
+    },
+    {
+        key = '<c-k>',
+        func = vim.lsp.buf.signature_help,
+        desc = 'signature_help'
+    },
+    {
+        key = '<c-h>',
+        func = require('navigator.definition').definition_preview,
+        desc = 'definition_preview'
+    },
+    {
+        key = 'gD',
+        func = vim.lsp.buf.declaration,
+        desc = 'declaration',
+        fallback = fallback_fn('gD')
+    }, -- fallback used
+    -- {
+    --     key = 'gd',
+    --     func = require('navigator.definition').definition,
+    --     desc = 'definition'
+    -- },
+    -- {
+    --   key = 'gi',
+    --   func = vim.lsp.buf.implementation,
+    --   desc = 'implementation',
+    --   fallback = fallback_fn('gi')
+    -- },
+    -- {
+    --     key = 'gr',
+    --     func = require('navigator.reference').async_ref,
+    --     desc = 'async_ref'
+    -- },
+    {
+        key = '<Leader>wa',
+        func = require('navigator.workspace').add_workspace_folder,
+        desc = 'add_workspace_folder'
+    },
+    {
+        key = '<Leader>wr',
+        func = require('navigator.workspace').remove_workspace_folder,
+        desc = 'remove_workspace_folder'
+    },
+    {
+        key = '<Leader>wl',
+        func = require('navigator.workspace').list_workspace_folders,
+        desc = 'list_workspace_folders'
+    },
+    -- for lsp handler
+    {
+        key = '<Leader>ca',
+        mode = 'n',
+        func = require('navigator.codeAction').code_action,
+        desc = 'code_action'
+    },
+    {
+        key = '<Leader>ca',
+        mode = 'v',
+        func = require('navigator.codeAction').range_code_action,
+        desc = 'range_code_action'
+    }, -- { key = '<Leader>re', func = 'rename()' },
+    {
+        key = '<Leader>rn',
+        func = require('navigator.rename').rename,
+        desc = 'rename'
+    },
+    {
+        key = '<Leader>osl',
+        func = require('navigator.symbols').document_symbols,
+        desc = 'document_symbols'
+    },
+    {
+        key = '<Leader>osg',
+        func = require('navigator.workspace').workspace_symbol_live,
+        desc = 'workspace_symbol_live'
+    },
+    {
+        key = '<Leader>osd',
+        func = require('navigator.treesitter').buf_ts,
+        desc = 'buf_ts'
+    },
+    {
+        key = '<Leader>osw',
+        func = require('navigator.treesitter').bufs_ts,
+        desc = 'bufs_ts'
+    },
+    {
+        key = '<Leader>oci',
+        func = vim.lsp.buf.incoming_calls,
+        desc = 'incoming_calls'
+    },
+    {
+        key = '<Leader>oco',
+        func = vim.lsp.buf.outgoing_calls,
+        desc = 'outgoing_calls'
+    },
 
 
 
-{
-    key = '<Leader>gD',
-    func = vim.lsp.buf.type_definition,
-    desc = 'type_definition'
-},
-{
-  key = '<Leader>D',
-  func = require('navigator.definition').type_definition_preview,
-  desc = 'type_definition_preview'
-},
-{
-  key = '<Leader>gr',
-  func = require('navigator.reference').reference,
-  desc = 'reference'
-}, -- reference deprecated
+    {
+        key = '<Leader>gD',
+        func = vim.lsp.buf.type_definition,
+        desc = 'type_definition'
+    },
+    {
+        key = '<Leader>D',
+        func = require('navigator.definition').type_definition_preview,
+        desc = 'type_definition_preview'
+    },
+    {
+        key = '<Leader>gr',
+        func = require('navigator.reference').reference,
+        desc = 'reference'
+    }, -- reference deprecated
 
 
 
-{
-    key = '<c-]>',
-    func = require('navigator.definition').definition,
-    desc = 'definition'
-},
-{
-    key = '<Leader>ct',
-    func = require('navigator.ctags').ctags,
-    desc = 'ctags'
-},
-{
-    key = 'gL',
-    func = require('navigator.diagnostics').show_diagnostics,
-    desc = 'show_diagnostics'
-}, {
+    {
+        key = '<c-]>',
+        func = require('navigator.definition').definition,
+        desc = 'definition'
+    },
+    {
+        key = '<Leader>ct',
+        func = require('navigator.ctags').ctags,
+        desc = 'ctags'
+    },
+    {
+        key = 'gL',
+        func = require('navigator.diagnostics').show_diagnostics,
+        desc = 'show_diagnostics'
+    }, {
     key = 'gG',
     func = require('navigator.diagnostics').show_buf_diagnostics,
     desc = 'show_buf_diagnostics'
@@ -207,23 +207,23 @@ local key_maps = {
     func = require('navigator.dochighlight').hi_symbol,
     desc = 'hi_symbol'
 },
--- {
---     key = '<Leader>ff',
---     func = vim.lsp.buf.format,
---     mode = 'n',
---     desc = 'format'
--- }, {
---     key = '<Leader>ff',
---     func = vim.lsp.buf.range_formatting,
---     mode = 'v',
---     desc = 'range format'
--- },
-{
-    key = '<Leader>gm',
-    func = require('navigator.formatting').range_format,
-    mode = 'n',
-    desc = 'range format operator e.g gmip'
-}, {
+    -- {
+    --     key = '<Leader>ff',
+    --     func = vim.lsp.buf.format,
+    --     mode = 'n',
+    --     desc = 'format'
+    -- }, {
+    --     key = '<Leader>ff',
+    --     func = vim.lsp.buf.range_formatting,
+    --     mode = 'v',
+    --     desc = 'range format'
+    -- },
+    {
+        key = '<Leader>gm',
+        func = require('navigator.formatting').range_format,
+        mode = 'n',
+        desc = 'range format operator e.g gmip'
+    }, {
     key = '<Leader>la',
     mode = 'n',
     func = require('navigator.codelens').run_action,
@@ -243,7 +243,7 @@ local key_maps_help = {}
 -- LuaFormatter on
 local M = {}
 
-local ccls_mappings = {{
+local ccls_mappings = { {
     key = '<Leader>oci',
     func = require('navigator.cclshierarchy').incoming_calls,
     desc = 'incoming_calls'
@@ -251,7 +251,7 @@ local ccls_mappings = {{
     key = '<Leader>oco',
     func = require('navigator.cclshierarchy').outgoing_calls,
     desc = 'outgoing_calls'
-}}
+} }
 
 local check_cap = function(opts)
     -- log(vim.lsp.get_active_clients({buffer = 0}))
@@ -290,17 +290,17 @@ local check_cap = function(opts)
 end
 
 local function set_cmds(_)
-    local commands = {[[command!  -nargs=* Nctags lua require("navigator.ctags").ctags(<f-args>)]],
-                      "command! -nargs=0 LspLog lua require'navigator.lspclient.config'.open_lsp_log()",
-                      "command! -nargs=0 LspRestart lua require'navigator.lspclient.config'.reload_lsp()",
-                      "command! -nargs=0 LspToggleFmt lua require'navigator.lspclient.mapping'.toggle_lspformat()<CR>",
-                      "command! -nargs=0 LspKeymaps lua require'navigator.lspclient.mapping'.get_keymaps_help()<CR>",
-                      "command! -nargs=0 LspSymbols lua require'navigator.symbols'.side_panel()<CR>",
-                      "command! -nargs=0 TSymbols lua require'navigator.treesitter'.side_panel()<CR>",
-                      "command! -nargs=0 NRefPanel lua require'navigator.reference'.side_panel()<CR>",
-                      "command! -nargs=* Calltree lua require'navigator.hierarchy'.calltree(<f-args>)<CR>",
-                      "command! -nargs=* TsAndDiag lua require'navigator.sidepanel'.treesitter_and_diag_panel(<f-args>)<CR>",
-                      "command! -nargs=* LspAndDiag lua require'navigator.sidepanel'.lsp_and_diag_panel(<f-args>)<CR>"}
+    local commands = { [[command!  -nargs=* Nctags lua require("navigator.ctags").ctags(<f-args>)]],
+        "command! -nargs=0 LspLog lua require'navigator.lspclient.config'.open_lsp_log()",
+        "command! -nargs=0 LspRestart lua require'navigator.lspclient.config'.reload_lsp()",
+        "command! -nargs=0 LspToggleFmt lua require'navigator.lspclient.mapping'.toggle_lspformat()<CR>",
+        "command! -nargs=0 LspKeymaps lua require'navigator.lspclient.mapping'.get_keymaps_help()<CR>",
+        "command! -nargs=0 LspSymbols lua require'navigator.symbols'.side_panel()<CR>",
+        "command! -nargs=0 TSymbols lua require'navigator.treesitter'.side_panel()<CR>",
+        "command! -nargs=0 NRefPanel lua require'navigator.reference'.side_panel()<CR>",
+        "command! -nargs=* Calltree lua require'navigator.hierarchy'.calltree(<f-args>)<CR>",
+        "command! -nargs=* TsAndDiag lua require'navigator.sidepanel'.treesitter_and_diag_panel(<f-args>)<CR>",
+        "command! -nargs=* LspAndDiag lua require'navigator.sidepanel'.lsp_and_diag_panel(<f-args>)<CR>" }
 
     for _, value in pairs(commands) do
         vim.cmd(value)
@@ -315,7 +315,7 @@ local function set_mapping(lsp_attach_info)
         silent = true
     }
     vim.validate({
-        lsp_attach_info = {lsp_attach_info, 'table'}
+        lsp_attach_info = { lsp_attach_info, 'table' }
     })
     if _NgConfigValues.debug then
         log('setup mapping for client', lsp_attach_info.client.name, lsp_attach_info.client.cmd)
@@ -347,7 +347,7 @@ local function set_mapping(lsp_attach_info)
             local exists = false
             for _, default in pairs(key_maps) do
                 if -- override only if func and mode are the same
-                v.func == default.func and (v.mode or 'n') == (default.mode or 'n') and not default.override then
+                    v.func == default.func and (v.mode or 'n') == (default.mode or 'n') and not default.override then
                     default.key, default.override, exists = v.key, true, true
                     break
                 end
@@ -428,7 +428,7 @@ local function set_mapping(lsp_attach_info)
         end
 
         if fmt then
-            api.nvim_create_autocmd({'BufWritePost'}, {
+            api.nvim_create_autocmd({ 'BufWritePost' }, {
                 group = gn,
                 desc = 'auto format',
                 buffer = bufnr,
@@ -459,13 +459,13 @@ end
 local function autocmd()
     local gn = api.nvim_create_augroup('NavAuGroupDocHlAu', {})
 
-    api.nvim_create_autocmd({'BufWritePre'}, {
+    api.nvim_create_autocmd({ 'BufWritePre' }, {
         group = gn,
         desc = 'doc highlight',
         callback = require('navigator.dochighlight').cmd_nohl
     })
 
-    api.nvim_create_autocmd({'CmdlineLeave'}, {
+    api.nvim_create_autocmd({ 'CmdlineLeave' }, {
         group = gn,
         desc = 'doc highlight nohl',
         callback = require('navigator.dochighlight').cmd_nohl
@@ -588,7 +588,7 @@ function M.setup(attach_opts)
         end
     end
 
-    api.nvim_create_autocmd({'BufWritePre'}, {
+    api.nvim_create_autocmd({ 'BufWritePre' }, {
         group = api.nvim_create_augroup('nvim_nv_event_autos', {}),
         buffer = attach_opts.bufnr,
         desc = 'diagnostic update',

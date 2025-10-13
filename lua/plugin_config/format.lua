@@ -7,7 +7,7 @@ M.config_conform = function()
 	conform.setup({
 		formatters_by_ft = {
 			sh = { "beautysh" }, -- { "shfmt" },
-            zsh = { "beautysh" }, -- { "shfmt" },
+			zsh = { "beautysh" }, -- { "shfmt" },
 			c = { "clang_format" },
 			cpp = { "clang_format" },
 			objc = { "clang_format" },

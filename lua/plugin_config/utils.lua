@@ -511,19 +511,7 @@ end
 -- chrisgrieser/nvim-origami
 M.config_origami = function()
 	require("origami").setup({
-		-- requires with `nvim-ufo`
-		keepFoldsAcrossSessions = package.loaded["ufo"] ~= nil,
-
 		pauseFoldsOnSearch = true,
-
-		setupFoldKeymaps = false,
-
-		-- incompatible with `nvim-ufo`
-		-- foldtextWithLineCount = {
-		-- 	enabled = package.loaded["ufo"] == nil,
-		-- 	template = "   %s lines", -- `%s` gets the number of folded lines
-		-- 	hlgroupForCount = "Comment",
-		-- },
 		foldtext = {
 			enabled = true,
 			padding = 3,
@@ -534,15 +522,13 @@ M.config_origami = function()
 			diagnosticsCount = true, -- uses hlgroups and icons from `vim.diagnostic.config().signs`
 			gitsignsCount = true, -- requires `gitsigns.nvim`
 		},
-		foldKeymaps = {
-			setup = true, -- modifies `h` and `l`
-			hOnlyOpensOnFirstColumn = false,
-		},
-
-		-- redundant with `nvim-ufo`
 		autoFold = {
 			enabled = false,
 			kinds = { "comment", "imports" }, ---@type lsp.FoldingRangeKind[]
+		},
+		foldKeymaps = {
+			setup = false, -- modifies `h` and `l`
+			hOnlyOpensOnFirstColumn = false,
 		},
 	})
 end

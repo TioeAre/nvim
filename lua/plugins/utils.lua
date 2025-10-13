@@ -72,7 +72,7 @@ return {
 	{
 		"okuuva/auto-save.nvim",
 		-- enabled = not vim.g.only_text_editor,
-		cmd = "ASToggle", -- optional for lazy loading on command
+		cmd = "ASToggle",                   -- optional for lazy loading on command
 		event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
 		config = M.config_auto_save,
 	},
@@ -167,6 +167,15 @@ return {
 	-- 	event = { "VeryLazy" },
 	-- 	config = M.config_ufo,
 	-- },
+	{
+		"chrisgrieser/nvim-origami",
+		event = "VeryLazy",
+		config = M.config_origami,
+		init = function()
+			vim.opt.foldlevel = 99
+			vim.opt.foldlevelstart = 99
+		end,
+	},
 	-- 跳转光标位置
 	{
 		"folke/flash.nvim",
@@ -296,13 +305,13 @@ return {
 	-- 	event = { "VeryLazy" },
 	-- 	config = M.config_nvim_spectre,
 	-- },
-    -- MagicDuck/grug-far.nvim
-    {
-        "MagicDuck/grug-far.nvim",
+	-- MagicDuck/grug-far.nvim
+	{
+		"MagicDuck/grug-far.nvim",
 		-- enabled = not vim.g.only_text_editor,
-        event = {"VeryLazy"},
-        config = M.config_grug_far,
-    },
+		event = { "VeryLazy" },
+		config = M.config_grug_far,
+	},
 	-- Chinese words spilt
 	-- {
 	--     'noearc/jieba.nvim',

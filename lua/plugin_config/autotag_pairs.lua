@@ -59,7 +59,7 @@ M.config_auto_pairs = function()
         check_ts = true,
         enable_check_bracket_line = false,
         disable_filetype = filetype.excluded_filetypes,
-      })
+    })
 end
 
 return M

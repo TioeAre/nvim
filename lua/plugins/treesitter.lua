@@ -10,7 +10,6 @@ return {
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
             "andymass/vim-matchup",
-            -- "kevinhwang91/nvim-ufo",
             "nvim-treesitter/nvim-treesitter-refactor",
         },
     },

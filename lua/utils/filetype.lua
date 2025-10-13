@@ -4,7 +4,7 @@ local M = {}
 M.is_value_in_list = function(value, list)
 	if not list then
 		return false
-	end -- Handle nil list case
+	end                         -- Handle nil list case
 	for _, item in ipairs(list) do -- Use ipairs for sequential lists
 		if item == value then
 			return true
@@ -52,9 +52,9 @@ M.excluded_filetypes = {
 	"Trouble",
 	"undotree",
 	"bigfile",
-    "grug-far",
-    "grug-far-history",
-    "grug-far-help",
+	"grug-far",
+	"grug-far-history",
+	"grug-far-help",
 }
 -- echo &buftype
 M.excluded_buftypes = {

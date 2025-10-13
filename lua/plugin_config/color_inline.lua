@@ -6,20 +6,20 @@ M.config_colorizer = function()
     require("colorizer").setup({
         filetypes = { "*" },
         user_default_options = {
-            RGB = true, -- #RGB hex codes
-            RRGGBB = true, -- #RRGGBB hex codes
-            names = true, -- "Name" codes like Blue or blue
-            RRGGBBAA = true, -- #RRGGBBAA hex codes
-            AARRGGBB = false, -- 0xAARRGGBB hex codes
-            rgb_fn = true, -- CSS rgb() and rgba() functions
-            hsl_fn = true, -- CSS hsl() and hsla() functions
-            css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-            css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+            RGB = true,          -- #RGB hex codes
+            RRGGBB = true,       -- #RRGGBB hex codes
+            names = true,        -- "Name" codes like Blue or blue
+            RRGGBBAA = true,     -- #RRGGBBAA hex codes
+            AARRGGBB = false,    -- 0xAARRGGBB hex codes
+            rgb_fn = true,       -- CSS rgb() and rgba() functions
+            hsl_fn = true,       -- CSS hsl() and hsla() functions
+            css = false,         -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+            css_fn = false,      -- Enable all CSS *functions*: rgb_fn, hsl_fn
             -- Available modes for `mode`: foreground, background,  virtualtext
             mode = "background", -- Set the display mode.
             -- Available methods are false / true / "normal" / "lsp" / "both"
             -- True is same as normal
-            tailwind = false, -- Enable tailwind colors
+            tailwind = false,                               -- Enable tailwind colors
             -- parsers can contain values used in |user_default_options|
             sass = { enable = false, parsers = { "css" } }, -- Enable sass colors
             virtualtext = "■",
@@ -96,14 +96,14 @@ M.config_color_picker = function()
         -- ["icons"] = { "", "" },
         ["icons"] = { "█", "█" },
         ["border"] = "rounded", -- none | single | double | rounded | solid | shadow
-        ["keymap"] = { -- mapping example:
+        ["keymap"] = {          -- mapping example:
             ["T"] = "<Plug>ColorPickerToggleTransparency",
             -- ["U"] = "<Plug>ColorPickerSlider5Decrease",
             -- ["O"] = "<Plug>ColorPickerSlider5Increase",
         },
-        ["background_highlight_group"] = "Normal", -- default
+        ["background_highlight_group"] = "Normal",  -- default
         ["border_highlight_group"] = "FloatBorder", -- default
-        ["text_highlight_group"] = "Normal", --default
+        ["text_highlight_group"] = "Normal",        --default
     })
 end
 
@@ -135,6 +135,7 @@ M.config_ccc = function()
         end
         return ("%6d"):format(n)
     end
+
     function RgbHslCmykInput.from_rgb(RGB)
         local HSL = convert.rgb2hsl(RGB)
         local CMYK = convert.rgb2cmyk(RGB)
@@ -143,25 +144,30 @@ M.config_ccc = function()
         local C, M, Y, K = unpack(CMYK)
         return { R, G, B, H, S, L, C, M, Y, K }
     end
+
     function RgbHslCmykInput.to_rgb(value)
         return { value[1], value[2], value[3] }
     end
+
     function RgbHslCmykInput:_set_rgb(RGB)
         self.value[1] = RGB[1]
         self.value[2] = RGB[2]
         self.value[3] = RGB[3]
     end
+
     function RgbHslCmykInput:_set_hsl(HSL)
         self.value[4] = HSL[1]
         self.value[5] = HSL[2]
         self.value[6] = HSL[3]
     end
+
     function RgbHslCmykInput:_set_cmyk(CMYK)
         self.value[7] = CMYK[1]
         self.value[8] = CMYK[2]
         self.value[9] = CMYK[3]
         self.value[10] = CMYK[4]
     end
+
     function RgbHslCmykInput:callback(index, new_value)
         self.value[index] = new_value
         local v = self.value
@@ -198,10 +204,10 @@ M.config_ccc = function()
             lsp = true,
         },
         mappings = {
-        -- Disable only 'q' (|ccc-action-quit|)
-        -- w = mapping.none,
-        -- w = mapping.increase5()
-    }
+            -- Disable only 'q' (|ccc-action-quit|)
+            -- w = mapping.none,
+            -- w = mapping.increase5()
+        }
     })
 end
 

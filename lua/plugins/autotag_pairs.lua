@@ -13,7 +13,7 @@ return {
         -- enabled = not vim.g.only_text_editor,
         event = { "VeryLazy" },   -- "InsertEnter",
         dependencies = { "nvim-treesitter/nvim-treesitter" },
-        opts = M.opts_auto_pairs,  -- this is equal to setup({}) function
+        opts = M.opts_auto_pairs, -- this is equal to setup({}) function
         config = M.config_auto_pairs,
         -- require('nvim-autopairs').setup({ })
     },

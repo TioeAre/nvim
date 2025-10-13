@@ -22,7 +22,7 @@ return {
         -- lazy = false,
         event = { "UIEnter" },
         -- dependencies = {
-            -- "arkav/lualine-lsp-progress", -- lsp notify
+        -- "arkav/lualine-lsp-progress", -- lsp notify
         -- },
         -- event = { "VeryLazy", "FocusGained", "FocusLost", "FuncUndefined" },
         config = M.config_lualine,
@@ -78,7 +78,7 @@ return {
         event = { "VeryLazy" },
         opts = M.opt_noice,
         config = M.config_noice,
-        dependencies = { -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+        dependencies = {            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
             "MunifTanjim/nui.nvim", -- OPTIONAL:
             --   `nvim-notify` is only needed, if you want to use the notification view.
             --   If not available, we use `mini` as the fallback

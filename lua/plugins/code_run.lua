@@ -13,7 +13,7 @@ return {
     },
     {
         "michaelb/sniprun",
-        enabled = not vim.g.only_text_editor,   -- rust
+        enabled = not vim.g.only_text_editor, -- rust
         branch = "master",
         build = "sh install.sh 1",
         config = M.config_sniprun,
@@ -21,7 +21,7 @@ return {
     },
     {
         "EthanJWright/vs-tasks.nvim",
-        enabled = not vim.g.only_text_editor,   -- json5
+        enabled = not vim.g.only_text_editor, -- json5
         dependencies = {
             "nvim-lua/popup.nvim",
             "nvim-lua/plenary.nvim",

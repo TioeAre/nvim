@@ -31,7 +31,7 @@ M.config_ros_nvim_thibthib18 = function()
 end
 
 -- taketwo/vim-ros
-M.config_vim_ros = function ()
+M.config_vim_ros = function()
     -- vim.g.python3_host_prog = '/path/to/your/python3'
 end
 

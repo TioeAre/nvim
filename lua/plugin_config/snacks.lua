@@ -2,7 +2,7 @@ local M = {}
 
 -- folke/snacks.nvim
 M.opt_snacks = {
-	bigfile = { -- create `bigfile` filetype
+	bigfile = {           -- create `bigfile` filetype
 		notify = true,
 		size = 1 * 1024 * 1024, -- 10 MB
 		line_length = 10000, -- average line length (useful for minified files)
@@ -127,7 +127,7 @@ M.opt_snacks = {
 	rename = { enabled = false },
 	scope = { enabled = true },
 	scratch = { enabled = true },
-	scroll = { enabled = false},
+	scroll = { enabled = false },
 	statuscolumn = { enabled = true },
 	terminal = { enabled = true },
 	words = { enabled = true },
