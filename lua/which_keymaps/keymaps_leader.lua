@@ -459,6 +459,12 @@ wk.add({
 			-- end,
 			desc = "lint current file",
 		},
+        -- mbbill/undotree
+        {
+            "<leader>tu",
+            "<cmd> UndotreeToggle <cr>",
+            desc = "toggle undotree"
+        }
 	},
 	{ -- <leader> v
 		{ -- AckslD/swenv.nvim linux-cultist/venv-selector.nvim

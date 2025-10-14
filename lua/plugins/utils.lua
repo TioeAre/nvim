@@ -72,7 +72,7 @@ return {
 	{
 		"okuuva/auto-save.nvim",
 		-- enabled = not vim.g.only_text_editor,
-		cmd = "ASToggle",                   -- optional for lazy loading on command
+		cmd = "ASToggle", -- optional for lazy loading on command
 		event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
 		config = M.config_auto_save,
 	},
@@ -330,5 +330,11 @@ return {
 			-- it doesn't require you to do any configuration
 			require("nvim-picgo").setup()
 		end,
+	},
+	-- mbbill/undotree
+	{
+		"mbbill/undotree",
+        event = { "VeryLazy" },
+        config = M.config_undotree,
 	},
 }
