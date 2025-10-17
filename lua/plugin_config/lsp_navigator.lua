@@ -346,7 +346,7 @@ M.config_navigator = function()
         preview_height = 0.35, -- max height of preview windows
         ts_fold = {
             enable = true,
-            comment_fold = true,
+            -- comment_fold = true,
             max_lines_scan_comments = 99,
             disable_filetypes = filetypes.excluded_filetypes,
         },

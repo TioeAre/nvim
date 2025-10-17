@@ -322,15 +322,14 @@ return {
 	--     -- config = true,
 	-- },
 	-- askfiy/nvim-picgo
-	{
-		"askfiy/nvim-picgo",
-		enabled = not vim.g.only_text_editor,
-		event = { "VeryLazy" },
-		config = function()
-			-- it doesn't require you to do any configuration
-			require("nvim-picgo").setup()
-		end,
-	},
+	-- {
+	-- 	"askfiy/nvim-picgo",
+	-- 	enabled = not vim.g.only_text_editor,
+	-- 	event = { "VeryLazy" },
+	-- 	config = function()
+	-- 		require("nvim-picgo").setup()
+	-- 	end,
+	-- },
 	-- mbbill/undotree
 	{
 		"mbbill/undotree",

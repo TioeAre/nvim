@@ -1,8 +1,9 @@
 local M = {}
+local filetype = require("utils.filetype")
 
 -- folke/snacks.nvim
 M.opt_snacks = {
-	bigfile = {           -- create `bigfile` filetype
+	bigfile = { -- create `bigfile` filetype
 		notify = true,
 		size = 1 * 1024 * 1024, -- 10 MB
 		line_length = 10000, -- average line length (useful for minified files)
@@ -51,7 +52,7 @@ M.opt_snacks = {
 		},
 		scope = {
 			enabled = true, -- enable highlighting the current scope
-			priority = 200,
+			priority = 1,
 			char = "▎", -- ▎,╎
 			underline = true, -- underline the start of the scope
 			only_current = false, -- only show scope in the current window
@@ -79,7 +80,8 @@ M.opt_snacks = {
 		filter = function(buf)
 			return vim.g.snacks_indent ~= false
 				and vim.b[buf].snacks_indent ~= false
-				and vim.bo[buf].buftype ~= "nofile" -- and vim.bo[buf].filetype ~= "bigfile"
+				and vim.bo[buf].buftype ~= filetype.excluded_buftypes -- "nofile"
+				and vim.bo[buf].filetype ~= filetype.excluded_filetypes -- "bigfile"
 		end,
 	},
 	input = { enabled = true },
