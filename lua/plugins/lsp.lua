@@ -68,13 +68,4 @@ return {
         event = { "VeryLazy" },
         config = M.config_whynothugo_lsp_lens,
     },
-    -- lsp glance document flow like vscode
-    -- {
-    -- 	"dnlhc/glance.nvim",
-    -- 	cmd = "Glance",
-    -- 	dependencies = {
-    -- 		"neovim/nvim-lspconfig",
-    -- 	},
-    -- 	config = M.config_glance,
-    -- },
 }

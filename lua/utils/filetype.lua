@@ -4,8 +4,8 @@ local M = {}
 M.is_value_in_list = function(value, list)
 	if not list then
 		return false
-	end                         -- Handle nil list case
-	for _, item in ipairs(list) do -- Use ipairs for sequential lists
+	end
+	for _, item in ipairs(list) do
 		if item == value then
 			return true
 		end

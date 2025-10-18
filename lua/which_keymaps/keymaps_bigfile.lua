@@ -6,7 +6,6 @@ wk.add({
 		"m",
 		desc = "mini.surround",
 	},
-	-- kevinhwang91/nvim-ufo
 	{
 		"za",
 		desc = "ufo/trouble toggle current fold",
@@ -480,7 +479,6 @@ wk.add({
 		desc = "move to right window",
 		mode = { "n", "t" },
 	},
-	-- akinsho/toggleterm.nvim
 	{
 		"<A-h>",
 		"<cmd> wincmd h <cr>",
@@ -559,10 +557,8 @@ wk.add({
 		"<C-_>",
 		desc = "toggle comment",
 	},
-	-- akinsho/toggleterm.nvim
 	{
 		"<C-\\>",
-		-- "<cmd> ToggleTerm <cr>",
 		"<cmd>lua require('snacks').terminal.toggle() <cr>",
 		desc = "toggle term",
 		mode = { "n", "t" },

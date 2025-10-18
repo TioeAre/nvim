@@ -33,59 +33,6 @@ M.config_rainbow_delimiters = function()
 	require("rainbow-delimiters.setup").setup({})
 end
 
--- lukas-reineke/indent-blankline.nvim
-M.opts_indent_blankline = {}
-M.config_indent_blankline = function()
-	local highlight = {
-		"RainbowRed",
-		"RainbowYellow",
-		"RainbowBlue",
-		"RainbowOrange",
-		"RainbowGreen",
-		"RainbowViolet",
-		"RainbowCyan",
-	}
-	local hooks = require("ibl.hooks")
-	hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-		vim.api.nvim_set_hl(0, "RainbowRed", {
-			fg = "#e5c2c5",
-		})
-		vim.api.nvim_set_hl(0, "RainbowYellow", {
-			fg = "#deceb0",
-		})
-		vim.api.nvim_set_hl(0, "RainbowBlue", {
-			fg = "#86acca",
-		})
-		vim.api.nvim_set_hl(0, "RainbowOrange", {
-			fg = "#cab4a0",
-		})
-		vim.api.nvim_set_hl(0, "RainbowGreen", {
-			fg = "#bacbaf",
-		})
-		vim.api.nvim_set_hl(0, "RainbowViolet", {
-			fg = "#cbb0d4",
-		})
-		vim.api.nvim_set_hl(0, "RainbowCyan", {
-			fg = "#a1c0c4",
-		})
-	end)
-	vim.g.rainbow_delimiters = {
-		highlight = highlight,
-	}
-	require("ibl").setup({
-		indent = {
-			char = "▏", -- ⡇, ⡆, ⠇, ▎, ▏, │
-			highlight = highlight,
-			smart_indent_cap = true,
-		},
-		scope = {
-			char = "▎", -- ▎,╎
-			highlight = highlight,
-		},
-	})
-	hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
-end
-
 -- RRethy/vim-illuminate
 M.config_vim_illuminate = function()
 	require("illuminate").configure()
@@ -118,71 +65,6 @@ M.config_smartyank = function()
 	require("neoclip").setup()
 end
 
--- emileferreira/nvim-strict
-M.config_strict = function()
-	require("strict").setup({
-		excluded_filetypes = filetype.excluded_filetypes, -- nil,
-		excluded_buftypes = filetype.excluded_buftypes,
-		-- { "help", "nofile", "terminal", "prompt" },
-		deep_nesting = {
-			highlight = true,
-			highlight_group = "DiffDelete",
-			depth_limit = 8,
-			ignored_trailing_characters = { ",", ";" },
-			ignored_leading_characters = { "." },
-		},
-		trailing_whitespace = {
-			highlight = true,
-			highlight_group = "DiffDelete",
-			remove_on_save = true,
-		},
-		todos = {
-			highlight = true,
-			highlight_group = "DiffAdd",
-		},
-		space_indentation = {
-			highlight = false,
-			highlight_group = "DiffDelete",
-			convert_on_save = false,
-		},
-		tab_indentation = {
-			highlight = false,
-			highlight_group = "DiffDelete",
-			convert_on_save = false,
-		},
-		overlong_lines = {
-			highlight = false,
-			highlight_group = "DiffDelete",
-			length_limit = 120,
-			split_on_save = false,
-		},
-		trailing_empty_lines = {
-			highlight = false,
-			highlight_group = "SpellBad",
-			remove_on_save = false,
-		},
-	})
-	-- auto save
-	local group = vim.api.nvim_create_augroup("autosave", {})
-	local strict = require("strict")
-	vim.api.nvim_create_autocmd("User", {
-		pattern = "AutoSaveWritePre",
-		group = group,
-		callback = function(opts)
-			if opts.data.saved_buffer ~= nil then
-				-- local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
-				strict.convert_tabs_to_spaces()
-				strict.remove_trailing_whitespace()
-				-- require("conform").format({
-				-- 	lsp_fallback = true,
-				-- 	async = false,
-				-- 	timeout_ms = 500,
-				-- })
-			end
-		end,
-	})
-end
-
 -- johnfrankmorgan/whitespace.nvim
 M.config_whitespace = function()
 	require("whitespace-nvim").setup({
@@ -196,18 +78,11 @@ M.config_whitespace = function()
 		pattern = "AutoSaveWritePre",
 		group = group,
 		callback = function(opts)
-			-- print(opts.data.saved_buffer)
 			if
 				opts.data.saved_buffer ~= nil
 				and not filetype.is_value_in_list(opts.data.saved_buffer, filetype.excluded_buftypes)
 			then
-				-- local filename = vim.api.nvim_buf_get_name(opts.data.saved_buffer)
 				require("whitespace-nvim").trim()
-				-- require("conform").format({
-				-- 	lsp_fallback = true,
-				-- 	async = false,
-				-- 	timeout_ms = 500,
-				-- })
 			end
 		end,
 	})
@@ -306,21 +181,10 @@ M.opts_twilight = {
 	exclude = { "markdown" }, -- exclude these filetypes
 }
 
--- folke/persistence.nvim
-M.opts_persistence = {
-	dir = vim.fn.expand(vim.fn.stdpath("state") .. "/sessions/"), -- directory where session files are saved
-	options = { "buffers", "curdir", "tabpages", "winsize" }, -- sessionoptions used for saving
-	pre_save = nil, -- a function to call before saving the session
-	save_empty = false, -- don't save if there are no open file buffers
-	-- vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {}),
-	-- -- restore the last session
-	-- vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {}),
-	-- -- stop Persistence => session won't be saved on exit
-	-- vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], {})
-}
-
 -- olimorris/persisted.nvim
-M.opts_persisted = {}
+M.opts_persisted = {
+	autosave = true,
+}
 M.config_persisted = function()
 	vim.o.sessionoptions = "buffers,curdir,folds,tabpages,winpos,winsize"
 	require("persisted").setup({
@@ -337,14 +201,6 @@ M.config_persisted = function()
 			{ "/home/Systemback/", exact = true },
 		}, -- table of dirs that are ignored when auto-saving and auto-loading
 	})
-	-- vim.api.nvim_create_autocmd({ "User" }, {
-	-- 	pattern = "PersistedLoadPost",
-	-- 	group = "persisted",
-	-- 	callback = function(session)
-	-- 		print(session.data.dir_path)
-	-- 		print(session.data.branch)
-	-- 	end,
-	-- })
 end
 
 -- gaborvecsei/memento.nvim
@@ -371,33 +227,6 @@ M.config_flatten = function()
 	})
 end
 
--- akinsho/toggleterm.nvim
-M.opts_toggleterm = {
-	size = function(term)
-		if term.direction == "horizontal" then
-			return math.floor(vim.o.lines * 0.2)
-		elseif term.direction == "vertical" then
-			return math.floor(vim.o.columns * 0.2)
-		end
-	end,
-	direction = "horizontal",
-	open_mapping = [[<c+\>]],
-	on_create = function(t)
-		local bufnr = t.bufnr
-		vim.keymap.set("t", "<Esc>", "<C-\\><C-N>", { buffer = bufnr })
-	end,
-	-- shell = vim.uv.os_uname().sysname == "Windows_NT" and "pwsh" or "zsh",
-	float_opts = {
-		border = "rounded",
-	},
-	winbar = {
-		enabled = true,
-	},
-	hide_numbers = true,
-	start_in_insert = true,
-	shade_terminals = true,
-}
-
 -- vidocqh/auto-indent.nvim
 M.opts_auto_indent = {
 	indentexpr = function(lnum)
@@ -405,108 +234,6 @@ M.opts_auto_indent = {
 	end, -- Use vim.bo.indentexpr by default, see 'Custom Indent Evaluate Method'
 	ignore_filetype = filetype.excluded_filetypes, -- e.g. ignore_filetype = { 'javascript' }
 }
-
--- kevinhwang91/nvim-ufo
-M.config_ufo = function()
-	vim.o.foldcolumn = "1" -- '0' is not bad
-	vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-	vim.o.foldlevelstart = 99
-	vim.o.foldenable = true
-	vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-	vim.opt.viewoptions:remove("curdir")
-	vim.api.nvim_create_augroup("RememberFolds", { clear = true })
-	vim.api.nvim_create_autocmd("BufWinLeave", {
-		group = "RememberFolds",
-		pattern = "*.*",
-		command = "mkview",
-	})
-	vim.api.nvim_create_autocmd("FileReadPre", {
-		group = "RememberFolds",
-		-- pattern = "*.*",
-		command = "silent! loadview",
-	})
-
-	local builtin = require("statuscol.builtin")
-	require("statuscol").setup({
-		relculright = true,
-		segments = {
-			-- {
-			-- 	sign = { name = { "Dap*" }, auto = true },
-			-- 	click = "v:lua.ScSa",
-			-- },
-			{ text = { "%s" } }, -- click = "v:lua.ScSa" },
-			-- {
-			-- 	sign = { name = { "Diagnostic" }, auto = true },
-			-- 	-- click = "v:lua.ScSa",
-			-- },
-			-- -- { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-			-- {
-			-- 	sign = { namespace = { "gitsign*" } },
-			-- 	-- click = "v:lua.ScSa",
-			-- },
-			{ text = { builtin.lnumfunc, "" } }, -- click = "v:lua.ScLa" },
-			{ text = { builtin.foldfunc, " " } }, -- click = "v:lua.ScFa" },
-		},
-	})
-
-	local handler = function(virtText, lnum, endLnum, width, truncate)
-		local newVirtText = {}
-		local totalLines = vim.api.nvim_buf_line_count(0)
-		local foldedLines = endLnum - lnum
-		local suffix = (" 󰁂 %d %d%%"):format(foldedLines, foldedLines / totalLines * 100)
-		local sufWidth = vim.fn.strdisplaywidth(suffix)
-		local targetWidth = width - sufWidth
-		local curWidth = 0
-		for _, chunk in ipairs(virtText) do
-			local chunkText = chunk[1]
-			local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-			if targetWidth > curWidth + chunkWidth then
-				table.insert(newVirtText, chunk)
-			else
-				chunkText = truncate(chunkText, targetWidth - curWidth)
-				local hlGroup = chunk[2]
-				table.insert(newVirtText, { chunkText, hlGroup })
-				chunkWidth = vim.fn.strdisplaywidth(chunkText)
-				-- str width returned from truncate() may less than 2nd argument, need padding
-				if curWidth + chunkWidth < targetWidth then
-					suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-				end
-				break
-			end
-			curWidth = curWidth + chunkWidth
-		end
-		-- local rAlignAppndx = math.max(math.min(vim.opt.textwidth["_value"], width - 1) - curWidth - sufWidth, 0)
-		-- suffix = (" "):rep(rAlignAppndx) .. suffix
-		table.insert(newVirtText, { suffix, "MoreMsg" })
-		return newVirtText
-	end
-	-- opts["fold_virt_text_handler"] = handler
-	require("ufo").setup({
-		fold_virt_text_handler = handler,
-		-- INFO: Uncomment to use treeitter as fold provider, otherwise nvim lsp is used
-		provider_selector = function(bufnr, filetype, buftype)
-			if filetype == "bigfile" then
-				return { "indent" }
-			end
-			return { "treesitter", "indent" }
-		end,
-		open_fold_hl_timeout = 150,
-		close_fold_kinds_for_ft = { default = { "imports", "comment" } }, -- { "imports", "comment" },
-		preview = {
-			win_config = {
-				border = { "", "─", "", "", "", "─", "", "" },
-				winhighlight = "Normal:Folded",
-				winblend = 0,
-			},
-			mappings = {
-				scrollU = "<C-u>",
-				scrollD = "<C-d>",
-				-- jumpTop = "[",
-				-- jumpBot = "]",
-			},
-		},
-	})
-end
 
 -- chrisgrieser/nvim-origami
 M.config_origami = function()
@@ -583,27 +310,9 @@ M.config_nvim_window_picker = function()
 		hint = "floating-big-letter",
 		filter_rules = {
 			include_current_win = true,
-			-- filter_func = function(window_ids)
-			--     local filtered_windows = {}
-			--     for _, win_id in ipairs(window_ids) do
-			--         local bufnr = vim.api.nvim_win_get_buf(win_id)
-			--         if vim.api.nvim_buf_is_loaded(bufnr) then
-			--             table.insert(filtered_windows, win_id)
-			--         end
-			--     end
-			--     return filtered_windows
-			-- end,
 			bo = {
 				filetype = filetype.excluded_filetypes,
-				--             {
-				-- 	"fidget",
-				-- 	"neo-tree-popup",
-				-- 	"notify",
-				-- 	"incline",
-				-- 	"scrollbar",
-				-- }, -- "nvim-tree", "symbols-outline", "neo-tree",
 				buftype = filetype.excluded_buftypes,
-				-- { "nofile" },
 			},
 		},
 	})
@@ -625,29 +334,16 @@ M.config_windows = function()
 	vim.o.winminwidth = 1
 	vim.o.equalalways = false
 	require("windows").setup({
-		autowidth = { --		       |windows.autowidth|
+		autowidth = { -- |windows.autowidth|
 			enable = true,
-			-- winwidth = 10, --		        |windows.winwidth|
-			filetype = { --	      |windows.autowidth.filetype|
+			-- winwidth = 10, -- |windows.winwidth|
+			filetype = { -- |windows.autowidth.filetype|
 				help = 2,
 			},
 		},
-		ignore = { --			  |windows.ignore|
+		ignore = { -- |windows.ignore|
 			buftype = filetype.excluded_buftypes,
-			-- { "quickfix" },
 			filetype = filetype.excluded_filetypes,
-			--          {
-			-- 	"NvimTree",
-			-- 	"neo-tree",
-			-- 	"undotree",
-			-- 	"gundo",
-			-- 	"symbols-outline",
-			-- 	"lsp",
-			-- 	"SymbolsOutline",
-			-- 	"Outline",
-			-- 	"outline",
-			-- 	"aerial",
-			-- },
 		},
 		animation = {
 			enable = true,
@@ -656,10 +352,9 @@ M.config_windows = function()
 			easing = "in_out_sine",
 		},
 	})
-	-- vim.cmd("WindowsDisableAutowidth")
 end
 
--- toppair/peek.nvim
+-- ellisonleao/glow.nvim
 M.config_glow = function()
 	require("glow").setup({
 		border = "shadow", -- floating window border config
@@ -711,23 +406,6 @@ M.config_vim_matchup = function()
 	-- vim.g.matchup_matchparen_timeout = 6000000
 	-- vim.g.matchup_matchparen_insert_timeout = 6000000
 	vim.g.loaded_matchit = 1
-end
-
--- LunarVim/bigfile.nvim
-M.config_bigfile = function()
-	require("bigfile").setup({
-		filesize = 10, -- size of the file in MiB, the plugin round file sizes to the closest MiB
-		pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
-		features = { -- features to disable
-			"indent_blankline",
-			"illuminate",
-			"lsp",
-			"treesitter",
-			"syntax",
-			"matchparen",
-			"vimopts",
-		},
-	})
 end
 
 -- aserowy/tmux.nvim

@@ -145,16 +145,6 @@ M.config_cmake_tools = function()
 			refresh_rate_ms = 100, -- how often to iterate icons
 		},
 	})
-	-- vim.cmd("CMakeSelectBuildType Debug")
-	-- vim.api.nvim_exec(
-	--     [[
-	--         augroup AutoCMakeGenerate
-	--             autocmd!
-	--             autocmd BufWritePost CMakeLists.txt,cmakelists.txt CMakeGenerate
-	--         augroup END
-	--     ]],
-	--     false
-	-- )
 end
 
 -- michaelb/sniprun
@@ -200,10 +190,6 @@ M.config_vs_task = function()
 		-- json_parser = "vim.fn.json_decode",
 		json_parser = require("json5").parse,
 	})
-	-- local harpoon = require("harpoon")
-	-- REQUIRED
-	-- harpoon:setup()
-	-- REQUIRED
 	-- nvim-telescope/telescope.nvim
 	require("telescope").load_extension("vstask")
 end

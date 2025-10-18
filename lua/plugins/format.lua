@@ -3,12 +3,7 @@ local M = require("plugin_config.format")
 return {
 	{
 		"stevearc/conform.nvim",
-		-- enabled = not vim.g.only_text_editor,
-		-- dependencies = {
-		-- 	"emileferreira/nvim-strict",
-		-- },
-		lazy = true,
-		event = { "VeryLazy" }, -- to disable, comment this out
+		event = { "VeryLazy" },
 		config = M.config_conform,
 	},
 	{

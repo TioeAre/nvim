@@ -132,15 +132,6 @@ M.config_telescope = function()
                 -- olimorris/persisted.nvim
                 layout_config = { width = 0.55, height = 0.55 },
             },
-            -- stevearc/aerial.nvim
-            -- aerial = {
-            --     -- Display symbols as <root>.<parent>.<symbol>
-            --     show_nesting = {
-            --         ["_"] = false, -- This key will be the default
-            --         json = true, -- You can set the option for specific filetypes
-            --         yaml = true,
-            --     },
-            -- },
         },
     })
 

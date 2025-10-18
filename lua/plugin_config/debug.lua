@@ -17,27 +17,6 @@ M.config_dap = function()
         dapui.close()
     end
 
-    -- local function close_nvim_ide_panels()
-    --     if pcall(require, 'ide') then
-    --         local ws = require('ide.workspaces.workspace_registry').get_workspace(vim.api.nvim_get_current_tabpage())
-    --         if ws ~= nil then
-    --             ws.close_panel(require('ide.panels.panel').PANEL_POS_BOTTOM)
-    --             ws.close_panel(require('ide.panels.panel').PANEL_POS_LEFT)
-    --             ws.close_panel(require('ide.panels.panel').PANEL_POS_RIGHT)
-    --         end
-    --     end
-    -- end
-    -- dap.listeners.after.event_initialized["dapui_config"] = function()
-    --     dapui.open()
-    --     close_nvim_ide_panels()
-    -- end
-    -- dap.listeners.before.event_terminated["dapui_config"] = function()
-    --     dapui.close()
-    -- end
-    -- dap.listeners.before.event_exited["dapui_config"] = function()
-    --     dapui.close()
-    -- end
-
     -- adapters config
     -- c/cpp
     dap.adapters.cppdbg = {
@@ -117,13 +96,7 @@ M.config_dap = function()
             open = "alternate",
         },
         load_breakpoints_event = "BufReadPost",
-        -- record the performance of different function. run :lua require('persistent-breakpoints.api').print_perf_data() to see the result.
         perf_record = false,
-        -- perform callback when loading a persisted breakpoint
-        --- param opts DAPBreakpointOptions options used to create the breakpoint ({condition, logMessage, hitCondition})
-        --- param buf_id integer the buffer the breakpoint was set on
-        --- param line integer the line the breakpoint was set on
-
         on_load_breakpoint = nil,
     })
     -- nvim-telescope/telescope.nvim

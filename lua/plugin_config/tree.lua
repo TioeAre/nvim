@@ -116,21 +116,6 @@ M.config_nvim_tree = function()
             update_root = false,
         },
     })
-    -- vim.api.nvim_exec([[autocmd VimEnter * NvimTreeToggle]], false)
-    -- local function open_nvim_tree(data)
-    --     local real_file = vim.fn.filereadable(data.file) == 1
-    --     local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
-    --     if not real_file then -- and not no_name then
-    --         return
-    --     end
-    --     require("nvim-tree.api").tree.toggle({
-    --         focus = false,
-    --         find_file = true,
-    --     })
-    -- end
-    -- vim.api.nvim_create_autocmd({ "VimEnter" }, {
-    --     callback = open_nvim_tree,
-    -- })
 end
 
 -- hedyhli/outline.nvim
@@ -453,60 +438,20 @@ M.config_project = function()
 end
 
 M.config_venv = function()
-    -- -- linux-cultist/venv-selector.nvim
-    -- require("venv-selector").setup({
-    --     -- Your options go here
-    --     name = { "venv" },
-    --     auto_refresh = true,
-    --     path = nil,
-    --     dap_enabled = true,
-    --     parents = 4,
-    --     anaconda_base_path = "/home/tioeare/anaconda3",
-    --     anaconda_envs_path = "/home/tioeare/anaconda3/envs",
-    -- })
-    -- vim.api.nvim_create_autocmd("UIEnter", {
-    --     desc = "Auto select virtualenv Nvim open",
-    --     pattern = { "*" },
-    --     callback = function()
-    --         local venv = vim.fn.findfile("pyproject.toml", vim.fn.getcwd() .. ";")
-    --         if venv ~= "" then
-    --             require("venv-selector").retrieve_from_cache()
-    --         end
-    --     end,
-    --     once = true,
-    -- })
-
-    -- AckslD/swenv.nvim
-    require("swenv").setup({
-        get_venvs = function(venvs_path)
-            return require("swenv.api").get_venvs(venvs_path)
-        end,
-        venvs_path = vim.fn.expand("venv"),
-        post_set_venv = function()
-            local client = vim.lsp.get_clients({ name = "basedpyright" })[1]
-            if not client then
-                return
-            end
-            local venv = require("swenv.api").get_current_venv()
-            if not venv then
-                return
-            end
-            local venv_python = venv.path .. "/bin/python"
-            if client.settings then
-                client.settings = vim.tbl_deep_extend("force", client.settings, { python = { pythonPath = venv_python } })
-            else
-                client.config.settings =
-                    vim.tbl_deep_extend("force", client.config.settings, { python = { pythonPath = venv_python } })
-            end
-            client.notify("workspace/didChangeConfiguration", { settings = nil })
-        end,
-    })
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "python" },
-        callback = function()
-            require("swenv.api").auto_venv()
-        end,
-    })
+    -- linux-cultist/venv-selector.nvim
+    require("venv-selector").setup(
+        {
+            picker = "snacks",
+            --     -- Your options go here
+            --     name = { "venv" },
+            --     auto_refresh = true,
+            --     path = nil,
+            --     dap_enabled = true,
+            --     parents = 4,
+            --     anaconda_base_path = "/home/tioeare/anaconda3",
+            --     anaconda_envs_path = "/home/tioeare/anaconda3/envs",
+        }
+    )
 end
 
 -- j-morano/buffer_manager.nvim

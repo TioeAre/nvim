@@ -3,8 +3,6 @@ local M = require("plugin_config.code_run")
 return {
     {
         "Civitasv/cmake-tools.nvim",
-        -- enabled = not vim.g.only_text_editor,
-        -- lazy = true,
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
@@ -27,11 +25,6 @@ return {
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
             "Joakker/lua-json5",
-            -- {
-            --     "ThePrimeagen/harpoon",
-            --     branch = "harpoon2",
-            --     dependencies = { "nvim-lua/plenary.nvim" },
-            -- },
         },
         event = { "VeryLazy" },
         config = M.config_vs_task,

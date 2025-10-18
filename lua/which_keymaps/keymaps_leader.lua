@@ -199,19 +199,6 @@ wk.add({
 			desc = "open trouble lsp_definitions",
 		},
 	},
-	{ -- <leader> m
-		-- toppair/peek.nvim
-		{
-			"<leader>mc",
-			"<cmd> lua require('peek').close() <cr>",
-			desc = "peek close markdown preview",
-		},
-		{
-			"<leader>mo",
-			"<cmd> lua require('peek').open() <cr>",
-			desc = "peek open markdown preview",
-		},
-	},
 	{ -- <leader> o
 		{
 			"<leader>oi",
@@ -469,14 +456,15 @@ wk.add({
 	{ -- <leader> v
 		{ -- AckslD/swenv.nvim linux-cultist/venv-selector.nvim
 			"<leader>vs",
-			"<cmd> lua require('swenv.api').pick_venv() <cr>",
+			-- "<cmd> lua require('swenv.api').pick_venv() <cr>",
+			"<cmd> VenvSelect <cr>",
 			desc = "python venv select",
 		},
-		{
-			"<leader>vc",
-			"<cmd> lua require('swenv.api').auto_venv() <cr>",
-			desc = "python venv auto select",
-		},
+		-- {
+		-- 	"<leader>vc",
+		-- 	"<cmd> lua require('swenv.api').auto_venv() <cr>",
+		-- 	desc = "python venv auto select",
+		-- },
 	},
 	{ -- <leader> w
 		-- neovim/nvim-lspconfig

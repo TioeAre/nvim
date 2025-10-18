@@ -4,9 +4,6 @@ return {
     -- find files or strings
     {
         "nvim-telescope/telescope.nvim",
-        -- enabled = not vim.g.only_text_editor,
-        -- lazy = false,
-        -- tag = '0.1.4',
         dependencies = {
             "nvim-lua/plenary.nvim",
             -- "cljoly/telescope-repo.nvim",
@@ -26,9 +23,4 @@ return {
         event = { "VeryLazy" },
         config = M.config_telescope,
     },
-    -- -- 选项卡
-    -- {
-    --     "tiagovla/scope.nvim",
-    --     config = M.config_scope
-    -- }
 }

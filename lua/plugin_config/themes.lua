@@ -6,35 +6,44 @@ M.theme_config = function()
     vim.cmd("colorscheme catppuccin-latte")
     require("catppuccin").setup({
         integrations = {
-            cmp = true,
-            gitsigns = true,
-            nvimtree = true,
-            treesitter = true,
-            notify = true,
             alpha = true,
-            flash = true,
-            lsp_saga = true,
+            cmp = true,
             dap = true,
             dap_ui = true,
-            -- ufo = true,
-            window_picker = true,
-            -- outline = true,
-            symbols_outline = true,
-            -- aerial = true,
-            telescope = true,
-            lsp_trouble = true,
-            illuminate = true,
-            which_key = true,
-            rainbow_delimiters = true,
-            indent_blankline = {
-                enabled = true,
-                -- scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-                colored_indent_levels = true,
+            dropbar = {
+                enabled = false,
+                color_mode = false, -- enable color for kind's texts, not just kind's icons
             },
+            flash = true,
+            gitsigns = true,
+            illuminate = true,
+            lsp_trouble = true,
+            nvimtree = true,
+            noice = true,
+            rainbow_delimiters = true,
+            snacks = {
+                enabled = true,
+                indent_scope_color = "latte", -- catppuccin color (eg. `lavender`) Default: text
+            },
+            symbols_outline = true,
+            telescope = true,
+            treesitter = true,
+            window_picker = true,
+            which_key = true,
+            -- aerial = true,
+            -- indent_blankline = {
+            --     enabled = true,
+            --     -- scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+            --     colored_indent_levels = true,
+            -- },
+            -- lsp_saga = true,
             -- mini = {
             --     enabled = true,
             --     indentscope_color = "",
             -- },
+            -- notify = true,
+            -- outline = true,
+            -- ufo = true,
         },
         highlight_overrides = {
             mocha = function(cp)
@@ -124,90 +133,25 @@ M.config_lualine = function()
                 },
             },
             lualine_c = {
-                -- "os.date('%A %B/%d %H:%M:%S')",
                 {
                     function()
                         local utc8_time = os.time() + 8 * 3600 -- UTC+8 offset in seconds
                         return os.date("%a %d/%b %H:%M:%S", utc8_time)
                     end,
                 },
-                -- {
-                --     require("weather.lualine").custom(weather_format, { pending = "羽", error = "" }),
-                --     -- require('weather.lualine').default_c()
-                -- },
             },
-
-            -- lualine_x = {
-            --     {
-            --         require("noice").api.status.search.get,
-            --         cond = require("noice").api.status.search.has,
-            --         color = {
-            --             fg = "#ff9e64",
-            --         },
-            --     },
-            --     -- {
-            --     -- 	require("noice").api.status.mode.get,
-            --     -- 	cond = require("noice").api.status.mode.has,
-            --     -- 	color = { fg = "#ff9e64" },
-            --     -- },
-            --     {
-            --         require("noice").api.status.command.get,
-            --         cond = require("noice").api.status.command.has,
-            --         color = {
-            --             fg = "#ff9e64",
-            --         },
-            --     },
-            --     {
-            --         -- require("noice").api.status.message.get_hl,
-            --         function()
-            --             local max_length = 50 -- 设置最大长度
-            --             local text = require("noice").api.status.message.get_hl()
-            --             if #text > max_length then
-            --                 return text:sub(1, max_length) .. " ..." -- 截断字符串并添加省略号
-            --             else
-            --                 return text
-            --             end
-            --         end,
-            --         cond = require("noice").api.status.message.has,
-            --     },
-            -- },
             lualine_y = {
                 "diff",
                 "diagnostics",
                 "filesize",
                 "encoding",
                 "fileformat",
-                {
-                    'swenv',
-                    icon = "",
-                },
                 -- {
-                --     function()
-                --         local has_venv_selector = vim.fn.exists("g:loaded_venv_selector") == 1
-                --         local active_venv = ""
-                --         if has_venv_selector then
-                --             active_venv = require("venv-selector").get_active_venv()
-                --         end
-                --         return active_venv:match("[^/]*$")
-                --     end,
-                --     color = {
-                --         fg = "#ff9e64",
-                --     },
+                --     'swenv',
+                --     icon = "",
                 -- },
+                "venv-selector",
                 lsp_client_names,
-                -- {
-                -- 	"lsp_progress", -- "lualine-lsp-progress"
-                -- 	display_components = { "lsp_client_name", "spinner", { "title", "percentage", "message" } },
-                -- 	colors = {
-                -- 		percentage = colors.cyan,
-                -- 		title = colors.cyan,
-                -- 		message = colors.cyan,
-                -- 		spinner = colors.cyan,
-                -- 		lsp_client_name = colors.magenta,
-                -- 		use = true,
-                -- 	},
-                -- 	timer = { progress_enddelay = 500, spinner = 1000, lsp_client_name_enddelay = 1000 },
-                -- },
                 "filetype",
             },
             lualine_z = { "progress", "location" },
@@ -232,10 +176,6 @@ M.config_bufferline = function()
         local filenames = {}
         local buffers = vim.api.nvim_list_bufs()
         for _, buf in ipairs(buffers) do
-            -- if vim.api.nvim_buf_is_loaded(buf) and not vim.api.nvim_buf_get_option(buf, "buflisted") then
-            --     -- Optionally, you can add additional checks here to prevent closing certain types of buffers.
-            --     vim.api.nvim_buf_delete(buf, { force = true })
-            -- end
             if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, "buflisted") then
                 local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
                 if filename ~= "" then
@@ -256,30 +196,9 @@ M.config_bufferline = function()
             return filename
         end
     end
-    local mocha = require("catppuccin.palettes").get_palette("mocha")
-    local latte = require("catppuccin.palettes").get_palette("latte")
     require("bufferline").setup({
-        -- highlights = require("catppuccin.groups.integrations.bufferline").get({
-        --     styles = { "italic", "bold" },
-        --     custom = {
-        --         all = {
-        --             fill = {
-        --                 bg = "#000000",
-        --             },
-        --         },
-        --         mocha = {
-        --             background = {
-        --                 fg = mocha.text,
-        --             },
-        --         },
-        --         latte = {
-        --             background = {
-        --                 fg = latte.text,
-        --             },
-        --         },
-        --     },
-        -- }),
         options = {
+            enforce_regular_tabs = false,
             mode = "buffers", -- "buffers" "tabs"
             move_wraps_at_ends = true,
             color_icons = true,
@@ -307,7 +226,7 @@ M.config_bufferline = function()
                 {
                     filetype = "neo-tree",
                     text = function()
-                        return vim.fn.getcwd()
+                        return "󰙅  " .. vim.fn.getcwd()
                     end,
                     highlight = "Directory",
                     separator = true, -- use a "true" to enable the default, or set your own character
@@ -321,24 +240,21 @@ M.config_bufferline = function()
                 {
                     filetype = "NvimTree",
                     text = function()
-                        return vim.fn.getcwd()
+                        return "󰙅  " .. vim.fn.getcwd()
                     end,
                     highlight = "Directory",
-                    separator = true, -- use a "true" to enable the default, or set your own character
+                    separator = true,
                 },
+                {
+                    filetype = 'snacks_layout_box',
+                    -- text = '󰙅  File Explorer',
+                    text = function()
+                        return "󰙅  " .. vim.fn.getcwd()
+                    end,
+                    separator = true,
+                }
             },
             name_formatter = name_formatter,
-            --          function(buf)
-            -- 	local path = buf.path or ""
-            -- 	local filename = vim.fn.fnamemodify(path, ":t")
-            -- 	local tail = vim.fn.fnamemodify(path, ":p:h:t")
-            -- 	local all_filenames = get_all_buffer_filenames()
-            -- 	if all_filenames[filename] and all_filenames[filename] > 1 then
-            -- 		return tail .. "/" .. filename
-            -- 	else
-            -- 		return filename
-            -- 	end
-            -- end,
         },
     })
     vim.g.transparent_groups = vim.list_extend(
@@ -646,8 +562,8 @@ M.config_alpha = function()
         dashboard.button("l", "🖫  > last layout", "<cmd>SessionLoadLast<cr>"), -- "<cmd>lua require('persistence').load()<CR>"),
         dashboard.button("s", "🖪  > layouts", "<cmd>Telescope persisted<cr>"), -- "<cmd>lua require('persistence').load()<CR>"),
         dashboard.button("p", "🗟  > projects", "<cmd>lua require'telescope'.extensions.projects.projects{}<CR>"),
-        dashboard.button("r", "  > recent", ":Telescope oldfiles<CR>"),
-        dashboard.button("e", "  > new file", ":ene <BAR> startinsert <CR>"),
+        dashboard.button("r", "   > recent", ":Telescope oldfiles<CR>"),
+        dashboard.button("e", "   > new file", ":ene <BAR> startinsert <CR>"),
         dashboard.button("f", "🗒  > find file", ":Telescope find_files<CR>"),
         dashboard.button("q", "🖬  > quit nvim", ":qa<CR>"),
     }
@@ -676,9 +592,6 @@ M.config_incline = function()
         },
     }
 
-    -- local start = vim.tbl_extend("force", { "" }, field_format.blocks)
-    -- local stop = vim.tbl_extend("force", { "" }, field_format.blocks)
-
     local function get_diagnostic_label(props)
         local labels = {}
         if not vim.api.nvim_buf_is_valid(props.buf) then
@@ -697,12 +610,6 @@ M.config_incline = function()
                 table.insert(labels, { icon .. " " .. n .. " ", group = "DiagnosticSign" .. severity })
             end
         end
-        -- for severity, icon in pairs(icons) do
-        --     local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
-        --     if n > 0 then
-        --         table.insert(label, { icon .. " " .. n .. " ", group = "DiagnosticSign" .. severity })
-        --     end
-        -- end
         if #labels > 0 then
             table.insert(labels, 1, " ")
             table.insert(labels, { "|" })
@@ -733,10 +640,6 @@ M.config_incline = function()
         local filenames = {}
         local buffers = vim.api.nvim_list_bufs()
         for _, buf in ipairs(buffers) do
-            -- if vim.api.nvim_buf_is_loaded(buf) and not vim.api.nvim_buf_get_option(buf, "buflisted") then
-            --     -- Optionally, you can add additional checks here to prevent closing certain types of buffers.
-            --     vim.api.nvim_buf_delete(buf, { force = true })
-            -- end
             if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, "buflisted") then
                 local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ":t")
                 if filename ~= "" then
@@ -851,186 +754,10 @@ M.config_incline = function()
     })
 end
 
--- folke/edgy.nvim
-M.init_edgy = function()
-    -- views can only be fully collapsed with the global statusline
-    -- Default splitting will cause your main splits to jump when opening an edgebar.
-    -- To prevent this, set `splitkeep` to either `screen` or `topline`.
-    vim.opt.splitkeep = "screen"
-end
-M.opts_edgy = {
-    keys = {
-        -- close window
-        ["<leader>qa"] = function(win)
-            win:close()
-        end,
-        -- hide window
-        ["<c-q>"] = function(win)
-            win:hide()
-        end,
-        -- close sidebar
-        ["<leader>Q"] = function(win)
-            win.view.edgebar:close()
-        end,
-        -- next open window
-        ["]w"] = function(win)
-            win:next({
-                visible = true,
-                focus = true,
-            })
-        end,
-        -- previous open window
-        ["[w"] = function(win)
-            win:prev({
-                visible = true,
-                focus = true,
-            })
-        end,
-        -- next loaded window
-        ["]W"] = function(win)
-            win:next({
-                pinned = false,
-                focus = true,
-            })
-        end,
-        -- prev loaded window
-        ["[W"] = function(win)
-            win:prev({
-                pinned = false,
-                focus = true,
-            })
-        end,
-        -- increase width
-        ["<c-w>>"] = function(win)
-            win:resize("width", 2)
-        end,
-        -- decrease width
-        ["<c-w><lt>"] = function(win)
-            win:resize("width", -2)
-        end,
-        -- increase height
-        ["<c-w>+"] = function(win)
-            win:resize("height", 2)
-        end,
-        -- decrease height
-        ["<c-w>-"] = function(win)
-            win:resize("height", -2)
-        end,
-        -- reset all custom sizing
-        ["<c-w>="] = function(win)
-            win.view.edgebar:equalize()
-        end,
-    },
-    bottom = { -- toggleterm / lazyterm at the bottom with a height of 40% of the screen
-        {
-            ft = "toggleterm",
-            size = {
-                height = 0.2,
-            },
-            -- exclude floating windows
-            filter = function(buf, win)
-                return vim.api.nvim_win_get_config(win).relative == ""
-            end,
-        },
-        {
-            ft = "lazyterm",
-            title = "LazyTerm",
-            size = {
-                height = 0.2,
-            },
-            filter = function(buf)
-                return not vim.b[buf].lazyterm_cmd
-            end,
-        },
-        "Trouble",
-        {
-            ft = "qf",
-            title = "QuickFix",
-        },
-        {
-            ft = "help",
-            size = {
-                height = 20,
-            },
-            -- only show help buffers
-            filter = function(buf)
-                return vim.bo[buf].buftype == "help"
-            end,
-        },
-        {
-            ft = "spectre_panel",
-            size = {
-                height = 0.2,
-            },
-        },
-    },
-    left = { -- Neo-tree filesystem always takes half the screen height
-        {
-            title = "Neo-Tree",
-            ft = "neo-tree",
-            filter = function(buf)
-                return vim.b[buf].neo_tree_source == "filesystem"
-            end,
-            size = {
-                height = 0.6,
-            },
-        },
-        {
-            ft = "Outline",
-            pinned = true,
-            open = "OutlineOpen", -- "AerialOpen!",-- "SymbolsOutlineOpen",
-        },
-        {
-            title = "Neo-Tree Git",
-            ft = "neo-tree",
-            filter = function(buf)
-                return vim.b[buf].neo_tree_source == "git_status"
-            end,
-            pinned = true,
-            open = "Neotree position=right git_status",
-        }, -- {
-        --   title = "Neo-Tree Buffers",
-        --   ft = "neo-tree",
-        --   filter = function(buf)
-        --     return vim.b[buf].neo_tree_source == "buffers"
-        --   end,
-        --   pinned = true,
-        --   open = "Neotree position=top buffers",
-        -- },
-        -- any other neo-tree windows
-        "neo-tree",
-    },
-}
-
 -- xiyaowong/transparent.nvim
 M.config_transparent = function()
     vim.cmd([[hi StatusLine ctermbg=0 cterm=NONE]])
-    require("transparent").setup({ -- Optional, you don't have to run setup.
-        -- groups = { -- table: default groups
-        --     "Normal",
-        --     "NormalNC",
-        --      "Comment",
-        --      "Constant",
-        --      "Special",
-        --      "Identifier",
-        --      "Statement",
-        --      "PreProc",
-        --      "Type",
-        --      "Underlined",
-        --      "Todo",
-        --      "String",
-        --      "Function",
-        --      "Conditional",
-        --      "Repeat",
-        --      "Operator",
-        --      "Structure",
-        --      "LineNr",
-        --      "NonText",
-        --      "SignColumn",
-        --      "CursorLineNr",
-        --      "EndOfBuffer",
-        --      "InsertEnter",
-        --  },
+    require("transparent").setup({                                     -- Optional, you don't have to run setup.
         extra_groups = { "CursorLine", "NormalFloat", "TablineFill" }, -- table: additional groups that should be cleared
         exclude_groups = {},                                           -- table: groups you don't want to clear
     })
@@ -1044,14 +771,6 @@ end
 M.opt_noice = {}
 M.config_noice = function()
     require("noice").setup({
-        -- routes = {
-        --     {
-        --         view = "notify",
-        --         filter = {
-        --             event = "msg_showmode",
-        --         },
-        --     },
-        -- },
         lsp = {
             progress = {
                 enabled = false, -- noice lsp progress
@@ -1083,11 +802,6 @@ M.config_noice = function()
                         fg = "#ff9e64",
                     },
                 },
-                -- {
-                -- 	require("noice").api.status.mode.get,
-                -- 	cond = require("noice").api.status.mode.has,
-                -- 	color = { fg = "#ff9e64" },
-                -- },
                 {
                     require("noice").api.status.command.get,
                     cond = require("noice").api.status.command.has,
@@ -1096,7 +810,6 @@ M.config_noice = function()
                     },
                 },
                 {
-                    -- require("noice").api.status.message.get_hl,
                     function()
                         local max_length = 50 -- 设置最大长度
                         local text = require("noice").api.status.message.get_hl()
@@ -1127,24 +840,18 @@ M.config_dressing = function()
         input = {
             -- Set to false to disable the vim.ui.input implementation
             enabled = true,
-
             -- Default prompt string
             default_prompt = "Input:",
-
             -- Can be 'left', 'right', or 'center'
             title_pos = "left",
-
             -- When true, <Esc> will close the modal
             insert_only = true,
-
             -- When true, input will start in insert mode.
             start_in_insert = true,
-
             -- These are passed to nvim_open_win
             border = "rounded",
             -- 'editor' and 'win' will default to being centered
             relative = "cursor",
-
             -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
             prefer_width = 40,
             width = nil,
@@ -1152,7 +859,6 @@ M.config_dressing = function()
             -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
             max_width = { 140, 0.9 },
             min_width = { 20, 0.2 },
-
             buf_options = {},
             win_options = {
                 -- Disable line wrapping
@@ -1163,7 +869,6 @@ M.config_dressing = function()
                 -- Increase this for more context when text scrolls off the window
                 sidescrolloff = 0,
             },
-
             -- Set to `false` to disable
             mappings = {
                 n = {
@@ -1282,33 +987,8 @@ end
 
 -- petertriho/nvim-scrollbar
 M.config_nvim_scrollbar = function()
-    require("scrollbar").setup({
-        -- handle = {
-        -- 	color = colors.bg_highlight,
-        -- },
-        -- marks = {
-        -- 	Search = { color = colors.orange },
-        -- 	Error = { color = colors.error },
-        -- 	Warn = { color = colors.warning },
-        -- 	Info = { color = colors.info },
-        -- 	Hint = { color = colors.hint },
-        -- 	Misc = { color = colors.purple },
-        -- },
-    })
-    require("scrollbar.handlers.search").setup({
-        -- hlslens config overrides
-    })
-    -- require("hlslens").setup({
-    -- build_position_cb = function(plist, _, _, _)
-    -- 	require("scrollbar.handlers.search").handler.show(plist.start_pos)
-    -- end,
-    -- })
-    -- vim.cmd([[
-    --        augroup scrollbar_search_hide
-    --            autocmd!
-    --            autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
-    --        augroup END
-    --    ]])
+    require("scrollbar").setup()
+    require("scrollbar.handlers.search").setup()
     require("scrollbar.handlers.gitsigns").setup()
 end
 

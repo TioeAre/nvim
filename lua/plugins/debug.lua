@@ -5,7 +5,6 @@ return {
         "mfussenegger/nvim-dap",
         enabled = not vim.g.only_text_editor,
         event = { "VeryLazy" },
-        -- lazy = false,
         dependencies = {
             "rcarriga/nvim-dap-ui",
             "theHamsta/nvim-dap-virtual-text",

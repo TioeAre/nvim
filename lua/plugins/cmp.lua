@@ -4,8 +4,6 @@ local S = require("plugin_config.copilot")
 return {
 	{
 		"hrsh7th/nvim-cmp",
-		-- enabled = not vim.g.only_text_editor,
-		-- lazy = false,
 		event = { "VeryLazy", "InsertEnter" },
 		config = M.config_cmp,
 		dependencies = {
@@ -24,9 +22,6 @@ return {
 				"saadparwaiz1/cmp_luasnip",
 				dependencies = {
 					"L3MON4D3/LuaSnip",
-					-- follow latest release.
-					version = "2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-					-- install jsregexp (optional!).
 					build = "make install_jsregexp",
 					dependencies = "rafamadriz/friendly-snippets",
 				},
@@ -41,12 +36,9 @@ return {
 	-- docs
 	{
 		"danymat/neogen",
-		-- enabled = not vim.g.only_text_editor,
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = M.config_neogen,
 		cmd = { "Neogen" },
 		event = { "VeryLazy" },
-		-- Uncomment next line if you want to follow only stable versions
-		version = "*",
 	},
 }

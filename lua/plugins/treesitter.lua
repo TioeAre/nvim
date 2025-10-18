@@ -3,8 +3,6 @@ local M = require("plugin_config.treesitter")
 return {
     {
         "nvim-treesitter/nvim-treesitter",
-        -- enabled = not vim.g.only_text_editor,
-        -- lazy = false,
         event = { "VeryLazy", "BufNewFile" },
         config = M.config_treesitter,
         dependencies = {
@@ -27,8 +25,6 @@ return {
     },
     { -- breadcrumbs下拉
         "Bekaboo/dropbar.nvim",
-        -- enabled = not vim.g.only_text_editor,
-        -- optional, but required for fuzzy finder support
         dependencies = {
             "nvim-telescope/telescope-fzf-native.nvim",
             "nvim-tree/nvim-web-devicons",
