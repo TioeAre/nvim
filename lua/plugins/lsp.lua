@@ -33,11 +33,11 @@ return {
                     },
                 },
             },
-            {
-                "barreiroleo/ltex_extra.nvim",
-                ft = { "markdown", "tex", "text" },
-                dependencies = { "neovim/nvim-lspconfig" },
-            },
+            -- {
+            --     "barreiroleo/ltex_extra.nvim",
+            --     ft = { "markdown", "tex", "text" },
+            --     dependencies = { "neovim/nvim-lspconfig" },
+            -- },
         },
         event = { "BufReadPost", "VeryLazy" }, -- BufReadPost
         config = M.config_lspconfig,

@@ -105,7 +105,6 @@ M.config_lspconfig = function()
         },
         docker_compose_language_service = {},
         lemminx = {},
-        matlab_ls = {},
         bashls = {},
         pyright = {},
         lua_ls = {
@@ -170,16 +169,16 @@ M.config_lspconfig = function()
         }
     end
 
-    require("ltex_extra").setup({
-        load_langs = { "en-US", "zh-CN" },
-        init_check = true,
-        -- path = "",
-        log_level = "none",
-        server_opts = {
-            capabilities = capabilities,
-            on_attach = on_attach,
-        },
-    })
+    -- require("ltex_extra").setup({
+    --     load_langs = { "en-US", "zh-CN" },
+    --     init_check = true,
+    --     -- path = "",
+    --     log_level = "none",
+    --     server_opts = {
+    --         capabilities = capabilities,
+    --         on_attach = on_attach,
+    --     },
+    -- })
     local navigator_servers = {
         bashls = {},
         dockerls = {},
@@ -234,7 +233,6 @@ M.config_lspconfig = function()
         },
         docker_compose_language_service = {},
         lemminx = {},
-        matlab_ls = {},
     }
     require("navigator").setup({
         ts_fold = {
