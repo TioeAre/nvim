@@ -48,7 +48,7 @@ M.config_lspconfig = function()
     --     ensure_installed = { "bash-debug-adapter", "cpptools", "debugpy", "mockdebug" },
     -- })
 
-    local util = require("lspconfig.util")
+    local util = vim.lsp.config.util
     local clangd_root_files = {
         "build/compile_commands.json",
         "compile_commands.json",
