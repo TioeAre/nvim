@@ -3,91 +3,80 @@ local M = {}
 -- local colors = require("tokyonight.colors")
 M.theme_config = function()
     -- vim.cmd("colorscheme catppuccin") -- tokyonight-storm tokyonight-day catppuccin catppuccin-latte onedark  onelight
-    vim.cmd("colorscheme catppuccin-latte")
-    require("catppuccin").setup({
-        integrations = {
-            alpha = true,
-            cmp = true,
-            dap = true,
-            dap_ui = true,
-            dropbar = {
-                enabled = false,
-                color_mode = false, -- enable color for kind's texts, not just kind's icons
-            },
-            flash = true,
-            gitsigns = true,
-            illuminate = true,
-            lsp_trouble = true,
-            nvimtree = true,
-            noice = true,
-            rainbow_delimiters = true,
-            snacks = {
-                enabled = true,
-                indent_scope_color = "latte", -- catppuccin color (eg. `lavender`) Default: text
-            },
-            symbols_outline = true,
-            telescope = true,
-            treesitter = true,
-            window_picker = true,
-            which_key = true,
-            -- aerial = true,
-            -- indent_blankline = {
-            --     enabled = true,
-            --     -- scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
-            --     colored_indent_levels = true,
-            -- },
-            -- lsp_saga = true,
-            -- mini = {
-            --     enabled = true,
-            --     indentscope_color = "",
-            -- },
-            -- notify = true,
-            -- outline = true,
-            -- ufo = true,
-        },
-        highlight_overrides = {
-            mocha = function(cp)
-                return {
-                    -- folke/trouble.nvim
-                    TroubleNormal = { bg = cp.base },
-                }
-            end,
-            latte = function(cp)
-                return {
-                    -- folke/trouble.nvim
-                    TroubleNormal = { bg = cp.base },
-                }
-            end,
-            frappe = function(cp)
-                return {
-                    -- folke/trouble.nvim
-                    TroubleNormal = { bg = cp.base },
-                }
-            end,
-            macchiato = function(cp)
-                return {
-                    -- folke/trouble.nvim
-                    TroubleNormal = { bg = cp.base },
-                }
-            end,
-        },
-    })
+    vim.cmd("colorscheme Eva-Light-Bold")
+    -- require("catppuccin").setup({
+    --     integrations = {
+    --         alpha = true,
+    --         cmp = true,
+    --         dap = true,
+    --         dap_ui = true,
+    --         dropbar = {
+    --             enabled = false,
+    --             color_mode = false, -- enable color for kind's texts, not just kind's icons
+    --         },
+    --         flash = true,
+    --         gitsigns = true,
+    --         illuminate = true,
+    --         lsp_trouble = true,
+    --         nvimtree = true,
+    --         noice = true,
+    --         rainbow_delimiters = true,
+    --         snacks = {
+    --             enabled = true,
+    --             indent_scope_color = "latte", -- catppuccin color (eg. `lavender`) Default: text
+    --         },
+    --         symbols_outline = true,
+    --         telescope = true,
+    --         treesitter = true,
+    --         window_picker = true,
+    --         which_key = true,
+    --         -- aerial = true,
+    --         -- indent_blankline = {
+    --         --     enabled = true,
+    --         --     -- scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
+    --         --     colored_indent_levels = true,
+    --         -- },
+    --         -- lsp_saga = true,
+    --         -- mini = {
+    --         --     enabled = true,
+    --         --     indentscope_color = "",
+    --         -- },
+    --         -- notify = true,
+    --         -- outline = true,
+    --         -- ufo = true,
+    --     },
+    --     highlight_overrides = {
+    --         mocha = function(cp)
+    --             return {
+    --                 -- folke/trouble.nvim
+    --                 TroubleNormal = { bg = cp.base },
+    --             }
+    --         end,
+    --         latte = function(cp)
+    --             return {
+    --                 -- folke/trouble.nvim
+    --                 TroubleNormal = { bg = cp.base },
+    --             }
+    --         end,
+    --         frappe = function(cp)
+    --             return {
+    --                 -- folke/trouble.nvim
+    --                 TroubleNormal = { bg = cp.base },
+    --             }
+    --         end,
+    --         macchiato = function(cp)
+    --             return {
+    --                 -- folke/trouble.nvim
+    --                 TroubleNormal = { bg = cp.base },
+    --             }
+    --         end,
+    --     },
+    -- })
 end
 -- local colors = require("catppuccin.colors").setup()
 
 -- nvim-lualine/lualine.nvim
 M.config_lualine = function()
-    local colors = {
-        yellow = "#ECBE7B",
-        cyan = "#008080",
-        darkblue = "#081633",
-        green = "#98be65",
-        orange = "#FF8800",
-        violet = "#a9a1e1",
-        magenta = "#c678dd",
-        blue = "#51afef",
-        red = "#ec5f67",
-    }
     local function lsp_client_names()
         local client_names = {}
         for _, client in ipairs(vim.lsp.get_clients()) do
@@ -98,7 +87,7 @@ M.config_lualine = function()
 
     require("lualine").setup({
         options = {
-            theme = "catppuccin",
+            theme = "ayu_light",
             globalstatus = true,
             component_separators = {
                 left = ">",

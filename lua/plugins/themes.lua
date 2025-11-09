@@ -4,8 +4,10 @@ return {
     -- 主题
     {
         -- "folke/tokyonight.nvim",
-        "catppuccin/nvim",
-        name = "catppuccin",
+        -- "catppuccin/nvim",
+        -- name = "catppuccin",
+        'sharpchen/Eva-Theme.nvim',
+        build = ':EvaCompile',
         lazy = false,
         priority = 1000,
         config = M.theme_config,

@@ -35,7 +35,14 @@ end
 
 -- RRethy/vim-illuminate
 M.config_vim_illuminate = function()
-	require("illuminate").configure()
+	require("illuminate").configure({
+		delay = 0,
+		filetypes_denylist = filetype.excluded_filetypes,
+		large_file_cutoff = 10000,
+	})
+	vim.api.nvim_set_hl(0, "LspReferenceWrite", { link = "IlluminatedWordWrite" })
+	vim.api.nvim_set_hl(0, "LspReferenceRead", { link = "IlluminatedWordRead" })
+	vim.api.nvim_set_hl(0, "LspReferenceText", { link = "IlluminatedWordText" })
 	-- vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = "#4e306e" })
 	-- vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = "#58268c" })
 	-- vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = "#4e306e" })

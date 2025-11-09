@@ -25,13 +25,7 @@ return {
             --     dependencies = { "lewis6991/gitsigns.nvim" },
             -- },
             {
-                'ray-x/navigator.lua',
-                dependencies = {
-                    {
-                        'ray-x/guihua.lua',
-                        build = 'cd lua/fzy && make'
-                    },
-                },
+                'ray-x/navigator.lua'
             },
             -- {
             --     "barreiroleo/ltex_extra.nvim",
