@@ -145,7 +145,8 @@ wk.add({
 		},
 		{
 			"<leader>fpp",
-			"<cmd>lua require('snacks').picker.projects() <cr>",
+			-- "<cmd>lua require('snacks').picker.projects() <cr>",
+			"<cmd> lua require'telescope'.extensions.projects.projects{} <cr>",
 			desc = "snacks find projects",
 		},
 		-- olimorris/persisted.nvim
