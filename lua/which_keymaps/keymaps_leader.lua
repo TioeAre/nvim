@@ -171,6 +171,20 @@ wk.add({
 		desc = "diff file history",
 	},
 	{ -- <leader> l
+		-- stevearc/conform.nvim
+		{
+			"<leader>lf",
+			function()
+				require("whitespace-nvim").trim()
+				require("conform").format({
+					lsp_fallback = true,
+					async = false,
+					timeout_ms = 500,
+				})
+			end,
+			desc = "format file or range",
+			mode = { "n", "v" },
+		},
 		-- folke/trouble.nvim
 		{
 			"<leader>ll",
@@ -446,12 +460,12 @@ wk.add({
 			-- end,
 			desc = "lint current file",
 		},
-        -- mbbill/undotree
-        {
-            "<leader>tu",
-            "<cmd> UndotreeToggle <cr>",
-            desc = "toggle undotree"
-        }
+		-- mbbill/undotree
+		{
+			"<leader>tu",
+			"<cmd> UndotreeToggle <cr>",
+			desc = "toggle undotree",
+		},
 	},
 	{ -- <leader> v
 		{ -- AckslD/swenv.nvim linux-cultist/venv-selector.nvim

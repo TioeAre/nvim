@@ -156,7 +156,7 @@ wk.add({
     },
     {
         "<leader>l",
-        group = "list trouble/todo/toggle lsp_lens",
+        group = "list trouble/todo/toggle lsp_lens, format",
     },
     {
         "<leader>m",
