@@ -15,7 +15,7 @@ return {
     -- 底部状态栏
     {
         "nvim-lualine/lualine.nvim",
-        event = { "UIEnter" },
+        event = { "TextChanged" },  -- TextChanged
         config = M.config_lualine,
     },
     -- tab栏状态
