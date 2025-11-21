@@ -556,7 +556,9 @@ wk.add({
 	-- numToStr/Comment.nvim
 	{
 		"<C-_>",
+        "<Plug>(comment_toggle_linewise_visual)gv",
 		desc = "toggle comment",
+        mode = {"x"}
 	},
 	{
 		"<C-\\>",
