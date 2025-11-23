@@ -152,7 +152,7 @@ wk.add({
     },
     {
         "<leader>h",
-        group = "history, memento",
+        group = "history",
     },
     {
         "<leader>l",

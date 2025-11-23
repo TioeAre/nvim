@@ -33,7 +33,7 @@ return {
         dependencies = {
             "lewis6991/gitsigns.nvim",
         },
-        event = { "VeryLazy" },
+        event = { "VeryLazy", "BufReadPre" },
         -- lazy = false,
         config = M.config_incline,
     },
@@ -54,17 +54,17 @@ return {
             "MunifTanjim/nui.nvim",
         },
     },
-    -- select ui
-    {
-        "stevearc/dressing.nvim",
-        event = { "VeryLazy" },
-        opts = M.opts_dressing,
-        config = M.config_dressing,
-    },
+    -- -- select ui
+    -- {
+    --     "stevearc/dressing.nvim",
+    --     event = { "VeryLazy" },
+    --     opts = M.opts_dressing,
+    --     config = M.config_dressing,
+    -- },
     -- scrollbar
     {
         "petertriho/nvim-scrollbar",
-        event = { "VeryLazy" },
+        event = { "VeryLazy", "BufReadPre" },
         config = M.config_nvim_scrollbar,
         dependencies = {
             "kevinhwang91/nvim-hlslens",
