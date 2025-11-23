@@ -115,27 +115,6 @@ wk.add({
 		},
 		{ -- NOTE
 			"<leader>fh",
-			-- function()
-			--     local results = {}
-			--     local search_pattern = vim.fn.getreg("/")
-			--     if search_pattern ~= "" then
-			--         for line_nr = 1, vim.api.nvim_buf_line_count(0) do
-			--             local line = vim.api.nvim_buf_get_lines(0, line_nr - 1, line_nr, false)[1]
-			--             if line:match(search_pattern) then
-			--                 table.insert(results, line_nr .. ": " .. line)
-			--             end
-			--         end
-			--         require("telescope.pickers")
-			--             .new({}, {
-			--                 prompt_title = "Search Results",
-			--                 finder = require("telescope.finders").new_table({
-			--                     results = results,
-			--                 }),
-			--                 sorter = require("telescope.sorters").get_generic_fuzzy_sorter(),
-			--             })
-			--             :find()
-			--     end
-			-- end,
 			"<cmd>lua require('snacks').picker.highlights() <cr>",
 			desc = "snacks find highlights",
 		},
@@ -416,33 +395,17 @@ wk.add({
 		{ -- NOTE
 			-- MagicDuck/grug-far.nvim
 			"<leader>sc",
-			-- "<cmd>lua require('spectre').open_file_search({select_word=true})<cr>",
 			"<cmd> lua require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>'), paths = vim.fn.expand('%') } }) <cr>",
 			desc = "search word current file",
 		},
-		-- {
-		-- 	"<leader>sl",
-		-- 	"<cmd>lua require('spectre').resume_last_search()<cr>",
-		-- 	desc = "search last",
-		-- },
-		-- nvim-pack/nvim-spectre
 		{
 			"<leader>so",
-			-- "<cmd>lua require('spectre').toggle()<cr>",
 			"<cmd> lua require('grug-far').open() <cr>",
 			desc = "search open spectre",
 		},
 		{ -- NOTE
 			"<leader>sw",
-			-- "<cmd>lua require('spectre').open_visual({select_word=true})<cr>",
-			-- "<cmd>lua require('snacks').picker.grep_word() <cr>",
 			"<cmd> lua require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } }) <cr>",
-			-- function()
-			-- 	require("snacks").picker.grep_word({
-			-- 		preset = "sidebar",
-			-- 		layout = { position = "right" },
-			-- 	})
-			-- end,
 			desc = "search current word",
 		},
 	},
@@ -455,9 +418,7 @@ wk.add({
 		-- mfussenegger/nvim-lint
 		{
 			"<leader>tl",
-			-- function()
-			-- 	lint.try_lint()
-			-- end,
+			"<cmd> lua require('lint').try_lint() <cr>",
 			desc = "lint current file",
 		},
 		-- mbbill/undotree
@@ -468,17 +429,11 @@ wk.add({
 		},
 	},
 	{ -- <leader> v
-		{ -- AckslD/swenv.nvim linux-cultist/venv-selector.nvim
+		{ -- neolooong/whichpy.nvim
 			"<leader>vs",
-			-- "<cmd> lua require('swenv.api').pick_venv() <cr>",
-			"<cmd> VenvSelect <cr>",
+			"<cmd> WhichPy select <cr>",
 			desc = "python venv select",
 		},
-		-- {
-		-- 	"<leader>vc",
-		-- 	"<cmd> lua require('swenv.api').auto_venv() <cr>",
-		-- 	desc = "python venv auto select",
-		-- },
 	},
 	{ -- <leader> w
 		-- neovim/nvim-lspconfig
@@ -501,7 +456,6 @@ wk.add({
 	mode = "v",
 	{ -- <leader> s
 		"<leader>sw",
-		-- "<esc><cmd> lua require('spectre').open_visual() <cr>",
 		"<cmd> lua require('grug-far').with_visual_selection() <cr>",
 		desc = "search current word",
 	},

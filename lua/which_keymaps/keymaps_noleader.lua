@@ -93,9 +93,6 @@ wk.add({
 	{
 		"<C-A-l>",
 		function()
-			-- local strict = require("strict")
-			-- strict.convert_tabs_to_spaces()
-			-- strict.remove_trailing_whitespace()
 			require("whitespace-nvim").trim()
 			require("conform").format({
 				lsp_fallback = true,
@@ -206,11 +203,9 @@ wk.add({
 		"if",
 		desc = "select @function.inner",
 	},
-	-- nvim-pack/nvim-spectre
 	-- MagicDuck/grug-far.nvim
 	{
 		"sw",
-		-- "<esc><cmd> lua require('spectre').open_visual() <cr>",
 		"<cmd> lua require('grug-far').with_visual_selection() <cr>",
 		desc = "search current word",
 	},

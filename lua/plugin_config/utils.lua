@@ -10,7 +10,6 @@ M.opts_which_key = {}
 
 -- numToStr/Comment.nvim
 M.config_comment = function()
-	-- TODO: 添加选中多行注释后保留选中状态的功能
 	local comment = require("Comment")
 	comment.setup({
 		ignore = "^$",
@@ -36,7 +35,7 @@ end
 -- RRethy/vim-illuminate
 M.config_vim_illuminate = function()
 	require("illuminate").configure({
-		delay = 0,
+		delay = 100,
 		filetypes_denylist = filetype.excluded_filetypes,
 		large_file_cutoff = 10000,
 	})
@@ -52,21 +51,13 @@ end
 M.config_smartyank = function()
 	require("smartyank").setup({
 		highlight = {
-			enabled = true, -- highlight yanked text
-			higroup = "IncSearch", -- highlight group of yanked text
-			timeout = 1500, -- timeout for clearing the highlight
+			timeout = 1500,
 		},
 		osc52 = {
 			enabled = true,
 			-- escseq = 'tmux',     -- use tmux escape sequence, only enable if
-			-- you're using tmux and have issues (see #4)
-			ssh_only = true, -- false to OSC52 yank also in local sessions
-			silent = false, -- true to disable the "n chars copied" echo
-			echo_hl = "Directory", -- highlight group of the OSC52 echo message
+			ssh_only = false, -- false to OSC52 yank also in local sessions
 		},
-		-- By default copy is only triggered by "intentional yanks" where the
-		-- user initiated a `y` motion (e.g. `yy`, `yiw`, etc). Set to `false`
-		-- if you wish to copy indiscriminately:
 		validate_yank = false,
 	})
 	require("neoclip").setup()
@@ -99,23 +90,18 @@ end
 M.config_auto_save = function()
 	require("auto-save").setup({
 		enabled = true,
-		trigger_events = { -- See :h events
-			immediate_save = { "FocusLost" }, -- "BufLeave",  vim events that trigger an immediate save
-			defer_save = { "BufLeave" }, -- vim events that trigger a deferred save (saves after `debounce_delay`)
-			cancel_deferred_save = { "InsertEnter" }, -- vim events that cancel a pending deferred save
+		trigger_events = {
+			immediate_save = { "FocusLost" },
+			defer_save = { "BufLeave" },
 		},
 		condition = function(buf)
 			local fn = vim.fn
-			-- don't save for special-buffers
 			if fn.getbufvar(buf, "&buftype") ~= "" then
 				return false
 			end
 			return true
 		end,
-		write_all_buffers = false, -- write all buffers when the current one meets `condition`
-		noautocmd = false, -- do not execute autocmds when saving
 		debounce_delay = 700,
-		debug = false,
 	})
 	local group = vim.api.nvim_create_augroup("autosave", {})
 	vim.api.nvim_create_autocmd("User", {
@@ -134,14 +120,13 @@ end
 M.opts_trouble = {
 	position = "bottom",
 	height = 10,
-	width = 50, -- width of the list when position is left or right
-	-- icons = true,
+	width = 50,
 	mode = "workspace_diagnostics",
 	group = true, -- group results by file
 	padding = true, -- add an extra new line on top of the list
 	cycle_results = true, -- cycle item list when reaching beginning or end of list
 	multiline = true, -- render multi-line messages
-	auto_preview = false, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+	auto_preview = false,
 	auto_jump = { "lsp_references", "lsp_implementations", "lsp_definitions" },
 	use_diagnostic_signs = true,
 	action_keys = {
@@ -196,10 +181,10 @@ M.config_persisted = function()
 	vim.o.sessionoptions = "buffers,curdir,folds,tabpages,winpos,winsize"
 	require("persisted").setup({
 		save_dir = vim.fn.expand(vim.fn.stdpath("data") .. "/sessions/"),
-		use_git_branch = true, -- create session files based on the branch of a git enabled repository
-		default_branch = "main", -- the branch to load if a session file is not found for the current branch
-		autoload = true, -- automatically load the session for the cwd on Neovim startup
-		on_autoload_no_session = nil, -- function to run when `autoload = true` but there is no session to load
+		use_git_branch = true,
+		default_branch = "main",
+		autoload = true,
+		on_autoload_no_session = nil,
 		ignored_dirs = {
 			{ "/", exact = true },
 			{ "~", exact = true },
@@ -210,18 +195,8 @@ M.config_persisted = function()
 	})
 end
 
--- gaborvecsei/memento.nvim
-M.config_memento = function()
-	-- require("memento").setup({})
-	vim.g.memento_history = 35
-	vim.g.memento_shorten_path = true
-	vim.g.memento_window_width = 50
-	vim.g.memento_window_height = 15
-end
-
--- ethanholz/nvim-lastplace
+-- farmergreg/vim-lastplace
 M.config_lastplace = function()
-	require("nvim-lastplace").setup({})
 end
 
 -- willothy/flatten.nvim
@@ -374,29 +349,6 @@ M.config_glow = function()
 	})
 end
 
--- echasnovski/mini.surround
-M.config_mini_surround = function()
-	require("mini.surround").setup({
-		custom_surroundings = nil,
-		-- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
-		highlight_duration = 500,
-		-- Module mappings. Use `''` (empty string) to disable one.
-		mappings = {
-			add = "ma", -- Add surrounding in Normal and Visual modes
-			delete = "md", -- Delete surrounding
-			find = "mf", -- Find surrounding (to the right)
-			find_left = "mF", -- Find surrounding (to the left)
-			highlight = "mh", -- Highlight surrounding
-			replace = "mr", -- Replace surrounding
-			update_n_lines = "mn", -- Update `n_lines`
-			suffix_last = "l", -- Suffix to search with "prev" method
-			suffix_next = "n", -- Suffix to search with "next" method
-		},
-		-- Number of lines within which surrounding is searched
-		n_lines = 200,
-	})
-end
-
 -- andymass/vim-matchup
 M.config_vim_matchup = function()
 	vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
@@ -420,41 +372,13 @@ M.config_tmux = function()
 	require("tmux").setup({
 		copy_sync = {
 			enable = false,
-			ignore_buffers = { empty = false },
-			-- TMUX >= 3.2: all yanks (and deletes) will get redirected to system
-			-- clipboard by tmux
-			redirect_to_clipboard = false,
-			-- offset controls where register sync starts
-			-- e.g. offset 2 lets registers 0 and 1 untouched
-			register_offset = 0,
-			-- overwrites vim.g.clipboard to redirect * and + to the system
-			-- clipboard using tmux. If you sync your system clipboard without tmux,
-			-- disable this option!
-			sync_clipboard = true,
-			-- synchronizes registers *, +, unnamed, and 0 till 9 with tmux buffers.
-			sync_registers = true,
-			-- syncs deletes with tmux clipboard as well, it is adviced to
-			-- do so. Nvim does not allow syncing registers 0 and 1 without
-			-- overwriting the unnamed register. Thus, ddp would not be possible.
-			sync_deletes = true,
-			-- syncs the unnamed register with the first buffer entry from tmux.
-			sync_unnamed = true,
 		},
 		navigation = {
-			-- cycles to opposite pane while navigating into the border
-			cycle_navigation = true,
-
-			-- enables default keybindings (C-hjkl) for normal mode
 			enable_default_keybindings = false,
-			-- prevents unzoom tmux when navigating beyond vim border
-			persist_zoom = false,
 		},
 		resize = {
-			-- enables default keybindings (A-hjkl) for normal mode
 			enable_default_keybindings = false,
-			-- sets resize steps for x axis
 			resize_step_x = 2,
-			-- sets resize steps for y axis
 			resize_step_y = 2,
 		},
 	})
@@ -463,12 +387,6 @@ end
 -- knubie/vim-kitty-navigator
 M.config_vim_kitty_navigator = function()
 	vim.g.kitty_navigator_no_mappings = 1
-	-- local term = vim.fn.getenv("TERM")
-	-- if term == "xterm-256color" then
-	-- 	require("hologram").setup({
-	-- 		auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
-	-- 	})
-	-- end
 end
 
 -- stevearc/stickybuf.nvim
@@ -521,15 +439,7 @@ end
 
 -- mbbill/undotree
 M.config_undotree = function()
-	vim.g.undotree_WindowLayout = 4 -- 1
-	-- vim.opt.undofile = true
-
-	--    -- set undodir
-	-- local undo_dir = vim.fn.stdpath("data") .. "/undodir"
-	-- if vim.fn.isdirectory(undo_dir) == 0 then
-	-- 	vim.fn.mkdir(undo_dir, "p", 0700)
-	-- end
-	-- vim.opt.undodir = undo_dir
+	vim.g.undotree_WindowLayout = 4
 end
 
 return M

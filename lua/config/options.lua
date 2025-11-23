@@ -1,58 +1,54 @@
 local opt = vim.opt
 
--- 行号
+-- relative line number
 opt.relativenumber = true
 opt.number = true
-opt.termguicolors = true -- 启用更多色彩
+opt.termguicolors = true -- enable more colors
 opt.colorcolumn = "120"
-opt.signcolumn = "yes"   -- 标志列, 如git状态
+opt.signcolumn = "yes"   -- sign column, e.g. git status
 opt.cmdheight = 1
-opt.scrolloff = 10       -- 光标移动时距离上下界的最小行数
-
--- 缩进
+opt.scrolloff = 5        -- minimum number of lines to keep above and below the cursor when moving
+-- indentation
 opt.tabstop = 4
 opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
 opt.autoindent = true
 
--- 过长拆行
+-- long lines wrap
 opt.wrap = true
 
--- 光标行
+-- cursor line
 opt.cursorline = true
 
--- 启用鼠标
+-- enable mouse
 opt.mouse:append("a")
 
--- 系统剪贴板
+-- system clipboard
 opt.clipboard:append("unnamedplus")
 
--- 默认新窗口右和下
+-- default new window to the right and below
 opt.splitright = true
 opt.splitbelow = true
 
--- 搜索
+-- search
 opt.ignorecase = true
 opt.smartcase = true
 opt.incsearch = true -- search as characters are entered
-opt.hlsearch = true  -- 高亮搜索
+opt.hlsearch = true  -- highlight search results
 
 -- others
 opt.completeopt = "menuone,noinsert,noselect"
 opt.backspace = "indent,eol,start"
-opt.autochdir = false     -- 随文件切换更改缓存区
-opt.iskeyword:append("-") -- 识别'-'为一个词
-opt.modifiable = true     -- 缓存区是否能够修改
+opt.autochdir = false     -- change working directory with file switch
+opt.iskeyword:append("-") -- recognize '-' as part of a word
+opt.modifiable = true     -- whether buffer is modifiable
 opt.encoding = "UTF-8"
 opt.autoread = true
 opt.updatetime = 50
 opt.undofile = true
 opt.undodir = vim.fn.expand("$HOME/.local/share/nvim/undo")
 opt.exrc = true
-
--- 主题
--- vim.cmd[[colorscheme tokyonight-moon]]
 
 -- autocmd for changed files
 vim.api.nvim_exec(

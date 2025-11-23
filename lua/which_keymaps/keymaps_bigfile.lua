@@ -16,22 +16,18 @@ wk.add({
 	},
 	{
 		"zc",
-		-- "<cmd>lua require('ufo').closeFoldsWith()<cr>",
 		desc = "ufo/trouble close fold",
 	},
 	{
 		"zC",
-		-- "<cmd>lua require('ufo').closeAllFolds()<cr>",
 		desc = "ufo/trouble close all folds",
 	},
 	{
 		"zo",
-		-- "<cmd>lua require('ufo').openFoldsExceptKinds()<cr>",
 		desc = "ufo/trouble open fold",
 	},
 	{
 		"zO",
-		-- "<cmd>lua require('ufo').openAllFolds()<cr>",
 		desc = "ufo/trouble open all folds",
 	},
 })
@@ -42,8 +38,7 @@ wk.add({
 		-- folke/snacks.nvim
 		{
 			"<leader>bc",
-			-- "<cmd> bd <cr>",
-			"<cmd> lua require('snacks').bufdelete() <cr>", -- bufdelete.all(), bufdelete.other(), bufdelete.delete()
+			"<cmd> lua require('snacks').bufdelete() <cr>",
 			desc = "close current buffer",
 		},
 		{
@@ -145,7 +140,6 @@ wk.add({
 		},
 		{
 			"<leader>fpp",
-			-- "<cmd>lua require('snacks').picker.projects() <cr>",
 			"<cmd> lua require'telescope'.extensions.projects.projects{} <cr>",
 			desc = "snacks find projects",
 		},
@@ -180,33 +174,8 @@ wk.add({
 	},
 	{
 		"<leader>gg",
-		-- function()
-		-- 	require("toggleterm.terminal").Terminal
-		-- 		:new({
-		-- 			cmd = "lazygit",
-		-- 			hidden = true,
-		-- 			direction = "float",
-		-- 			float_opts = {
-		-- 				border = "rounded",
-		-- 			},
-		-- 		})
-		-- 		:toggle()
-		-- end,
-		"<cmd> lua require('snacks').lazygit() <cr>", -- lazygit.open(), lazygit.log(), lazygit.log_file()
+		"<cmd> lua require('snacks').lazygit() <cr>",
 		desc = "snacks lazygit toggle",
-	},
-	{ -- <leader> h
-		-- gaborvecsei/memento.nvim
-		{
-			"<leader>hb",
-			"<cmd> lua require('memento').toggle() <cr>",
-			desc = "toggle memento buffer history",
-		},
-		{
-			"<leader>hc",
-			"<cmd> lua require('memento').clear_history() <cr>",
-			desc = "clear memento buffer history",
-		},
 	},
 	{ -- <leader> l
 		{
@@ -556,9 +525,9 @@ wk.add({
 	-- numToStr/Comment.nvim
 	{
 		"<C-_>",
-        "<Plug>(comment_toggle_linewise_visual)gv",
+		"<Plug>(comment_toggle_linewise_visual)gv",
 		desc = "toggle comment",
-        mode = {"x"}
+		mode = { "x" }
 	},
 	{
 		"<C-\\>",

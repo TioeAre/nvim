@@ -80,16 +80,9 @@ return {
 		opts = M.opts_persisted,
 		config = M.config_persisted,
 	},
-	-- buffers history
-	{
-		"gaborvecsei/memento.nvim",
-		event = { "VeryLazy" },
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = M.config_memento,
-	},
 	-- 打开文件时恢复上次光标位置
 	{
-		"ethanholz/nvim-lastplace",
+		"farmergreg/vim-lastplace",
 		event = { "BufReadPre", "VeryLazy" },
 		config = M.config_lastplace,
 	},
@@ -177,13 +170,6 @@ return {
 		"lambdalisue/suda.vim",
 		cmd = { "SudaRead", "SudaWrite" },
 	},
-	-- surround text
-	{
-		"echasnovski/mini.surround",
-		event = { "VeryLazy" },
-		version = false,
-		config = M.config_mini_surround,
-	},
 	-- -- 匹配if else与括号
 	{
 		"andymass/vim-matchup",
@@ -207,15 +193,6 @@ return {
 		event = { "VeryLazy" },
 		config = M.config_grug_far,
 	},
-	-- Chinese words spilt
-	-- {
-	--     'noearc/jieba.nvim',
-	--     dependencies = {
-	--         'noearc/jieba-lua',
-	--     },
-	--     event = { "BufReadPost", },
-	--     -- config = true,
-	-- },
 	-- askfiy/nvim-picgo
 	-- {
 	-- 	"askfiy/nvim-picgo",

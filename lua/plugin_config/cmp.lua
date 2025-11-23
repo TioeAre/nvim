@@ -1,4 +1,6 @@
 local M = {}
+local cmp_funcs = require("utils.cmp")
+local cmp_vars = require("variables.cmp")
 
 -- hrsh7th/nvim-cmp
 M.config_cmp = function()
@@ -8,71 +10,7 @@ M.config_cmp = function()
     local neogen = require('neogen')
     require("luasnip/loaders/from_vscode").lazy_load()
     vim.opt.completeopt = "menu,menuone,noselect"
-
-    local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-    end
-    local bufIsBig = function(bufnr)
-        local max_filesize = 100 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
-        if ok and stats and stats.size > max_filesize then
-            return true
-        else
-            return false
-        end
-    end
-    local sources1 = cmp.config.sources({
-        -- lsp
-        {
-            name = "nvim_lsp",
-        },
-        -- lsp function help
-        {
-            name = "nvim_lsp_signature_help",
-        },
-        -- snippets
-        {
-            name = "luasnip",
-        },
-        -- text within current buffer
-        {
-            name = "buffer",
-        },
-        -- file system paths
-        {
-            name = "path",
-        },
-        -- calc
-        {
-            name = "calc",
-        },
-        -- spell
-        {
-            name = "spell",
-        },
-        -- latex
-        {
-            name = "latex_symbols",
-            option = {
-                strategy = 0, -- 0-mixed 1-julia 2-latex
-            },
-        },
-        -- nvim lua grammar
-        {
-            name = "nvim_lua",
-        },
-        {
-            name = 'tmux'
-        },
-        {
-            name = 'treesitter'
-        },
-        {
-            name = "copilot"
-        },
-    })
+    local sources1 = require("cmp").config.sources(cmp_vars.sources)
 
     cmp.setup({
         snippet = {
@@ -93,7 +31,7 @@ M.config_cmp = function()
                 select = false,
             }),
             ["<Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() and has_words_before() then
+                if cmp.visible() and cmp_funcs.has_words_before() then
                     cmp.select_next_item()
                     -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
                     -- they way you will only jump inside the snippet region
@@ -108,7 +46,7 @@ M.config_cmp = function()
                 end
             end, { "i", "s" }),
             ["<S-Tab>"] = cmp.mapping(function(fallback)
-                if cmp.visible() and has_words_before() then
+                if cmp.visible() and cmp_funcs.has_words_before() then
                     cmp.select_prev_item()
                 elseif luasnip.jumpable(-1) then
                     luasnip.jump(-1)
@@ -122,19 +60,6 @@ M.config_cmp = function()
         experimental = {
             ghost_text = false,
         },
-        window = {
-            --documentation = {
-            --border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-            --},
-            completion = {
-                border = "rounded",
-                winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
-            },
-            documentation = {
-                border = "rounded",
-                winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None",
-            },
-        },
         -- configure lspkind for vs-code like icons
         formatting = {
             format = lspkind.cmp_format({
@@ -147,11 +72,7 @@ M.config_cmp = function()
         vim.api.nvim_create_autocmd("FileReadPre", {
             pattern = "*.*",
             callback = function(t)
-                if not bufIsBig(t.buf) then
-                    -- sources1 = vim.tbl_deep_extend("keep",
-                    --     sources1,
-                    --     { name = "treesitter", group_index = 2 }
-                    -- )
+                if not cmp_funcs.bufIsBig(t.buf) then
                     sources1[#sources1 + 1] = { name = "treesitter", group_index = 2 }
                 end
                 cmp.setup.buffer({
@@ -159,21 +80,6 @@ M.config_cmp = function()
                 })
             end,
         }),
-    })
-
-    cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = { {
-            name = "buffer",
-        } },
-    })
-    cmp.setup.cmdline(":", {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({ {
-            name = "path",
-        } }, { {
-            name = "cmdline",
-        } }),
     })
 
     cmp.setup.filetype("gitcommit", {
