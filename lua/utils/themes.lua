@@ -32,7 +32,7 @@ M.get_diagnostic_label = function(props)
     if not vim.api.nvim_buf_is_valid(props.buf) then
         return labels -- Return an empty table if buffer is not valid
     end
-    local icons = { error = " ", warn = " ", hint = "❃", info = "" }
+    local icons = { error = "", warn = "", hint = "❃", info = "" }
     local severity_map = {
         error = vim.diagnostic.severity.ERROR,
         warn = vim.diagnostic.severity.WARN,
