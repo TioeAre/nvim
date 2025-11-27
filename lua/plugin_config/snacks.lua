@@ -4,7 +4,7 @@ local snacks_vars = require("variables.snacks")
 
 -- folke/snacks.nvim
 M.opt_snacks = {
-	bigfile = {           -- create `bigfile` filetype
+	bigfile = { -- create `bigfile` filetype
 		notify = true,
 		size = 5 * 1024 * 1024, -- 10 MB
 		line_length = 10000, -- average line length (useful for minified files)
@@ -16,7 +16,12 @@ M.opt_snacks = {
 			keys = {
 				{ icon = " ", key = "l", desc = "Restore Session", action = ":SessionLoadLast" },
 				{ icon = " ", key = "s", desc = "Find Sessions", action = ":Telescope persisted" },
-				{ icon = " ", key = "p", desc = "Find Projects", action = ":lua require'telescope'.extensions.projects.projects{}" },
+				{
+					icon = " ",
+					key = "p",
+					desc = "Find Projects",
+					action = ":lua require'telescope'.extensions.projects.projects{}",
+				},
 				{ icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
 				{ icon = " ", key = "e", desc = "New File", action = ":ene | startinsert" },
 				{ icon = " ", key = "f", desc = "Find files", action = ":lua Snacks.dashboard.pick('files')" },
@@ -155,6 +160,12 @@ M.opt_snacks = {
 	statuscolumn = { enabled = true },
 	terminal = { enabled = true },
 	words = { enabled = true },
+	styles = {
+		scratch = {
+			width = 135,
+			height = 45,
+		},
+	},
 }
 M.keys_snacks = {}
 

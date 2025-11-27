@@ -190,7 +190,11 @@ local render_file = function(current_item, if_highlight_current)
 			end
 
 			-- last item re-render to SpectreSearch highlight
-			if state.last_select_item and state.total_item[state.last_select_item.c_line] and current_item.c_line ~= state.last_select_item.c_line then
+			if
+				state.last_select_item
+				and state.total_item[state.last_select_item.c_line]
+				and current_item.c_line ~= state.last_select_item.c_line
+			then
 				-- change last item's highlight
 				state.total_item[state.last_select_item.c_line].search_highlight = state.user_config.highlight.search
 

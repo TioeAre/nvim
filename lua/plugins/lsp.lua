@@ -27,7 +27,7 @@ return {
 				"ray-x/navigator.lua",
 			},
 			{
-				'linrongbin16/lsp-progress.nvim',
+				"linrongbin16/lsp-progress.nvim",
 				config = M.config_lsp_progress,
 			},
 			-- {

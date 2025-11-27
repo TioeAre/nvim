@@ -527,7 +527,7 @@ wk.add({
 		"<C-_>",
 		"<Plug>(comment_toggle_linewise_visual)gv",
 		desc = "toggle comment",
-		mode = { "x" }
+		mode = { "x" },
 	},
 	{
 		"<C-\\>",

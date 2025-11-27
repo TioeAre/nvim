@@ -8,14 +8,17 @@ M.config_cmake_tools = function()
 	require("cmake-tools.scratch").append = code_run_utils.scratch_append
 
 	require("cmake-tools").setup({
-		cmake_regenerate_on_save = true,                                                                              -- auto generate when save CMakeLists.txt
-		cmake_generate_options = { "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" },                                             -- this will be passed when invoke `CMakeGenerate`
-		cmake_build_options = { "-j10" },                                                                             -- this will be passed when invoke `CMakeBuild`
-		cmake_kits_path = W.windows_selectNO2home("/.config/nvim/config/CMakeKits.json", "\\nvim\\config\\CMakeKits.json"), -- this is used to specify global cmake kits path, see CMakeKits for detailed usage
-		cmake_executor = {                                                                                            -- executor to use
-			default_opts = {                                                                                          -- a list of default and possible values for executors
+		cmake_regenerate_on_save = true, -- auto generate when save CMakeLists.txt
+		cmake_generate_options = { "-DCMAKE_EXPORT_COMPILE_COMMANDS=1" }, -- this will be passed when invoke `CMakeGenerate`
+		cmake_build_options = { "-j10" }, -- this will be passed when invoke `CMakeBuild`
+		cmake_kits_path = W.windows_selectNO2home(
+			"/.config/nvim/config/CMakeKits.json",
+			"\\nvim\\config\\CMakeKits.json"
+		), -- this is used to specify global cmake kits path, see CMakeKits for detailed usage
+		cmake_executor = { -- executor to use
+			default_opts = { -- a list of default and possible values for executors
 				quickfix = {
-					show = "only_on_error",                                                                           -- "always", "only_on_error"
+					show = "only_on_error", -- "always", "only_on_error"
 				},
 			},
 		},
@@ -26,7 +29,7 @@ M.config_cmake_tools = function()
 						strategy = {
 							quit_on_exit = false, -- "success",
 						},
-					},       -- options to pass into the `overseer.new_task` command
+					}, -- options to pass into the `overseer.new_task` command
 				},
 			},
 		},

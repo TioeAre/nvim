@@ -5,9 +5,9 @@ opt.relativenumber = true
 opt.number = true
 opt.termguicolors = true -- enable more colors
 opt.colorcolumn = "120"
-opt.signcolumn = "yes"   -- sign column, e.g. git status
+opt.signcolumn = "yes" -- sign column, e.g. git status
 opt.cmdheight = 1
-opt.scrolloff = 5        -- minimum number of lines to keep above and below the cursor when moving
+opt.scrolloff = 5 -- minimum number of lines to keep above and below the cursor when moving
 -- indentation
 opt.tabstop = 4
 opt.softtabstop = 4
@@ -35,14 +35,14 @@ opt.splitbelow = true
 opt.ignorecase = true
 opt.smartcase = true
 opt.incsearch = true -- search as characters are entered
-opt.hlsearch = true  -- highlight search results
+opt.hlsearch = true -- highlight search results
 
 -- others
 opt.completeopt = "menuone,noinsert,noselect"
 opt.backspace = "indent,eol,start"
-opt.autochdir = false     -- change working directory with file switch
+opt.autochdir = false -- change working directory with file switch
 opt.iskeyword:append("-") -- recognize '-' as part of a word
-opt.modifiable = true     -- whether buffer is modifiable
+opt.modifiable = true -- whether buffer is modifiable
 opt.encoding = "UTF-8"
 opt.autoread = true
 opt.updatetime = 50
@@ -52,14 +52,14 @@ opt.exrc = true
 
 -- autocmd for changed files
 vim.api.nvim_exec(
-  [[
+	[[
   augroup AutoRefresh
     autocmd!
     autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * silent! checktime
     autocmd FileChangedShellPost * echohl InfoMsg | echo "File changed on disk. Buffer reloaded." | echohl None | checktime
   augroup END
 ]],
-  false
+	false
 )
 
 vim.g.python3_host_prog = "python3"

@@ -205,7 +205,7 @@ return {
 	-- mbbill/undotree
 	{
 		"mbbill/undotree",
-        event = { "VeryLazy" },
-        config = M.config_undotree,
+		event = { "VeryLazy" },
+		config = M.config_undotree,
 	},
 }

@@ -196,8 +196,7 @@ M.config_persisted = function()
 end
 
 -- farmergreg/vim-lastplace
-M.config_lastplace = function()
-end
+M.config_lastplace = function() end
 
 -- willothy/flatten.nvim
 M.config_flatten = function()
