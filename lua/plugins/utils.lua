@@ -139,7 +139,7 @@ return {
 	{
 		"mrjones2014/smart-splits.nvim",
 		lazy = false,
-		build = "./kitty/install-kittens.bash",
+		build = W.windows_selectNO2string("./kitty/install-kittens.bash", "powershell"),
 		config = M.config_smart_splits,
 	},
 	-- move windows
