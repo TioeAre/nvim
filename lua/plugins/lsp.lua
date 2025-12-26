@@ -63,6 +63,7 @@ return {
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 		enabled = not vim.g.only_text_editor,
 		event = { "VeryLazy" },
+        -- cmd = "lua require('lsp_lines').toggle()",
 		config = M.config_whynothugo_lsp_lens,
 	},
 }

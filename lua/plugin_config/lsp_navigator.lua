@@ -33,9 +33,9 @@ M.config_lspconfig = function()
 	require("mason-tool-installer").setup({
 		ensure_installed = {
 			"black",
-			"clang_format",
-			"cmake_format",
-			"clangtidy",
+			-- "clang_format",
+			-- "cmake_format",
+			-- "clangtidy",
 			"shellcheck", -- "clangtidy",
 			"cmakelint",
 			"hadolint",
