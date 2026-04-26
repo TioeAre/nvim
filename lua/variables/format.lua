@@ -30,7 +30,8 @@ M.formatters_by_ft = {
 	rmd = { "latexindent" },
 	rst = { "latexindent" },
 	lua = { "stylua" },
-	python = { "black" },
+	-- python = { "black" },
+	python = { "ruff_format" },
 	yaml = { "prettier" },
 
 	typescript = { "prettier" },
@@ -65,7 +66,8 @@ M.linters_by_ft = {
 	rmd = {},
 	rst = {},
 	lua = W.windows_ignore_dict({ "luacheck" }),
-	python = { "flake8" },
+	-- python = { "flake8" },
+	python = { "ruff_fix" },
 	-- yaml = { "yamllint" },
 }
 

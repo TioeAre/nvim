@@ -50,6 +50,17 @@ opt.undofile = true
 opt.undodir = vim.fn.expand("$HOME/.local/share/nvim/undo")
 opt.exrc = true
 
+-- vim.cmd("filetype on")
+vim.api.nvim_create_autocmd({"InsertLeave"}, {
+    desc = "try to detect the filetype of empty buffer",
+    callback = function(args)
+        local buf = args.buf
+        if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype == "" and vim.bo[buf].buftype == "" then
+            vim.cmd("filetype detect")
+        end
+    end,
+})
+
 -- autocmd for changed files
 vim.api.nvim_exec(
 	[[

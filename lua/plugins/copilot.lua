@@ -12,10 +12,22 @@ return {
 		event = "InsertEnter",
 		config = M.config_copilot,
 		dependencies = {
-			"zbirenbaum/copilot-cmp",
-			config = M.config_copilot_cmp,
-			event = { "InsertEnter", "LspAttach" }, -- "LspAttach"
-			fix_pairs = true,
+			{
+				"zbirenbaum/copilot-cmp",
+				config = M.config_copilot_cmp,
+				event = { "InsertEnter", "LspAttach" }, -- "LspAttach"
+				fix_pairs = true,
+			},
+			"copilotlsp-nvim/copilot-lsp",
 		},
+	},
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		dependencies = {
+			{ "nvim-lua/plenary.nvim", branch = "master" },
+		},
+        event = "VeryLazy",
+		build = "make tiktoken",
+		opts = M.opts_copilot_chat,
 	},
 }
